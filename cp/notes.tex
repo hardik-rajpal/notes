@@ -5,10 +5,12 @@
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem,listings}
 \author{Hardik Rajpal}
 \title{Notes from nearly draining pursuits of mastery in Leetcode problems}
+\hbadness 100001
 \begin{document}
 \maketitle
 \tableofcontents
 \pagebreak
+\section{STL}
 \section{Graph Algorithms}
 \subsection{BFS|DFS}
 I prefer writing both of these iteratively. In the immortal
@@ -63,7 +65,57 @@ while(!s.empty()){
         }
     }
 }
-    \end{lstlisting}
-    \end{minipage}
-    
+\end{lstlisting}
+\end{minipage}
+The notes should be reduced from the abstract type T, to
+int whenever possible; thereby reducing the
+\texttt{unordered\_map}s to \texttt{vector}s which can
+sometimes get you under the time limit.
+\href{https://stackoverflow.com/questions/55451825/why-is-vector-faster-than-unordered-map}{Click here for Why?}
+\subsubsection*{Optimizations}
+\begin{itemize}
+    \item If the list of neighbours is a shared data structure, consider clearing it after having visited
+    the neighbours using any one owner. Since, all elements in the shared field are visited and running them
+    through the loop for other owners of the field is redundant. \href{https://leetcode.com/problems/jump-game-iv/}{(Leetcode)}
+\end{itemize}
+\section{Misc. Algorithms}
+\subsection{Binary Search}
+While the idea of binary search is clear, opportunities
+for its application may not be easily identified (yet). Some
+common places where it may be applied:
+\subsubsection*{Optimization Problems}
+Problems involving the evaluation of the min/max of an expression,
+while its constituents satisfy a constraint that is straightforward to
+check. Consider the problem below:\\
+\begin{center}
+\fbox{Given $x_1,x_2,...x_n$ and $T$, find $min_{a_1,a_2,...a_n}(max_i(a_ix_i))$ such that $\sum_{i=0}^{n}{a_i}\geq T$ \href[]{https://leetcode.com/problems/minimum-time-to-complete-trips/description/}{(Leetcode)}}
+\end{center}
+The binary search algorithm is:
+\begin{lstlisting}[language=C++,caption=BinSearch]
+    int n = x.size();
+    int mine = *min_element(x.begin(),x.end());
+    int maxe = *max_element(x.begin(),x.end());
+    unsigned long long lb = mine, ub = T*(unsigned long long)maxe;
+    unsigned long long del = (ub - lb)/2;
+    auto numtrips = [x,n](unsigned long long gt){
+        unsigned long long nt = 0;
+            for(int i=0;i<n;i++){
+                nt += (gt/x[i]);
+            }
+            return nt;
+    };
+    while(del>0){
+        if(numtrips(lb+del)>=T){
+            ub = lb + del;
+        }
+        else{
+            lb = lb + del;
+        }
+        del = (ub-lb)/2;
+    }
+    if(numtrips(lb)>=T){
+        return lb;
+    }
+    return lb+1;
+\end{lstlisting}
 \end{document}
