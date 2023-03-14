@@ -2,15 +2,66 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
-\usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem,listings}
+\usepackage{lastpage,enumerate,fancyhdr,mathrsfs,graphicx,listings,hyperref,enumitem,listings}
+\usepackage[dvipsnames]{xcolor}
 \author{Hardik Rajpal}
 \title{Notes from nearly draining pursuits of mastery in Leetcode problems}
 \hbadness 100001
 \begin{document}
+\lstset{language=C++,backgroundcolor=\color{Lavender},
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{OliveGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
 \maketitle
 \tableofcontents
 \pagebreak
 \section{STL}
+\subsection{Sets and Maps}
+These (\texttt{set} and \texttt{map}) are ordered data structures; helpful when
+it is efficient to retain the ordering of a collection of elements during execution.
+Their unordered counterparts (\texttt{unordered\_set} and \texttt{unorderd\_map})
+prioritize access time and maintain no order of their elements.
+\subsubsection*{Declaration syntaxes}
+\begin{lstlisting}[caption={Sets and Maps},language=C++]
+struct U{
+    bool operator()(T t1, T t2)const{
+        //logic comparing t1<t2.
+    }
+};
+set<T,struct U> myset;
+map<T,V,struct U> mymap; 
+\end{lstlisting}
+The ordering parameter \texttt{U} is crucial in cases where order between T is not inferable.
+\begin{lstlisting}[caption={Unordered sets and maps}]
+struct T{
+    ...
+    bool operator==(T t2)const{
+        //return logic for t2==this.
+    }
+};
+struct hashT{
+    size_t operator()(T t)const{
+        //std::hash<string or int or double>()(string or int or double)
+        //return logic for hashing t. Use ^ << >> ~ | &
+    }
+};
+unordered_set<T,struct hashT> uset;
+unordered_map<T,V,struct hashT> umap;
+\end{lstlisting}
+\subsection{Iterators}
+An iterator pointing at an element is ``corrupted" on removing the element.
+Hence, any useful data should be copied over the iterator before removing the elemen.t
+\begin{lstlisting}[caption={Undefined behaviour},language=C++]
+    lists.erase(*minit);//minit is corrupted
+    lists.insert((*minit)->next);
+\end{lstlisting}
+\begin{lstlisting}[caption={Working code}]
+    lists.insert((*minit)->next);//first use the data.
+    lists.erase(*minit);//then erase.
+\end{lstlisting}
 \section{Graph Algorithms}
 \subsection{BFS|DFS}
 I prefer writing both of these iteratively. In the immortal
@@ -35,9 +86,9 @@ while(!q.empty()){
         q.pop();
         for(nb:edges[u]){
             if(!visited[nb]){
-                visited[nb] = true;
-                prev[nb] = u;
-                q.push(nb);
+               visited[nb] = true;
+               prev[nb] = u;
+               q.push(nb);
             }
         }
     }

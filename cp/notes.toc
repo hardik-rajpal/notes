@@ -1,5 +1,7 @@
 \contentsline {section}{\numberline {1}STL}{2}{section.1}%
-\contentsline {section}{\numberline {2}Graph Algorithms}{2}{section.2}%
-\contentsline {subsection}{\numberline {2.1}BFS|DFS}{2}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Misc. Algorithms}{2}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Binary Search}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {1.1}Sets and Maps}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Iterators}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Graph Algorithms}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}BFS|DFS}{3}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Misc. Algorithms}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Binary Search}{3}{subsection.3.1}%
