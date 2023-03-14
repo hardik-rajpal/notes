@@ -4,6 +4,7 @@
 \usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,graphicx,listings,hyperref,enumitem,listings}
 \usepackage[dvipsnames]{xcolor}
+\newcommand{\citem}[1]{\item \texttt{#1}}
 \author{Hardik Rajpal}
 \title{Notes from nearly draining pursuits of mastery in Leetcode problems}
 \hbadness 100001
@@ -31,8 +32,8 @@ struct U{
         //logic comparing t1<t2.
     }
 };
-set<T,struct U> myset;
-map<T,V,struct U> mymap; 
+set<T,struct U> myset; multiset<T,struct U> mymulset;
+map<T,V,struct U> mymap; multimap<T,struct U> mymulmap;
 \end{lstlisting}
 The ordering parameter \texttt{U} is crucial in cases where order between T is not inferable.
 \begin{lstlisting}[caption={Unordered sets and maps}]
@@ -53,7 +54,7 @@ unordered_map<T,V,struct hashT> umap;
 \end{lstlisting}
 \subsection{Iterators}
 An iterator pointing at an element is ``corrupted" on removing the element.
-Hence, any useful data should be copied over the iterator before removing the elemen.t
+Hence, any useful data should be copied over the iterator before removing the element.
 \begin{lstlisting}[caption={Undefined behaviour},language=C++]
     lists.erase(*minit);//minit is corrupted
     lists.insert((*minit)->next);
@@ -62,6 +63,18 @@ Hence, any useful data should be copied over the iterator before removing the el
     lists.insert((*minit)->next);//first use the data.
     lists.erase(*minit);//then erase.
 \end{lstlisting}
+\subsection{Built-In Utilities}
+Note: \texttt{iter} denotes the iterator return type. \texttt{first} and \texttt{last} denote \texttt{.begin()} and \texttt{.end()} iterators.
+\begin{itemize}
+    \citem{void sort(first,last)} (O(nlogn))
+    \citem{void reverse(first,last)} (O(n))
+    \citem{void random\_shuffle(first,last)} (O(n))
+    \citem{iter max\_element(first,last[,struct comp])} (O(n))
+    \citem{iter min\_element(first,last[,struct comp])} (O(n))
+    \citem{int | long long | etc accumulate(first,last,init\_val)} (O(n))
+    \citem{iter lower\_bound(first,last,value)} (Returns \texttt{iter} to the smallest element $\geq$ \texttt{value}.) (O(logn))
+    \citem{iter upper\_bound(first,last,value)} (Returns \texttt{iter} to the smallest element $>$ \texttt{value}.) (O(logn))
+\end{itemize}
 \section{Graph Algorithms}
 \subsection{BFS|DFS}
 I prefer writing both of these iteratively. In the immortal
