@@ -9,13 +9,31 @@
 \title{Notes from nearly draining pursuits of mastery in Leetcode problems}
 \hbadness 100001
 \begin{document}
-\lstset{language=C++,backgroundcolor=\color{Lavender},
-                basicstyle=\ttfamily,
-                keywordstyle=\color{blue}\ttfamily,
-                stringstyle=\color{red}\ttfamily,
-                commentstyle=\color{OliveGreen}\ttfamily,
-                morecomment=[l][\color{magenta}]{\#}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
 }
+
+\lstset{style=mystyle}
 \maketitle
 \tableofcontents
 \pagebreak
@@ -72,8 +90,22 @@ Note: \texttt{iter} denotes the iterator return type. \texttt{first} and \texttt
     \citem{iter max\_element(first,last[,struct comp])} (O(n))
     \citem{iter min\_element(first,last[,struct comp])} (O(n))
     \citem{int | long long | etc accumulate(first,last,init\_val)} (O(n))
-    \citem{iter lower\_bound(first,last,value)} (Returns \texttt{iter} to the smallest element $\geq$ \texttt{value}.) (O(logn))
-    \citem{iter upper\_bound(first,last,value)} (Returns \texttt{iter} to the smallest element $>$ \texttt{value}.) (O(logn))
+    \citem{iter lower\_bound(first,last,value)}(O(logn))
+    \begin{itemize}
+        \item Returns \texttt{iter} to the smallest element $\geq$ \texttt{value}.
+    \end{itemize}
+    \citem{iter upper\_bound(first,last,value)} (O(logn))
+    \begin{itemize}
+        \item Returns \texttt{iter} to the smallest element $>$ \texttt{value}.
+    \end{itemize}
+    \citem{bool next\_permutation(first,last[, struct comp])} (O(n))
+    \begin{itemize}
+        \item Updates \texttt{(first,last)} to its next permutation of in ascending order.
+        \item Sort \texttt{(first,last)} first to access all permutations.
+        \item Use in a \texttt{do-while} loop to avoid missing first permutation.
+        \item Returns true if there exists a permutation greater than the current one.
+    \end{itemize}
+    \citem{bool prev\_permutation(first, last[, struct comp])} (O(n))
 \end{itemize}
 \section{Graph Algorithms}
 \subsection{BFS|DFS}
@@ -130,8 +162,8 @@ while(!s.empty()){
     }
 }
 \end{lstlisting}
-\end{minipage}
-The notes should be reduced from the abstract type T, to
+\end{minipage}\\
+The nodes should be reduced from the abstract type T, to
 int whenever possible; thereby reducing the
 \texttt{unordered\_map}s to \texttt{vector}s which can
 sometimes get you under the time limit.
@@ -182,4 +214,12 @@ The binary search algorithm is:
     }
     return lb+1;
 \end{lstlisting}
+\subsection{Array Scan}
+The name is given to the family of algorithms where we do a couple of runs of a given array to evaluate an attribute. Approaches involving subarrays can be dealt with using to two indices \texttt{s} and \texttt{e}. Things to note:
+\begin{itemize}
+    \item Edge cases are possible at the start or end.
+    \item The attribute evaluation will often be have to be done once more at the end of the loop.
+    \item To improve performance, try to reduce the variables being updated/used in the loop.
+    \item Two loops are useful for getting started with the code, but reducing them to one helps performance.
+\end{itemize}
 \end{document}
