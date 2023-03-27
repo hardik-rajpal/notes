@@ -5,6 +5,12 @@
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,graphicx,listings,hyperref,enumitem,listings}
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\citem}[1]{\item \texttt{#1}}
+\newcommand{\dsr}[5]{
+\hline 
+\texttt{#1} & #2 & #3 & #4 & #5\\
+}
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 \author{Hardik Rajpal}
 \title{Notes from nearly draining pursuits of mastery in Leetcode problems}
 \hbadness 100001
@@ -32,7 +38,7 @@
     showtabs=false,                  
     tabsize=2
 }
-
+\setlist[enumerate,1]{label=\textbf{\arabic*.}}
 \lstset{style=mystyle}
 \maketitle
 \tableofcontents
@@ -70,7 +76,34 @@ struct hashT{
 unordered_set<T,struct hashT> uset;
 unordered_map<T,V,struct hashT> umap;
 \end{lstlisting}
+\subsubsection{The Big Fat Table of Data Structures}
+% \begin{center}
+\hspace*{-2cm}
+\begin{tabular}{ |p{3cm}|c|p{3cm}|p{3cm}|p{3cm}| }
+\dsr{STL class}{Insertion}{Deletion}{Lookup}{Remarks}
+\dsr{vector<T> s}{
+    \specialcell{\texttt{void push\_back(T t)}:O(1)\\
+    \texttt{void insert(iter pos, T t)} O(n)}
+}{\texttt{pop\_back}: O(1)}{\texttt{var[key]}: O(1)}{\texttt{insert} puts \texttt{t} before \texttt{pos}}
+\dsr{set<T> s}{\specialcell{\texttt{void insert(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{void erase(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{iter find(T t)}:\\O(log(s.size()))}}{Implemented as a tree.}
+\dsr{map<K,V>}
+{\specialcell{
+    \texttt{void insert(pair<K,V> p)}:\\
+    \texttt{var[k] = v;}
+}}
+{...}
+{...}
+{...}
+\hline
+\end{tabular}
+% \end{center}
 \subsection{Iterators}
+Without going into the non-trivial hierarchy of iterators, note that:
+\begin{itemize}
+    \item \texttt{iter++} is supported by all iterators.
+    \item \texttt{iter += n} is supported by random-access iterators, available with vectors and deques (and maybe others?).
+    \item \texttt{advance(iter,n)} is supported by all iterators: use this instead.
+\end{itemize}
 An iterator pointing at an element is ``corrupted" on removing the element.
 Hence, any useful data should be copied over the iterator before removing the element.
 \begin{lstlisting}[caption={Undefined behaviour},language=C++]
