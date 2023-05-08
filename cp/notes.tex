@@ -76,6 +76,12 @@ struct hashT{
 unordered_set<T,struct hashT> uset;
 unordered_map<T,V,struct hashT> umap;
 \end{lstlisting}
+In the interest of speed and space, and unreadability of code, it might be
+preferable to replace sets that only serve to mark and check membership
+by flags and bit operations.\\
+\begin{center}
+    \fbox{\texttt{insert(index)}$\equiv$\texttt{flag|(1<<index)} and \texttt{count(index)}$\equiv$\texttt{flag\&(1<<index)}}
+\end{center}
 \subsubsection{The Big Fat Table of Data Structures}
 % \begin{center}
 \hspace*{-2cm}
