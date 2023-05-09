@@ -22,7 +22,7 @@ by you and (3) gives you an output. The onus of deciding whether or not to make
 the trade is still on the human trader.\\
 The module plans to discuss:
 \begin{enumerate}
-    \item Pair trading
+    \item Pair trading (not related to that thing you suggested to your wife!)
     \item Volatility based Delta hedging
     \item Calendar spreads
     \item Momentum strategy (Portfolio approach)
@@ -170,6 +170,48 @@ if(isCumulative):\\
 \indent NORM.DIST(x, $\mu$, $\sigma$, isCumulative) $\equiv$ cdf(x;$\mu$, $\sigma$)\\
 else:\\
 \indent NORM.DIST(x, $\mu$, $\sigma$, isCumulative) $\equiv$ pdf(x;$\mu$, $\sigma$)
-\subsection{The Pair Trade (Not related to that thing you suggested to your wife!)}
+\subsection{The Pair Trade}
+Here are some density curve (cdf(x)) facts (100/100):
+\begin{itemize}
+    \item cdf($x_{curr}$) = 0.997 $\implies$ $x_{curr} = \mu+3\sigma$
+    \item cdf($x_{curr}$) = 0.974 $\implies$ $x_{curr} = \mu+2\sigma$
+    \item cdf($x_{curr}$) = 0.84 $\implies$ $x_{curr} = \mu+\sigma$
+    \item cdf($x_{curr}$) = 0.16 $\implies$ $x_{curr} = \mu-\sigma$
+    \item cdf($x_{curr}$) = 0.025 $\implies$ $x_{curr} = \mu-2\sigma$
+    \item cdf($x_{curr}$) = 0.003 $\implies$ $x_{curr} = \mu-3\sigma$
+\end{itemize}
+General thresholds for trading short and long are given below. The target
+value of the density curve is the value you want the density curve to go to
+after you make the trade for considerable profit.
+\begin{itemize}
+    \item cdf($x_{curr}$) $\in$ (0.003,0.025) $\implies$ long.
+    (Stoploss=0.003 or higher, target = 0.25 or lower)
+    \item cdf($x_{curr}$) $\in$ (0.975,0.997) $\implies$ short.
+    (Stoploss=0.997 or higher, target = 0.975 or lower)
+\end{itemize}
+In concrete terms, if the ratio is Stock A/Stock B,
+\begin{itemize}
+    \item long trade $\implies$ buy Stock A and sell Stock B.
+    \item short trade $\implies$ sell Stock A and buy Stock B.
+\end{itemize}
+Remember it as the numerator being the dominating term and long (buy) $\implies$
+buy the numerator while short (sell) $\implies$ sell the numerator. The
+denominator always suffers the alternative fate.
+\subsubsection{Real Talk}
+\begin{itemize}
+    \item For a given pair, one can expect at most 2-3 signals in a year; we need to observe multiple pairs to continuously find profit opportunities.
+    \item We have not discussed neutrality of both the positions, which is apparently a key angle.
+    \item As pair trading is a margin money guzzler, one needs to have sufficient funds to pair trade.
+\end{itemize}
+\section{Pair Trading Method 2: Statistical Arbitrage}
+This is also known as \textbf{Relative Value Trading}.
+\subsection{Straight Line Equation}
+Straigh line equation: $y = mx + \epsilon$
+\subsection{Linear Regression}
+Given $\{x_i,y_i\}_{i\in[n]}$, we estimate $m$ and $\epsilon$.\\
+\begin{center}
+    residual = $y_i - (mx_i + \epsilon)$
+\end{center}
+\subsection{The Error Ratio}
 
 \end{document}
