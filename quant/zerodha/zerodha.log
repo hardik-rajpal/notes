@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  11 MAY 2023 15:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  12 MAY 2023 00:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -427,29 +427,29 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
 {C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-<rsrc/stdtable.png, id=152, 183.68625pt x 119.2455pt>
+<rsrc/stdtable.png, id=192, 183.68625pt x 119.2455pt>
 File: rsrc/stdtable.png Graphic file (type png)
 <use rsrc/stdtable.png>
 Package pdftex.def Info: rsrc/stdtable.png  used on input line 129.
 (pdftex.def)             Requested size: 183.68578pt x 119.2452pt.
- [3] [4 <./rsrc/stdtable.png>] [5] [6] [7] 
+ [3] [4 <./rsrc/stdtable.png>] [5] [6] [7] [8] 
 AED: lastpage setting LastPage
-[8] (zerodha.aux)
+[9] (zerodha.aux)
 Package rerunfilecheck Info: File `zerodha.out' has not changed.
-(rerunfilecheck)             Checksum: 3532DE820302580D440671C1DDD47405;4898.
+(rerunfilecheck)             Checksum: B6F75FB1CBBD1C45D15042822F5E22DE;6566.
  ) 
 Here is how much of TeX's memory you used:
- 12582 strings out of 478338
- 197731 string characters out of 2832889
- 513624 words of memory out of 3000000
- 30766 multiletter control sequences out of 15000+600000
+ 12603 strings out of 478338
+ 198087 string characters out of 2832889
+ 513635 words of memory out of 3000000
+ 30776 multiletter control sequences out of 15000+600000
  478960 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  72i,6n,77p,486b,513s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on zerodha.pdf (8 pages, 256045 bytes).
+Output written on zerodha.pdf (9 pages, 265170 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 500000)
- 254 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 339 PDF objects out of 1000 (max. 8388607)
+ 75 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
 

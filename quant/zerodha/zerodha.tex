@@ -321,5 +321,54 @@ The intercept represents the part of a stock price that is not ``explained'' or
 captured by the regression analysis' predicted dependence. If a large fraction
 of the price is unexplained, say $(y_i/c) \approxeq 80\%$, the trade is not trustable.
 \section{Calendar Spreads}
-
+TODO: read that chapter from the Futures Module.
+\section{Momentum Portfolios}
+Momemntum is the rate of change of returns of the stock or index. It can be
+measured over a variety of time frames, ranging from minutes to days.
+\subsection{Momentum Strategy}
+Core Idea: Identify momentum stocks and ``ride the wave.'' A portfolio of
+momentum stocks is much more preferable to a single stock as the diversification
+lowers the risk further. We now discuss how to set up a momentum portfolio.
+\subsubsection{Define your stock universe}
+We filter out the stocks we wish to even consider for our portfolio; a common
+filter is to take the top 50 or 500 stocks from a stock market like Nifty or BSE.
+Additional filters like a maximum stock price and minimal market capitalization
+can help narrow the universe further. We should have, in our tracking universe,
+at least just over 10 times the intended size of our portfolio.
+\subsubsection{Set up the data}
+Procure the closing prices of all the stocks in your tracking universe. 
+Furthermore, ensure the dataset is clean and adjust it for corporate actions
+like the bonus issue, splits and special dividends among others. This strategy
+needs a 1-year lookback period.
+\subsubsection{Calculate Returns}
+Calculate returns for all the stocks in your tracking universe to get a sense
+of their momenta.
+\begin{center}
+    return = (ending value/starting value) - 1;
+\end{center}
+\subsubsection{Rank the Returns}
+Sort the returns in descending order.
+\subsubsection{Create the portfolio}
+Identify stocks with good momentum over the observation period and shortlist 10-12
+of them. Once the momentum portfolio stocks are identified, the idea is to buy
+all the momentum stocks in \textbf{equal proportion}, or, with good reason and
+backtested strategies, some pareto-ish distribution of the weights.
+\subsubsection{Rebalance the portfolio}
+We continue to update the ranks of the stocks in our tracking universe based on
+the latest twelve-month performances and shortlist the top 10-12 for our 
+portfolio. We then sell the stocks that have left the list and buy the new ones
+that have entered. We do this at the end of every month.
+\subsection{Momentum Portfolio Variations}
+Variations to the strategy include changing the frequency at which returns are
+considered, duration of time for which the portfolio is held and the duration of 
+lookback when generating ranks. Note that a fundamental analysis counterpart 
+to this strategy exists where the tracking universe is composed of 
+fundamentally good stocks, and the stocks are ranked on the basis of parameters 
+like EPS growth, profit margin, EBITDA margin, etc. These strategies have readily
+available data and hence backtesting is a lot easier.
+\subsection{Word of Caution}
+The price-based momentum strategy works well only when the market is trending
+up. There are cases of the markets going down where the momentum strategy bleeds
+heavier than the markets themselves. The strategy needs to be implemented in the
+right market cycle to secure great returns.
 \end{document}
