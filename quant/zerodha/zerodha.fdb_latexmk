@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1683747919 "c:/CODE/atgit/notes/quant/zerodha/zerodha.tex" "zerodha.pdf" "zerodha" 1683747921
+["pdflatex"] 1683799138 "c:/CODE/atgit/notes/quant/zerodha/zerodha.tex" "zerodha.pdf" "zerodha" 1683799140
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1679896319 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
@@ -46,6 +46,7 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247596666 32716 08e384dc442464e7285e891af9f45947 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1247596667 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1247596667 31099 342ef5a582aacbd3346f3cf4579679fa ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1247596673 34694 870c211f62cb72718a00e353f14f254d ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/generic/atbegshi/atbegshi.sty" 1575571100 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/generic/bigintcalc/bigintcalc.sty" 1576433602 40635 c40361e206be584d448876bba8a64a3b ""
@@ -114,11 +115,11 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/quant/zerodha/zerodha.tex" 1683747918 14841 0207db95bfd3f4591fc3b8a66031eb75 ""
+  "c:/CODE/atgit/notes/quant/zerodha/zerodha.tex" 1683799135 19682 7ffcc71503e02d155c41a1bfccbe7bf4 ""
   "rsrc/stdtable.png" 1683534668 25165 05cff66b986d42ae8c7139c99aa16259 ""
-  "zerodha.aux" 1683747921 3889 8d21205b6cf4099e543b65dbcb9d4a1c "pdflatex"
-  "zerodha.out" 1683747921 4086 cef3532c87b154861335c39319d10e74 "pdflatex"
-  "zerodha.tex" 1683747918 14841 0207db95bfd3f4591fc3b8a66031eb75 ""
+  "zerodha.aux" 1683799140 4614 7db46f240617b70572d7af5331724b78 "pdflatex"
+  "zerodha.out" 1683799140 4898 3532de820302580d440671c1ddd47405 "pdflatex"
+  "zerodha.tex" 1683799135 19682 7ffcc71503e02d155c41a1bfccbe7bf4 ""
   (generated)
   "zerodha.aux"
   "zerodha.log"

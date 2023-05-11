@@ -182,7 +182,9 @@ Here are some density curve (cdf(x)) facts (100/100):
 \end{itemize}
 General thresholds for trading short and long are given below. The target
 value of the density curve is the value you want the density curve to go to
-after you make the trade for considerable profit.
+after you make the trade for considerable profit. Note: the stoploss is the
+value of the density curve (or more generally, the parameter we are observing)
+at which it is considered smart to pull out of the trade.
 \begin{itemize}
     \item cdf($x_{curr}$) $\in$ (0.003,0.025) $\implies$ long.
     (Stoploss=0.003 or higher, target = 0.25 or lower)
@@ -242,5 +244,82 @@ can vary. It's the variance of the intercept.
 \subsubsection{Deciding the dependence}
 We pick x and y labels for two stocks so that the error ratio is minimzed.
 \subsection{The ADF test}
+To say two time series are ``co-integrated'' means that they move together and
+deviations, if any, are temporary or can be attributed to a stray event, and
+one can expect the two time series to converge and move together again.
+To check if two stocks are co-integrated, we run a linear regression analysis on 
+the them and obtain the residuals; the two stocks are co-integrated if the
+residuals are stationary. Of course, two stocks that are co-integrated make for a
+pair ripe for tracking trading opportunities.\\
+If the residuals of a regression analysis are not staionary, the regression 
+relation shouldn't be used. Speculation and setup of trades on a co-integrated
+time series is a lot more meaningful and independent of market direction. 
+\textbf{The ADF test} is used the check if the residuals are stationary or not.
+\subsubsection{Stationary series}
+We define three statistical conditions for a time series:
+\begin{enumerate}
+    \item The mean of the time series should be within a ``tight'' range.
+    \item The standard deviation of the series should be within a range.
+    \item There should be no autocorrelation within the series: f(n) should
+    not depend on f(i) for any i less than n.
+\end{enumerate}
+Note that conditions 1 and 2 are checked by splitting the series into ~3 parts,
+evaluating the mean and standard deviation of the parts separately and verifying 
+that they lie within a range. Condition 3 is verified by considering two sub-series: 1....n-k and k+1...n, and
+finding the (``k-lag'') correlation between these two; a small value of 
+correlation implies there is no autocorrelation.\\
+We say a pair exhibits complete stationarity (or has stationary residuals) if its 
+residuals satisfy all three conditions. Weak stationarity is when at least one of 
+these conditions are statisfied; otherwise, the residuals are non-stationary. In
+pair trading, we are only interested in completely stationary pairs.
+\subsubsection{The ADF test}
+It's the Augmented Dickey-Fuller test to determine the stationarity of a time 
+series; we use it to determine the stationarity of the residuals series. The 
+test outputs a probability of the series NOT being stationary; this is called `the
+P value'. A time series is stationary if the P value is less than 0.05.
+The ADF test is complicated; so, use a plugin or something.
+\section{Trade Identification}
+We extend the linear equation to include the residual term:
+\begin{equation}
+    y = mx + c + \epsilon
+\end{equation}
+The slope tells us how many stocks of x would equal the price of y. Going long on
+y by $d$ and going short on x by $md$, ``hedges away the directional risk'' 
+associated with the pair. But we're still left with $c+\epsilon$. With good
+reason, the lower the intercept and its standard error, the better.\\
+As the residual is a stationary time series, we can apply the properties of
+the normal distribution and trigger a trade only when it hits the upper of lower
+standard deviation.
+\begin{itemize}
+    \item Go long on the pair (buy y, sell x) when $\epsilon \approxeq -2\sigma$
+    \item Go short on the pair (sell y, buy x) when $\epsilon \approxeq 2\sigma$
+\end{itemize}
+\section{Live Examples}
+The report of pair data mentions five variables:
+\begin{enumerate}
+    \item Intercept (c)
+    \item Beta (m)
+    \item ADF Value (P)
+    \item Std\_err: this is the ratio of today's residual over the standard 
+    error of the residual, which is reported in the regression output.
+    \begin{center}
+        std\_err = $\frac{\text{today's residual}}{\text{std. err of residuals}}$
+    \end{center}
+    The std\_err captures the number of standard deviations the residual is (the factor used for triggering trade).
+    \item Sigma: The standard error of the residuals from the regression output.
+\end{enumerate}
+To remain \textbf{beta neutral}, we trade beta stocks of x for every stock of y.
+It's worth noting that we have no idea as to which stock will move to lower the
+difference that has risen, but by remaining we \textbf{beta neutral}, we ensure
+ourselves a profit so long as the two stocks eventually converge.
+\begin{center}
+    \fbox{What is a zscore?}
+\end{center}
+\subsection{Position Sizing}
+Lot sizes of stocks constraint the choices of quantity that we can make in trading. TODO: understand what these are and summarize here.\\
+The intercept represents the part of a stock price that is not ``explained'' or
+captured by the regression analysis' predicted dependence. If a large fraction
+of the price is unexplained, say $(y_i/c) \approxeq 80\%$, the trade is not trustable.
+\section{Calendar Spreads}
 
 \end{document}
