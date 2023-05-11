@@ -209,9 +209,38 @@ This is also known as \textbf{Relative Value Trading}.
 Straigh line equation: $y = mx + \epsilon$
 \subsection{Linear Regression}
 Given $\{x_i,y_i\}_{i\in[n]}$, we estimate $m$ and $\epsilon$.\\
+\begin{equation}
+    m = \frac{(n\sum_{i\in [n]}{x_iy_i}) - (\sum_{i\in [n]}{x_i})(\sum_{i\in [n]}{y_i})}{(n\sum_{i\in [n]}{x_i^2}) - (\sum_{i \in [n]}{x_i})^2}
+\end{equation}
+\begin{equation}
+    \epsilon = \frac{\sum_{i \in [n]}{y_i} - m\sum_{i\in [n]}{x_i}}{n}
+\end{equation}
 \begin{center}
     residual = $y_i - (mx_i + \epsilon)$
 \end{center}
 \subsection{The Error Ratio}
+When x and y are replaced by two stock prices, deciding which stock depends on the
+other is important. This is determined by three things:
+\begin{enumerate}
+    \item Standard Error
+    \item Standard Error of intercept
+    \item The ratio of the above two variables (aka the error ratio)
+\end{enumerate}
+The said ratio helps quantify how strongly an linear regression equation predicts
+the dependent variable.
+\subsubsection{Residuals}
+The aim of the regression analysis here is not to predict the prices, but to
+identify a pattern in the residuals of the predicted linear relation. Once said
+pattern is identified, we can work backwords to construct a trade; a trade which
+involves buying and selling two stocks, hence qualifying it as a pair trade.
+\subsubsection{Standard Error and that of the Intercept}
+\begin{center}
+    standard error = standard deviation of residuals = $\sqrt{(\sum_{i\in [n]}{x_i})^2 - \sum_{i \in [n]}{(x_i^2)}}$
+\end{center}
+The standard error of the intercept is a measure of how much the intercept itself
+can vary. It's the variance of the intercept.
+\subsubsection{Deciding the dependence}
+We pick x and y labels for two stocks so that the error ratio is minimzed.
+\subsection{The ADF test}
 
 \end{document}
