@@ -33,5 +33,150 @@ traded instruments; they are prepared to quote a bid price (to buy) and offer pr
 There is a credit risk associated with over-the-counter trade, while exchanges have
 organized themselves to eliminate virtually all credit risk.
 \subsection{Forward Contracts}
+A type of derivative that is an agreement to buy or sell an asset at a certain
+future time for a certain price (is a \textbf{forward contract}). In contrast,
+a \textbf{spot contract} is an agreement to buy or sell an asset today. These
+appear in over-the-counter trades. Each party
+involved in a forward contract can assume one of two positions:
+\begin{enumerate}
+    \item the \textbf{long} position: agreeing to \textbf{buy} the asset at the specified date and price.
+    \item the \textbf{short} position: agreeing to \textbf{sell} the asset at the specified date and price.
+\end{enumerate}
+The payoff from a \textbf{long} position in a forward contract on one unit of an asset is: $S_T - K$, where
+$K$ is the delivery price (the one agreed to by both parties) and $S_T$ is the spot price of the asset
+at maturity of the contract. The payoff in the \textbf{short} position is negative of that in the long
+position: $K-S_T$. As forward contracts cost nothing to enter, these payoffs are also the net gain or loss
+associated with the contract.\\
+Forward contracts can be used in the landscape of stocks to benefit from expected changes in stock prices:
+\begin{itemize}
+    \item If a stock is expected to drop ($\implies$ have a lower $S_T$ in the near future), enter a forward
+    contract to buy the stock in the future at $K<\text{current price}$, having sold it now at the current price.
+    \item If a stock is expected to rise ($implies$ have a higher $S_T$ in the near future), enter a forward
+    contract to sell the stock in the future at $K>\text{current price}$, having sold it now at the current price.
+\end{itemize}
+Both these points assume enough profit is made to justify any loans involved.
+\subsection{Futures Contracts}
+They are also agreements to buy/sell an asset at a certain time at a certain price, but are traded on an exchange.
+The commodities include pork bellies, live cattle, sugar, wool, lumber,
+copper, aluminum, gold, and tin. The financial assets include stock indices, currencies,
+and Treasury bonds. Future prices are regularly reported in the financial press.
+\subsection{Options}
+Options are traded both on exchanges and in the over-the-counter market. There are two types:
+\begin{enumerate}
+    \item Call option: Gives the holder the right to buy the underlying asset by a certain date for a certain price.
+    \item Put option: Gives the holder the right to sell the underlying asset by a certain date for a certain price.
+\end{enumerate}
+The specified price is called the \textbf{exercise price or strike price}, while
+the specified date is called the \textbf{expiration date or maturity}. Note that 
+\textbf{American} options can be exercised at any date on or before the expiration, while
+\textbf{European} options can only be exercised on the expiration date.\\
+The option gives the holder the right to exercise a trade; they don't have to actually make
+the trade. This freedom comes at a cost; precisely, the cost to acquiring an option.
+\subsubsection{Properties of Options}
+\begin{itemize}
+    \item The price of a call option decreases as the strike price increases,
+    while the price of a put option increases as the
+    strike price increases. (Is this because the prices is in general expected to drop,
+    and hence buying at a higher price (call option with high strike price)
+    is less preferred while selling at a higher price (put option with higher strike price)
+    is more preferred?).
+    \item However, both types of options become more valuable as 
+    their time to maturity increases.
+\end{itemize}
+Consider a case where an investor buys a call option with the asset as 100 shares of Google,
+the strike price as \$520 per share and the expiration date as 18/12/10, at a price of \$32 per share.
+\begin{itemize}
+    \item The investor has spent \$3200 in acquiring the option.
+    \item If Google's share price doesn't rise above \$520 by the expiration date,
+    the investor has no reason to exercise the option (paying \$520 for a share while the
+    bid price is much below that) and has thus lost \$3200.
+    \item If before the expiration date, Google's share price rises above \$520, the investor can
+    exercise the option; buy the shares at \$520, and sell them at the current price $S_T$, making
+    a profit of $100(S_T-(520+32))$.
+    \item Note that we're neglecting TVoM here.  
+\end{itemize}
+The person who sells the put option is obliged to do the buying at the option's maturity (or before).
+Consider a case where an investor sells a put option with on 100 shares of Google with the 
+strike price as \$480 per share and the expiration date as 18/09/10, at a price of \$22.2 per share.
+\begin{itemize}
+    \item Immediately, the investor receives a cash inflow of $100\times22.2=\$2220$
+    \item Suppose Google's share price up to the expiration date remains above \$480, the buyer of the
+    option has no incentive to sell his shares at \$480, and doesn't exercise the option.
+    \item Suppose Google's share price $S_T$ is below \$480 before the expiration date, the buyer of the option
+    sells the shares back to the investor at \$480, and buys them at $S_T$ making a profit of: $100\times(480-(S_T+22.2))$.
+    \item In this case, the investor is forced to buy shares worth $S_T<480$ at 480, and suffers a net loss of:
+    $100\times(480-(S_T+22.2))$.
+    \item The investor's gain can be defined as 100 times $S_T+22.2 - 480$ when $S_T < 480$ and as 22.2 when $S_T>480$.
+\end{itemize}
+The diagrams below summarize the two analyses with the assumption
+of European options.
+\begin{center}
+    \includegraphics[width=6in]{rsrc/trading-options.png}
+\end{center}
+Note that there are four types of participants in the options market with
+the choice of put/call option and buying or selling the option. Buyers are said
+to take \textbf{long positions} and sellers are said to take \textbf{short positions}.
+Selling an option is also known as \textbf{writing an option}.
+\subsection{Types of Traders}
+Derivatives markets have been successful mainly because of the variety of traders
+they have attracted and their great deal of liquidity. When an investor wants to take
+one side of a contract, there is usually no problem in finding someone who is prepared
+to take the other side. Traders can be broadly divided into three categories:
+\begin{enumerate}
+    \item Hedgers: use derivatives to reduce the risk they face from potential future movements
+    in a market variable.
+    \item Speculators: use derivatives to bet on the future direction of a market variable.
+    \item Arbitrageurs: take offsetting positions in two or more instruments to lock in a profit. 
+\end{enumerate}
+\subsection{Hedgers}
+Hedgers can use future contracts to, for example, hedge the risk of foreign exchange. Companies
+that agree to pay a fixed amount in a currency, say C2, different from their operating currency,
+say C1, can buy futures of the amount in C2 at a fixed price in C1; hence avoiding any loss
+due to fluctuations in the exchange rate between C1 and C2. Conversely, a company set to receive
+a payment in C2 in the future can sell futures of C1 at the current exchange rate to hedge
+the foreign exchange risk. It should be noted that the companies may have been better off
+without using the future contracts, but they could have been worse off too.\\
+``The purpose of hedging is to reduce risk. There is no guarantee that the outcome with
+hedging will be better than the one without hedging.''\\
+\subsubsection{Hedging with Options}
+We use options to hedge against the possible decline in the price of shares held by us. One method
+is to buy put options at a high enough strike price $K$ to lower-bound our possible loss by $CP-K$,
+where $CP$ is the current price of the shares.
+\begin{itemize}
+    \item If the price drops below K, we exercise our option
+    to sell the shares at $\$K$ and buy them back at the lower price.
+    \item If the price doesn't drop below K, we don't exercise our option, we have lost the amount
+    we paid for the option, but we've been protected from the risk.
+\end{itemize}
+We note that options provide a lower bound for the loss incurred by price dips, while retaining
+the possibilty to earn from price rises. Futures, however, fix the price to protect against
+price dips but also keep us from benefitting from price rises.
+\subsection{Speculators}
+Speculators are either betting on the price of an asset going down or going up.
+\subsubsection{With Futures}
+Suppose a speculator believes that C2 will be increasingly more valuable than C1
+over the next few months. The speculator can:
+\begin{itemize}
+    \item Purchase, say 250,000 of C2 right away and sell it when it becomes more valuable.
+    \item Enter the long position on a future implying the purchase of 250,000 of C2 at a rate $K$
+    lower than the expected exchange rate in the future. Then, on the expiration date, we 
+    purchase 250,000 of C2 at this lowered rate and immediately sell it for a profit given by:
+    $250,000\times(S_T-K)$
+\end{itemize}
+Note that if the futures's promised price is lower than the current exchange rate, the profit obtained
+is even larger than that obtained by the first option, while the loss is reduced in magnitude too.
+The futures market allows the speculator to take a large speculative position with a relatively
+small initial outlay. 
+\subsubsection{With Options}
+Options allow for more profit (and equivalently, more loss, albeit capped at
+the capital) to be made with the same investment capital,
+than would be made by purchasing shares rightaway. This is because options themselves are much cheaper
+than shares. The only reason the profit/loss is magnified is because you can buy more options with the
+same capital right now than you can buy shares. Summary: Good outcomes are magnified, while with
+bad outcomes, the entire initial investment is lost.
+\subsubsection{Comparison}
+It's important to note that with futures, both the loss and gain are unbounded but with options, the 
+loss is bounded below by the amount paid for the options.
+\subsection{Arbitrageurs}
 
 \end{document}
