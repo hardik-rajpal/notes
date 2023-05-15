@@ -189,5 +189,115 @@ Sometimes, traders who have a mandate to be hedgers or arbitrageurs, become (by
 choice or ignorance) speculators; this can lead to disastrous effects. Risk management
 is an important part of trading firms and should be carried out without any negligence.
 \section{Chapter 2: Mechanics of Futures Markets}
-
+The (current) price of future contracts of a particular asset are determined by the laws of demand and supply:
+\begin{itemize}
+    \item more buyers $\implies$ price goes up $\implies$ more sellers enter the market.
+    \item more sellers $\implies$ price goes down $\implies$ more buyers enter the market.
+\end{itemize}
+\subsubsection*{Closing Out Positions}
+Most futures contracts do not lead to delivery because most traders choose to close out their positions
+prior to the delivery period specified in the contract. Closing out refers to entering into futures
+contracts that exactly counter your current long or short position on an asset, by having \textbf{the same amount
+of the asset in the opposite position} with \textbf{the same delivery period}. The loss/gain arises
+from the fact that the countering future is purchased at a much later date (which is probably close
+to the delivery period) and hence the price specified in the future is different from those entered previously.
+The loss/gain is determined by the change in the futures price between the first contract and the counter contract.
+We still review the delivery arrangements in futures contracts  because the possibility of a final delivery
+ties the futures price to the spot price.
+\subsection{Specs of a Futures Contract}
+The futures contract must specify:
+\begin{itemize}
+    \item The asset
+    \item The contract size (how much of the asset is being traded)
+    \item Where the delivery will be made
+    \item When the delivery will be made
+\end{itemize}
+Additionally, some alternatives are specified for the grade of the asset that will be delivered
+or for the delivery locations. When the party with the short position is ready to deliver,
+it files a \emph{notice to deliver} with the exchange, specifying the selections it has made
+with respect to said alternatives.
+\subsubsection*{The Asset}
+Exchanges (the institutes organizing trades) put down the criterion for acceptable grades
+and respective prices of assets that are commodities. For ex., corn bushels can be described
+as as No.1 Yellow, No. 2 Yellow and No. 3 Yellow; each with no further than 1.5 cents from its
+centre color category. The financial assets in futures contracts are generally well-defined. For ex.
+the Japanese Yen. Treasury bonds and notes on the CBoT have some interesting features here.
+\footnote{The underlying asset in the Treasury bond
+contract is any long-term US Treasury bond that has a maturity of greater than 15 years and
+is not callable within 15 years. In the Treasury note futures contract, the underlying
+asset is any long-term Treasury note with a maturity of no less than 6.5 years and no
+more than 10 years from the date of delivery. In both cases, the exchange has a formula
+for adjusting the price received according to the coupon and maturity date of the bond
+delivered.} 
+\subsubsection*{Contract Size}
+It specifies the amount of the asset to be delivered under one contract. A very large size is unusable
+by investors who wish to hedge relatively small exposures or take relatively small speculation positions while
+a very small size may render the contract expensive to trade because of costs associated with each trade; contract
+sizes are an important decision for the exchange. The correct size of a contract depends on the likely user, and 
+exchanges have introduced minicontracts to attract small investors: mini-Nasdaq.
+\subsubsection*{Delivery Arrangements}
+The exchange must specify the delivery spot; it's particularly important for commodities with large transportaion
+costs, like giant vipers. When alternative delivery locations are specified, the price received by the short position party
+is adjusted base on the location chosen by the party: price tends to be higher for delivery locations that are
+relatively far from the main sources of the commodity.
+\subsubsection*{Delivery Months}
+A futures contract is referred to by its delivery month, but the contract must specify the precise period of delivery.
+Though for many futures contracts, the period is the entier month. The delivery months vary from contract to contract
+and are chosen by the exchange to meet the needs of the market participants.
+\begin{itemize}
+    \item At any given time, contracts trade for the closest delivery month and a number of subsequent
+    delivery months.
+    \item The exchange specifies when trading in a particular month's contract
+    will begin.
+    \item The exchange also specifies the last day on which trading can take place for a
+    given contract.
+    \item Trading generally ceases a few days before the last day on which delivery
+    can be made.
+\end{itemize}
+\subsubsection*{Prices, Positions and Limits}
+The exchange further defines how prices will be quoted: the currency and precision.
+The exhange also specifies daily price movement limits for most contracts. The contract
+is said to be:
+\begin{itemize}
+    \item limit down if it has moved down by the limit from yesterday's closing price.
+    \item limig up if it has moved up by the limit from yesterday's closing price.
+\end{itemize}
+A \emph{limit move} is a move in the either direction that crosses the limit. Normally, trading
+ceases for the day when a contract is limit up or limit down, but, in some instances, the exchange
+has the authority to step in and change the limits. The daily price limits prevent large movements
+in price from occuring because of speculative excesses, but they can become a barrier to trading
+when the price of an underlying commodity is in fact shifting rapidly; price limits remain controversial
+in terms of their effect on the futures market. \textbf{Position limits} are the maximum number of contracts
+that an speculator (any investor?) may hold. These limits prevent the speculators from exercising undue
+influence on the market.
+\subsection{Convergence of Future Price and Spot Price}
+The futures price converges to the spot price of the underlying asset as the delivery period comes closer; at
+the delivery period the future price is practically equal to the spot price. The reason for this is the 
+opportunity for arbitrage while the prices are far apart:
+\begin{itemize}
+    \item If cost(futures)>cost(asset), traders will short futures contracts, delivering with the assets bought at a lower cost.
+    \item If cost(futures)<cost(asset), companies interested in acquiring the asset will enter long positions in futures contracts
+    instead of buying the asset, thus making the futures more valuable.
+\end{itemize}
+\subsection{The Operation of Margins}
+One of the key roles of the exchange is to organize trading so that contract defaults are avoided.
+\subsubsection*{Daily Settlements}
+This refers to practice of adjusting the investor's \emph{margin account} at the end of a day to reflect the investor's 
+loss or gain. The account also contains deposits known as \emph{initial margins}, which need to be deposited on entering
+futures contracts. The investor's profit at the end of the day is given by:
+\begin{equation}
+    \sum_{i \in [n]}{(\text{spot price of asset i} - \text{strike price of futures contract of asset i in long position})}
+\end{equation}
+and negative terms for futures in short positions.
+The margin account is altered by this amount at the end of each day. Hence, initial margins are determined by the asset's price
+and the expected variation. Note that the previous days alteration is first undone, to avoid the incorrect accumulation
+or gain/loss brought about by a constant difference between the future's strike price and the spot price. A trade is first
+settled at the close of the day on which it takes place. It is then settled at the
+close of trading on each subsequent day. Note that money actually moves from the investor's margin account to their broker,
+and then to traders in the opposite position who are profiting in the other direction because of the gap between the future's
+strike price and the spot price.\\
+We also have the notion of a \textbf{maintenance margin}, whose role is to ensure the margin account's balance doesn't go into 
+negative values. The investor is rung up when hte margin account's balance falls below this value and the investor is expected
+to top up the balance to the initial margin level by the end of the next day. The extra funds provided in the margin account 
+are known as \textbf{variation margin}; in the absence of a variation margin, the broker closes out the position.
 \end{document}
