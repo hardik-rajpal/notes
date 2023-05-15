@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1683912225 "c:/CODE/atgit/notes/quant/jch/jch.tex" "jch.pdf" "jch" 1683912227
+["pdflatex"] 1684131184 "c:/CODE/atgit/notes/quant/jch/jch.tex" "jch.pdf" "jch" 1684131186
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1679896319 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
@@ -107,10 +107,10 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/quant/jch/jch.tex" 1683912223 12447 e027c8df09fb044cbbd79586fb7e8c48 ""
-  "jch.aux" 1683912227 2526 46cce02d6d50fdcb0c4f10dc58a5df73 "pdflatex"
-  "jch.out" 1683912227 2099 a8db942e51772bc9bbee5a5b18225529 "pdflatex"
-  "jch.tex" 1683912223 12447 e027c8df09fb044cbbd79586fb7e8c48 ""
+  "c:/CODE/atgit/notes/quant/jch/jch.tex" 1684131182 13297 5d76a1c8dbac6740d9ef098dcacda753 ""
+  "jch.aux" 1684131185 2778 3aeb8197916f374845dbb1bf94f51073 "pdflatex"
+  "jch.out" 1684131185 2447 db4f3345c29d5f620b6b0f2a50c8afdf "pdflatex"
+  "jch.tex" 1684131182 13297 5d76a1c8dbac6740d9ef098dcacda753 ""
   "rsrc/trading-options.png" 1683901590 49675 8f298963902190f2f7fa56f496e17eb7 ""
   (generated)
   "jch.aux"
