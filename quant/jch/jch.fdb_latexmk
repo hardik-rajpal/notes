@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1684171530 "c:/CODE/atgit/notes/quant/jch/jch.tex" "jch.pdf" "jch" 1684171532
+["pdflatex"] 1684322117 "c:/CODE/atgit/notes/quant/jch/jch.tex" "jch.pdf" "jch" 1684322119
   "C:/Users/HARDIK" 0 -1 0 ""
-  "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1679896319 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1684321659 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs10.tfm" 1675755677 688 37338d6ab346c2f1466b29e195316aa4 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs5.tfm" 1675755679 684 3a51bd4fd9600428d5264cf25f04bb9a ""
@@ -83,6 +83,7 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/enumitem/enumitem.sty" 1561039820 51697 f8f08183cd2080d9d18a41432d651dfb ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1623003186 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/fancyhdr/fancyhdr.sty" 1668504483 18450 88279bf67c81e69f8e3f1c1bad1a26c5 ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/framed/framed.sty" 1338542172 22449 7ec15c16d0d66790f28e90343c5434a3 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geometry.cfg" 1578053545 1104 7ac475a4e3466b0b43e138e9356bda83 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geometry.sty" 1578053545 42759 9cf6c5257b1bc7af01a58859749dd37a ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/graphics-cfg/color.cfg" 1465894292 1213 620bba36b25224fa9b7e1ccb4ecb76fd ""
@@ -112,10 +113,10 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/quant/jch/jch.tex" 1684171529 21849 a2f36cf35cff03d5e799108528200954 ""
-  "jch.aux" 1684171532 3192 d6dd1b48e83b214c3069da30a9005a4e "pdflatex"
-  "jch.out" 1684171532 3125 0bb46f0cf7367ab7b23622b0e61cc662 "pdflatex"
-  "jch.tex" 1684171529 21849 a2f36cf35cff03d5e799108528200954 ""
+  "c:/CODE/atgit/notes/quant/jch/jch.tex" 1684322117 23402 b7fbf2836427c0b12b7ededd8a3df3d8 ""
+  "jch.aux" 1684322119 3518 ad66034af7580f13c2acfd7aab876b5a "pdflatex"
+  "jch.out" 1684322119 3469 569e09c2319ec08dc506ed612db9c6e8 "pdflatex"
+  "jch.tex" 1684322117 23402 b7fbf2836427c0b12b7ededd8a3df3d8 ""
   "rsrc/trading-options.png" 1683901590 49675 8f298963902190f2f7fa56f496e17eb7 ""
   (generated)
   "jch.aux"

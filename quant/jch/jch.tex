@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{framed}
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem}
@@ -275,8 +276,8 @@ The futures price converges to the spot price of the underlying asset as the del
 the delivery period the future price is practically equal to the spot price. The reason for this is the 
 opportunity for arbitrage while the prices are far apart:
 \begin{itemize}
-    \item If cost(futures)>cost(asset), traders will short futures contracts, delivering with the assets bought at a lower cost.
-    \item If cost(futures)<cost(asset), companies interested in acquiring the asset will enter long positions in futures contracts
+    \item If cost(futures)$>$cost(asset), traders will short futures contracts, delivering with the assets bought at a lower cost.
+    \item If cost(futures)$<$cost(asset), companies interested in acquiring the asset will enter long positions in futures contracts
     instead of buying the asset, thus making the futures more valuable.
 \end{itemize}
 \subsection{The Operation of Margins}
@@ -300,4 +301,29 @@ We also have the notion of a \textbf{maintenance margin}, whose role is to ensur
 negative values. The investor is rung up when hte margin account's balance falls below this value and the investor is expected
 to top up the balance to the initial margin level by the end of the next day. The extra funds provided in the margin account 
 are known as \textbf{variation margin}; in the absence of a variation margin, the broker closes out the position.
+\section{Investopedia Summaries}
+\subsection{\href{https://www.investopedia.com/terms/c/cash-and-carry-arbitrage.asp}{Cash and Carry Arbitrage}}
+It's a market neutral strategy combining:
+\begin{itemize}
+    \item purchase of a long position in an asset such as a stock or commodity
+    \item sale (short) of a position in a futures contract on that same underlying asset.
+\end{itemize}
+The strategy seeks to exploit pricing inefficencies between spot and futures markets for an asset.
+We ``carry'' the asset for physical delivery until the expiry date of the futures contract.
+The strategy involves the risk of expenses associated with physically ``carrying'' an asset until expiry, but
+the risk of market movement, the major component in any regular long or short trade is mitigated.
+For profits, the futures contract must be theoretically priced above the stock.
+\begin{center}
+\begin{framed}
+    Strategy is viable only if cash inflow from the short futures exceeds the acquisition costs
+    and carrying costs on the long asset position.
+\end{framed}
+While arbitrage in non-physical assets, such as stock indices, requires only financing costs,
+(as opposed to arbitrage in physical markets, which also requires storage and insurance of the 
+associated commodities), the barrier to entry is also lower than that of arbitrage in physical
+markets. Thus, more players enter the market and the spread between futures and spot prices
+are very low, leading to fewer opportunities to profit.
+
+\end{center}
+
 \end{document}
