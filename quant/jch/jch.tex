@@ -301,7 +301,7 @@ We also have the notion of a \textbf{maintenance margin}, whose role is to ensur
 negative values. The investor is rung up when hte margin account's balance falls below this value and the investor is expected
 to top up the balance to the initial margin level by the end of the next day. The extra funds provided in the margin account 
 are known as \textbf{variation margin}; in the absence of a variation margin, the broker closes out the position.
-\section{Investopedia Summaries}
+\section{Misc. Summaries}
 \subsection{\href{https://www.investopedia.com/terms/c/cash-and-carry-arbitrage.asp}{Cash and Carry Arbitrage}}
 It's a market neutral strategy combining:
 \begin{itemize}
@@ -318,12 +318,31 @@ For profits, the futures contract must be theoretically priced above the stock.
     Strategy is viable only if cash inflow from the short futures exceeds the acquisition costs
     and carrying costs on the long asset position.
 \end{framed}
+\end{center}
 While arbitrage in non-physical assets, such as stock indices, requires only financing costs,
 (as opposed to arbitrage in physical markets, which also requires storage and insurance of the 
 associated commodities), the barrier to entry is also lower than that of arbitrage in physical
 markets. Thus, more players enter the market and the spread between futures and spot prices
 are very low, leading to fewer opportunities to profit.
-
+\subsection{\href{https://zerodha.com/varsity/chapter/futures-pricing/}{The Futures Pricing}}
+\subsubsection{The Pricing Formula}
+The difference between the futures and spot price is called \textbf{the basis or the spread}.
+The spot-future parity refers to the difference that arises between spot and futures prices due
+to variables such as interest rates, dividends, time to expiry, etc. It's the mathematical
+equation involving the spot price and the futures price.
+\begin{center}
+    FP = SP*(1+$r_f$) - d
 \end{center}
+where $r_f$ is the risk free rate (for the entire year) and $d$ is the dividend
+expected to be paid out between now and the expiry.
+As $r_f$ is for the entire year, it has to be scaled as ($x$ is the number of
+days to expiry):
+\begin{center}
+    FP = SP*(1+$r_f \frac{x}{365}$) - d
+\end{center}
+Note that the FP as evaluated above is the \textbf{Fair Value}. The actual
+value (on the exchange) is calld \textbf{Market Value}. The difference between
+the two arises due to market costs such as transaction charges, taxes, margins etc.
+mail
 
 \end{document}
