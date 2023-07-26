@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
+\usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem}
+\newcommand*{\algodis}[4]{
+    \textbf{#1:} #2\\%name: % key idea
+    \textbf{Time:} #3 \\% O(what)
+    \textbf{Space:} #4
+}
+\author{Hardik Rajpal}
+\begin{document}
+\title{Pre-Placement Grind}
+\maketitle
+\tableofcontents
+\pagebreak
+\section{Week 1}
+\subsection{Searching Algorithms}
+\subsubsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
+These are algorithms to check for the existence of an element or to retrieve it from
+a data structure. The retrieval can also involve only returning the position (index)
+or a pointer to the element. There are two types:
+\begin{enumerate}
+    \item Sequential search: check every element based on a pre-determined sequence (ex. linear, alternating, etc.),
+    and return the matches.
+    \item Interval search: Designed for searching in \textbf{sorted} data structures.
+    They involve \textbf{repeatedly} dividing the search space into intervals which
+    can be excluded entirely after certain checks (ex. binary search).
+\end{enumerate}
+Some search algorithms are discussed below:
+\begin{enumerate}
+    \item \algodis{Linear Search}{Straighforward for-loop iterating over all elements in an array.}
+    {O(n)}
+    {O(1)}
+    \item \algodis{Sentinel Linear Search}{Reduces the number of 
+    comparisons by eliminating the need to check if the index is 
+    within bounds. This is accomplished by appending the target
+    element to the end of the array, and treating its index in the result as ``not found."}
+    {O(n)}{O(1)}
+    \item \algodis{Binary Search}
+    {It's used for sorted arrays. It involves comparing the element
+    at the center of the interval (defined initially as the entire array),
+    with the target element. One of the halves of the interval is picked
+    based on this comparison. The interval shrinks until the target is found
+    or an interval of size one is not equal to the element. It can
+    be implemented recursively or iteratively, each involving a step
+    similar to $m = l + \frac{(r-l)}{2}$ while $l \leq r$}.
+    {O(log(n))}
+    {O(1)}
+    \item \algodis{Meta Binary Search}
+    {Seems unimportant but check it \href{https://www.geeksforgeeks.org/meta-binary-search-one-sided-binary-search/}{here}}
+    {O(log(n))}{O(1)}
+    \item \algodis{K-ary Search}
+    {The search space is divided into k intervals in each step and one of them is picked to proceed further
+    by comparing the target element to the interval markers.}
+    {O(log(n)). The reduction is of a constant term: $log_k2$}
+    {O(1)}
+    \item \algodis{Jump Search}
+    {The sorted array is examined in jumps of the
+    optimal size $\sqrt{n}$,until the element being examined is greater than
+    the target element. The interval is then shrunk to the previous interval.
+    The shurnken interval can be examined linearly or with another jump search.
+    }
+    {O($2\sqrt{n} = O(\sqrt{n})$), or $O(n^{1/2} + n^{1/4} + n^{1/8}...) = O(\sqrt{n})$}
+    {O(1)}
+    \item \algodis{Interpolation Search}
+    {It improves over binary search only if the data is uniformly 
+    distributed. It involves selecting the splitting point of the 
+    current search space by comparing the target value to the current lower and upper bounds of the space. Linear interpolation involves the following equations:\\
+    $
+    slope = (arr[r] - arr[l])/(r-l)
+    $\\
+    $
+    m = l + slope \times (x - arr[l])
+    $}
+    {O(log(log(n))) on average, O(n) WCS.}
+    {O(1)}
+    \item \algodis{Exponential or Unbounded (Binary) Search}
+    {We examine the search space from the lower end $l$,
+    comparing $l+2^k - 1$ with the target element $x$, where $k$
+    is the number of comparisons so far, until $x < arr[l+2^k - 1]$.
+    Then, we examine the interval bounded by $l+2^{k-1} - 1$ and 
+    $l+2^k - 1$, using binary search.}
+    {O(log(n)), where n is the length of the array or where the 
+    first occurrence of the target element exists in an unbounded 
+    array.}
+    {O(1)}
+    \item \algodis{Fibonacci Search}
+    {The array must be sorted. We first find the Fibonacci number $f(m)$ that exceeds the length of the given array. We compare the target element to the element at $arr[f(m-2)]$. We pick an interval based on the outcome.}
+    {O(log(n))}
+    {O(1)}
+\end{enumerate}
+\subsection{Sorting Algorithms}
+\end{document} 

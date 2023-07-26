@@ -111,7 +111,7 @@ Without going into the non-trivial hierarchy of iterators, note that:
     \item \texttt{advance(iter,n)} is supported by all iterators: use this instead.
 \end{itemize}
 An iterator pointing at an element is ``corrupted" on removing the element.
-Hence, any useful data should be copied over the iterator before removing the element.
+Hence, any useful data should be copied over from the iterator before removing the element.
 \begin{lstlisting}[caption={Undefined behaviour},language=C++]
     lists.erase(*minit);//minit is corrupted
     lists.insert((*minit)->next);
