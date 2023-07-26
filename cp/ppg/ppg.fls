@@ -716,6 +716,7 @@ INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs5.tf
 OUTPUT ppg.toc
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
 INPUT ppg.aux
 INPUT .\ppg.out
 INPUT .\ppg.out
@@ -739,3 +740,5 @@ INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\am
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy7.pfb
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy7.pfb
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb

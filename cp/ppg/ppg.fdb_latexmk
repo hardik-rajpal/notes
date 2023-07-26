@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1690371084 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1690371086
+["pdflatex"] 1690383661 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1690383663
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1684321659 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs10.tfm" 1675755677 688 37338d6ab346c2f1466b29e195316aa4 ""
@@ -27,6 +27,7 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy10.tfm" 1136765053 1124 6c73e740cf17375f03eec0ee63599741 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136765053 1116 933a60c408fc0a863a92debe84b2d294 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmtt10.tfm" 1136765053 768 1321e9409b4137d6fb428ac9dc956269 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1247596666 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1247596666 32080 340ef9bf63678554ee606688e7b5339d ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1247596667 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
@@ -37,6 +38,7 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1247596667 32762 7fee39e011c23b3589931effd97b9702 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247596666 32716 08e384dc442464e7285e891af9f45947 ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1247596667 31099 342ef5a582aacbd3346f3cf4579679fa ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/generic/atbegshi/atbegshi.sty" 1575571100 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/generic/bigintcalc/bigintcalc.sty" 1576433602 40635 c40361e206be584d448876bba8a64a3b ""
@@ -105,11 +107,11 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1690371081 4642 2ff89498e3e60fed4176bb7e25af8e0e ""
-  "ppg.aux" 1690371086 1004 82dfc88da13ff9fd3dc723574281794b "pdflatex"
-  "ppg.out" 1690371086 386 434c75f9b8d760a18bfe36d16492a9de "pdflatex"
-  "ppg.tex" 1690371081 4642 2ff89498e3e60fed4176bb7e25af8e0e ""
-  "ppg.toc" 1690371086 232 94063215080660cd2f3b76e8f070d871 "pdflatex"
+  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1690383660 5956 3f312f5f6fa0ad35958656acbd2c1717 ""
+  "ppg.aux" 1690383663 1004 82dfc88da13ff9fd3dc723574281794b "pdflatex"
+  "ppg.out" 1690383663 386 434c75f9b8d760a18bfe36d16492a9de "pdflatex"
+  "ppg.tex" 1690383660 5956 3f312f5f6fa0ad35958656acbd2c1717 ""
+  "ppg.toc" 1690383663 232 94063215080660cd2f3b76e8f070d871 "pdflatex"
   (generated)
   "ppg.aux"
   "ppg.log"
