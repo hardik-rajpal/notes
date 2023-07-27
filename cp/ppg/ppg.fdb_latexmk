@@ -1,11 +1,13 @@
 # Fdb version 3
-["pdflatex"] 1690383661 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1690383663
+["pdflatex"] 1690439337 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1690439339
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1684321659 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs10.tfm" 1675755677 688 37338d6ab346c2f1466b29e195316aa4 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs5.tfm" 1675755679 684 3a51bd4fd9600428d5264cf25f04bb9a ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/tfm/public/rsfs/rsfs7.tfm" 1675755680 692 1b6510779f0f05e9cbf03e0f6c8361e6 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1659696249 10333772 1dda8ddf10a1d548d4eae285c492cadf ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/tcrm1000.tfm" 993062508 1436 c7f957a372ef2fbe93c0982f96625e12 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1233951854 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -107,11 +109,11 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1690383660 5956 3f312f5f6fa0ad35958656acbd2c1717 ""
-  "ppg.aux" 1690383663 1004 82dfc88da13ff9fd3dc723574281794b "pdflatex"
-  "ppg.out" 1690383663 386 434c75f9b8d760a18bfe36d16492a9de "pdflatex"
-  "ppg.tex" 1690383660 5956 3f312f5f6fa0ad35958656acbd2c1717 ""
-  "ppg.toc" 1690383663 232 94063215080660cd2f3b76e8f070d871 "pdflatex"
+  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1690439336 6411 6417df1cb571666e181200c2def57b61 ""
+  "ppg.aux" 1690439339 1004 82dfc88da13ff9fd3dc723574281794b "pdflatex"
+  "ppg.out" 1690439339 386 434c75f9b8d760a18bfe36d16492a9de "pdflatex"
+  "ppg.tex" 1690439336 6411 6417df1cb571666e181200c2def57b61 ""
+  "ppg.toc" 1690439339 232 94063215080660cd2f3b76e8f070d871 "pdflatex"
   (generated)
   "ppg.aux"
   "ppg.log"

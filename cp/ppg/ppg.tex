@@ -91,23 +91,27 @@ Some search algorithms are discussed below:
     {O(1)}
 \end{enumerate}
 \subsubsection*{Misc}
-\begin{enumerate}
+\begin{itemize}
     \item The preferred formula for evaluating the middle point of
     the interval in binary search is
     $m = l + (r-l)/2$, and not
     $m = (l+r)/2$, as the latter can suffer due to overflow.
     \item Global variables can also be used to maintain a ``best value yet" while searching through a space with binary search. For ex. find the first element $\geq$ x in an array.
     \item Problems where an array can be mapped to a boolean variable and is guarranteed to have either
-    \begin{enumerate}
+    \begin{itemize}
         \item F...FT...T or
         \item T...TF...F
-    \end{enumerate}
+    \end{itemize}
     and our aim is to find the boundary between true and false
     values can be translated to a binary search problem, with 
     the target as the point where the variable changes:
     arr[i] != arr[i+1].
     \item Remember the \texttt{break} statement in iterative binary search if the middle point element is equal to the target.
-\end{enumerate}
+    \item One can also binary search for a target range's starting point, instead of just a target. \href{https://leetcode.com/problems/find-k-closest-elements/}{See this problem.}
+    \item In some cases, we might want to keep the current middle point \texttt{m} in the search space,
+    here we resort to replacing either one of \texttt{r = m - 1} or \texttt{l = m + 1} by \texttt{ = m}
+    and change the loop invariant \texttt{l <= r} to \texttt{l < r}. 
+\end{itemize}
 \subsection{Sorting Algorithms}
 These algorithms rearrange a given array in ascending order. Various other orders can be achieved by modifying the comparison operator.
 \subsubsection*{Selection Sort}
