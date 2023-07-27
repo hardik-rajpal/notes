@@ -113,12 +113,52 @@ Some search algorithms are discussed below:
     and change the loop invariant \texttt{l <= r} to \texttt{l < r}. 
 \end{itemize}
 \subsection{Sorting Algorithms}
-These algorithms rearrange a given array in ascending order. Various other orders can be achieved by modifying the comparison operator.
-\subsubsection*{Selection Sort}
-
-\subsubsection*{Bubble Sort}
-\subsubsection*{Insertion Sort}
-\subsubsection*{Quick Sort}
+These algorithms rearrange a given array in ascending order.
+Various other orders can be achieved by modifying the comparison operator.
+A sorting algorithm is \textbf{stable} if it preserves the relative
+order of equal elements.
 \subsubsection*{Merge Sort}
-\subsubsection*{Radix/Counting Sort}
+The first part of the algorithm recursively handles halves of the given array.
+The second part merges the halves sorted by the first part.
+It takes O(nlog(n)) time in the \textbf{all cases}. O(n) space is necessary
+for the merging side of affairs. Implemented recursively. It's advantages
+include stability, parallelizability and lower time complexity. It's disadvantages
+include higher space complexity and not being in-place, and that it's not
+always optimal for small datasets. 
+\subsubsection*{Quick Sort}
+It involves recursively picking an element (\textbf{the pivot})
+from the unsorted array, 
+placing it so that all elements less than it are before and all
+those greater than it are after. Then calling this function on the sub-arrays
+after and before the chosen element.
+//TODO pseudo code
+\subsubsection*{Quick Sort}
+TODO pseudo code
+\subsubsection*{The Others}
+\begin{enumerate}
+    \item \algodis{Selection Sort}
+    {The given array is viewed in two parts; sorted and unsorted.
+    Every iteration involves \textbf{selecting} the minimal element
+    and swapping it with the first element of the unsorted part. Hence,
+    the boundary of the sorted part is expanded and that of the unsorted
+    part has contracted. All of this happens inplace. It isn't stable.}
+    {O($n^2$)}{O(1)}
+    \item \algodis{Bubble Sort}
+    {This involves repeatedly traversing the array,
+    swapping any two \textbf{adjacent} elements if they are
+    in the incorrect (descending) order, until we encounter
+    a run with no swaps. It is stable. With each iteration,
+    the last elements of the array are sorted in ascending order.}
+    {O($n^2$)}
+    {O(1)}
+    \item \algodis{Insertion Sort}
+    {It involves iterating over the array once, and in each iteration,
+    if the current element is less than its left neighbour, we move it
+    leftwards until its left neighbour is lower than it. It is in-place
+    and stable.}
+    {O($n^2$)}{O(1)}
+    % \item \algodis{Radix/Counting Sort}
+    % {}{}{}
+\end{enumerate}
+
 \end{document} 
