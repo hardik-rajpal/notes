@@ -262,4 +262,12 @@ The name is given to the family of algorithms where we do a couple of runs of a 
     \item To improve performance, try to reduce the variables being updated/used in the loop.
     \item Two loops are useful for getting started with the code, but reducing them to one helps performance.
 \end{itemize}
+\subsection{Min/Max in Arrays}
+Some questions might require evaluating the min/max elements in subarrays. These can be pre-computed using
+\textbf{prefix} and \textbf{suffix} arrays. In a prefix array, \texttt{a[i]} denotes the min/max value
+of the set \{\texttt{a[0],a[1]...a[i]}\} and in a suffix array, it denotes the min/max value
+of the set \{\texttt{a[i],a[i+1],...a[n-1]}\}. Additionally, \textbf{prefix and suffix sum} arrays
+can be used to pre-compute cumulative sums for sub-arrays. If a question involves finding
+the max element less than or min element more than a value over a range, consider using 
+\textbf{binary search} and maintaining a sorted version of the range.
 \end{document}
