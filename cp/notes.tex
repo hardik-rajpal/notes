@@ -71,6 +71,7 @@ struct hashT{
     size_t operator()(T t)const{
         //std::hash<string or int or double>()(string or int or double)
         //return logic for hashing t. Use ^ << >> ~ | &
+        //Note: Easy hash for collection of numbers=> sort, join with ","
     }
 };
 unordered_set<T,struct hashT> uset;
@@ -82,7 +83,24 @@ by flags and bit operations.\\
 \begin{center}
     \fbox{\texttt{insert(index)}$\equiv$\texttt{flag|(1<<index)} and \texttt{count(index)}$\equiv$\texttt{flag\&(1<<index)}}
 \end{center}
-\subsubsection{The Big Fat Table of Data Structures}
+\textbf{Note:} The great thing about sets and maps is the uniqueness of their values.
+So, to find the maximum element less than an element, we simply \texttt{find()} the element
+in the set and decrement the iterator.
+\subsection{Priority Queue}
+These structures lazily maintain order between their elements; only 
+one extreme of the elements in the data structure is accessible at 
+any time. The implementation involves a heap. the usage is as below:
+\begin{lstlisting}[caption={Unordered sets and maps}]
+    struct U{
+        bool operator()(T t1, T t2)const{
+            //logic comparing t1<t2.
+        }
+    };
+    priority_queue<T,vector<T>,struct U> pq;
+\end{lstlisting}
+The default U is \texttt{std::less<T>}. \texttt{pq.top()} returns
+the largest element, based on the comparator.
+\subsection{The Big Fat Table of Data Structures}
 % \begin{center}
 \hspace*{-2cm}
 \begin{tabular}{ |p{3cm}|c|p{3cm}|p{3cm}|p{3cm}| }
@@ -91,15 +109,33 @@ by flags and bit operations.\\
     \specialcell{\texttt{void push\_back(T t)}:O(1)\\
     \texttt{void insert(iter pos, T t)} O(n)}
 }{\texttt{pop\_back}: O(1)}{\texttt{var[key]}: O(1)}{\texttt{insert} puts \texttt{t} before \texttt{pos}}
-\dsr{set<T> s}{\specialcell{\texttt{void insert(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{void erase(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{iter find(T t)}:\\O(log(s.size()))}}{Implemented as a tree.}
+\dsr{set<T> s}
+{\specialcell{\texttt{void insert(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{void erase(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{iter find(T t)}:\\O(log(s.size()))}}{Implemented as a tree.}
 \dsr{map<K,V>}
 {\specialcell{
     \texttt{void insert(pair<K,V> p)}:\\
     \texttt{var[k] = v;}
 }}
+{\specialcell{
+    \texttt{void erase(K k)}:\\O(log(s.size()))
+}}
+{\specialcell{\texttt{iter find(K k)}:\\O(log(s.size()))}}
 {...}
-{...}
-{...}
+\dsr{\specialcell{
+    \texttt{priority\_queue}\\
+    \texttt{<T,vector<T>,U>}}}
+{
+\specialcell{
+    \texttt{pq.push(T t)}\\
+    O(log(\texttt{pq.size()}))
+}
+}{
+    \specialcell{
+        \texttt{pq.pop()}\\
+        O(log(\texttt{pq.size()}))
+    }
+}
+{\texttt{pq.top()} is O(1)}{...}
 \hline
 \end{tabular}
 % \end{center}
@@ -110,6 +146,7 @@ Without going into the non-trivial hierarchy of iterators, note that:
     \item \texttt{iter += n} is supported by random-access iterators, available with vectors and deques (and maybe others?).
     \item \texttt{void advance(iter,n)} is supported by all iterators: use this instead.
     \item \texttt{iter next(iter,n)} and \texttt{iter prev(iter,n)} is supported by all iterators.
+    \item \texttt{distance(iter\_before,iter\_after)} is the more general version of \texttt{iter\_before - iter\_after}.
 \end{itemize}
 An iterator pointing at an element is ``corrupted" on removing the element.
 Hence, any useful data should be copied over from the iterator before removing the element.
@@ -226,6 +263,12 @@ check. Consider the problem below:\\
 \begin{center}
 \fbox{Given $x_1,x_2,...x_n$ and $T$, find $min_{a_1,a_2,...a_n}(max_i(a_ix_i))$ such that $\sum_{i=0}^{n}{a_i}\geq T$ \href[]{https://leetcode.com/problems/minimum-time-to-complete-trips/description/}{(Leetcode)}}
 \end{center}
+In such problems, the answer involves
+\begin{itemize}
+    \item Drafting a binary search algorithm with \texttt{l, r} values chosen meaningfully.
+    \item Drafting a \texttt{status(int m)} function that
+    conveys which half of the search space we need to split.
+\end{itemize}
 The binary search algorithm is:
 \begin{lstlisting}[language=C++,caption=BinSearch]
     int n = x.size();
