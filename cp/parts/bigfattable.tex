@@ -1,0 +1,36 @@
+\hspace*{-2cm}
+\begin{tabular}{ |p{3cm}|c|p{3cm}|p{3cm}|p{3cm}| }
+\dsr{STL class}{Insertion}{Deletion}{Lookup}{Remarks}
+\dsr{vector<T> s}{
+    \specialcell{\texttt{void push\_back(T t)}:O(1)\\
+    \texttt{void insert(iter pos, T t)} O(n)}
+}{\texttt{pop\_back}: O(1)}{\texttt{var[key]}: O(1)}{\texttt{insert} puts \texttt{t} before \texttt{pos}}
+\dsr{set<T> s}
+{\specialcell{\texttt{void insert(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{void erase(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{iter find(T t)}:\\O(log(s.size()))}}{Implemented as a tree.}
+\dsr{map<K,V>}
+{\specialcell{
+    \texttt{void insert(pair<K,V> p)}:\\
+    \texttt{var[k] = v;}
+}}
+{\specialcell{
+    \texttt{void erase(K k)}:\\O(log(s.size()))
+}}
+{\specialcell{\texttt{iter find(K k)}:\\O(log(s.size()))}}
+{...}
+\dsr{\specialcell{
+    \texttt{priority\_queue}\\
+    \texttt{<T,vector<T>,U>}}}
+{
+\specialcell{
+    \texttt{pq.push(T t)}\\
+    O(log(\texttt{pq.size()}))
+}
+}{
+    \specialcell{
+        \texttt{pq.pop()}\\
+        O(log(\texttt{pq.size()}))
+    }
+}
+{\texttt{pq.top()} is O(1)}{...}
+\hline
+\end{tabular}

@@ -60,7 +60,7 @@ set<T,struct U> myset; multiset<T,struct U> mymulset;
 map<T,V,struct U> mymap; multimap<T,struct U> mymulmap;
 \end{lstlisting}
 The ordering parameter \texttt{U} is crucial in cases where order between T is not inferable.
-\begin{lstlisting}[caption={Unordered sets and maps}]
+\begin{lstlisting}[caption={Unordered sets and maps},language=C++]
 struct T{
     ...
     bool operator==(T t2)const{
@@ -86,11 +86,17 @@ by flags and bit operations.\\
 \textbf{Note:} The great thing about sets and maps is the uniqueness of their values.
 So, to find the maximum element less than an element, we simply \texttt{find()} the element
 in the set and decrement the iterator.
+\subsubsection{Erase}
+\texttt{erase} can take the value to be erased or the iterator to it. With multisets
+and multimaps, using the iterator ensures that the duplicates are not erased,
+whereas using the value erases all duplicates. Note that the iterator can't be a
+\texttt{reverse\_iterator}; we can't use \texttt{rbegin()} and must use
+\texttt{end()} after decrementing it. 
 \subsection{Priority Queue}
 These structures lazily maintain order between their elements; only 
 one extreme of the elements in the data structure is accessible at 
 any time. The implementation involves a heap. the usage is as below:
-\begin{lstlisting}[caption={Unordered sets and maps}]
+\begin{lstlisting}[caption={Priority Queue},language=C++]
     struct U{
         bool operator()(T t1, T t2)const{
             //logic comparing t1<t2.
@@ -100,45 +106,117 @@ any time. The implementation involves a heap. the usage is as below:
 \end{lstlisting}
 The default U is \texttt{std::less<T>}. \texttt{pq.top()} returns
 the largest element, based on the comparator.
-\subsection{The Big Fat Table of Data Structures}
-% \begin{center}
-\hspace*{-2cm}
-\begin{tabular}{ |p{3cm}|c|p{3cm}|p{3cm}|p{3cm}| }
-\dsr{STL class}{Insertion}{Deletion}{Lookup}{Remarks}
-\dsr{vector<T> s}{
-    \specialcell{\texttt{void push\_back(T t)}:O(1)\\
-    \texttt{void insert(iter pos, T t)} O(n)}
-}{\texttt{pop\_back}: O(1)}{\texttt{var[key]}: O(1)}{\texttt{insert} puts \texttt{t} before \texttt{pos}}
-\dsr{set<T> s}
-{\specialcell{\texttt{void insert(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{void erase(T t)}:\\O(log(s.size()))}}{\specialcell{\texttt{iter find(T t)}:\\O(log(s.size()))}}{Implemented as a tree.}
-\dsr{map<K,V>}
-{\specialcell{
-    \texttt{void insert(pair<K,V> p)}:\\
-    \texttt{var[k] = v;}
-}}
-{\specialcell{
-    \texttt{void erase(K k)}:\\O(log(s.size()))
-}}
-{\specialcell{\texttt{iter find(K k)}:\\O(log(s.size()))}}
-{...}
-\dsr{\specialcell{
-    \texttt{priority\_queue}\\
-    \texttt{<T,vector<T>,U>}}}
-{
-\specialcell{
-    \texttt{pq.push(T t)}\\
-    O(log(\texttt{pq.size()}))
-}
-}{
-    \specialcell{
-        \texttt{pq.pop()}\\
-        O(log(\texttt{pq.size()}))
+\subsubsection{Getting the Kth value}
+Some problems can ask for the Kth value (largest/smallest) from an
+array of \texttt{val}s. These can be implemented
+efficiently with PQs as follows:
+\begin{lstlisting}[caption={Kth Largest Element},language=C++]
+    priority_queue<int,vector<int>,greater<int>> pq;
+    //greater=> pq.top == least value of pq.
+    pq.push(val[0]);
+    for(int i=1;i<val.size();i++){
+        if(pq.size()<k){
+            pq.push(val[i]);
+        }
+        else if(pq.top() < val[i]){
+            pq.push(val[i]);
+            pq.pop();
+        }
+    }
+    return pq.top();
+    //size of pq == k, and we have 
+    //collected all high elements=>
+    //pq.top == least value must be kth largest
+\end{lstlisting}
+\begin{lstlisting}[caption={Kth Smallest Element},language=C++]
+    priority_queue<int,vector<int>,less<int>> pq;
+    //less=> pq.top == max value of pq.
+    pq.push(val[0]);
+    for(int i=1;i<val.size();i++){
+        if(pq.size()<k){
+            pq.push(val[i]);
+        }
+        else if(pq.top() > val[i]){
+            pq.push(val[i]);
+            pq.pop();
+        }
+    }
+    return pq.top();
+    //size of pq == k, and we have 
+    //collected all low elements=>
+    //pq.top == max value must be kth smallest
+\end{lstlisting}
+The time complexity of these algorithms is
+O((\texttt{val.size()})log(k)); it's linear in
+\texttt{val.size()}.
+An alternative way to maintain the kth element
+in a list of elements, where deletion of specific
+elements is necessary (but not permitted by the
+priority\_queue data structure), we can use two sets.
+\begin{lstlisting}[caption=Kth smallest Element,language=C++]
+class Kset{
+public:
+    size_t k;
+    multiset<int> trail;//multiset to permit duplicates.
+    multiset<int> others;
+    Kset(size_t _k){
+        k = _k;
+    };
+    void insert(int e){
+        if(trail.size()<k){
+            trail.insert(e);
+        }
+        else{
+            if(e<*trail.rbegin()){
+                others.insert(*trail.rbegin());
+                auto iter = trail.end();iter--;
+                trail.erase(iter);
+                trail.insert(e);
+            }
+            else{
+                others.insert(e);
+             }
+        }
+    }
+    void erase(int e){
+        auto iter = others.find(e);
+        if(iter!=others.end()){
+            others.erase(iter);
+            //erase using iterators to avoid
+            //erasing all duplicates
+        }
+        else{
+            iter = trail.find(e);
+            if(iter!=trail.end()){
+                trail.erase(iter);
+                trail.insert(*others.begin());
+                others.erase(others.begin());
+            }
+        }
+    }
+    int top(){
+        //returns kth smallest element.
+        return *trail.rbegin();
     }
 }
-{\texttt{pq.top()} is O(1)}{...}
-\hline
-\end{tabular}
-% \end{center}
+\end{lstlisting}
+
+\subsection{The Big Fat Table of Data Structures}
+\input{parts/bigfattable}
+\subsection{Comparators}
+STL provides its own simple comparators: (\texttt{T} can be replaced by
+int, vector, etc.)
+\begin{itemize}
+    \item \texttt{less<T>} for ascending orders.
+    \item \texttt{greater<T>} for descending orders.
+\end{itemize} Custom comparators are written like so:
+\begin{lstlisting}[caption={Comparators},language=C++]
+    struct U{
+        bool operator()(T t1, T t2)const{
+            //logic comparing t1<t2.
+        }
+    };
+\end{lstlisting}
 \subsection{Iterators}
 Without going into the non-trivial hierarchy of iterators, note that:
 \begin{itemize}
@@ -154,7 +232,7 @@ Hence, any useful data should be copied over from the iterator before removing t
     lists.erase(*minit);//minit is corrupted
     lists.insert((*minit)->next);
 \end{lstlisting}
-\begin{lstlisting}[caption={Working code}]
+\begin{lstlisting}[caption={Working code},language=C++]
     lists.insert((*minit)->next);//first use the data.
     lists.erase(*minit);//then erase.
 \end{lstlisting}
@@ -192,7 +270,7 @@ intonation of Ashish Mishra,\\
 \textbf{DFS} - \textbf{Stack}\\
 Here's a sample of both algorithms.\\
 \noindent\begin{minipage}{.45\textwidth}
-    \begin{lstlisting}[caption=BFS]
+    \begin{lstlisting}[caption=BFS,language=C++]
 T s;
 unordered_map<T,vector<T>> edges;
 queue<T> q;
@@ -219,7 +297,7 @@ while(!q.empty()){
         \end{lstlisting}
     \end{minipage}\hfill
     \begin{minipage}{.45\textwidth}
-        \begin{lstlisting}[caption=DFS]
+        \begin{lstlisting}[caption=DFS,language=C++]
 T s;
 unordered_map<T,vector<T>> edges;
 stack<T> s;
@@ -313,4 +391,55 @@ of the set \{\texttt{a[i],a[i+1],...a[n-1]}\}. Additionally, \textbf{prefix and 
 can be used to pre-compute cumulative sums for sub-arrays. If a question involves finding
 the max element less than or min element more than a value over a range, consider using 
 \textbf{binary search} and maintaining a sorted version of the range.
+\subsubsection{Two constraints}
+Some problems reduce to finding for each element \texttt{e} in \texttt{arr2}, an 
+element in \texttt{arr1} whose \texttt{attr1} is greater than a value \texttt{f(e)} 
+and \texttt{attr2} is minimized. These problems can be solved in min(n1log(n1),n2log(n2)) as follows:
+\begin{lstlisting}[caption=Two constraints, language=C++]
+    sort(arr2.begin(), arr2.end(), [](auto &a, auto &b) {
+        return f(a) > f(b);
+    });
+    sort(arr1.begin(), arr1.end(), [](auto &a, auto &b){
+        return a.attr1 > b.attr1;
+    });
+    int i = 0;
+    set<int> attr2ValSet;
+    vector<int> ans(arr2.size());
+    for(auto e : arr2) {
+        int minAttr1 = f(e);
+        while(i < arr1.size() && arr1[i].attr1 >= minAttr1){
+            attr2ValSet.insert(arr1[i].attr2);
+            i++;
+        }
+        if(st.size()) {
+            auto it = st.begin();
+            //minimal attr2 that satisfies attr1 >= f(e).
+            ans[e.idx] = *it;
+        }
+        else{
+            ans[e.idx] = -1;
+        }
+    }
+\end{lstlisting}
+\subsubsection{Sub-Array Sum}
+Here are some ideas I find useful in subarray sum questions:
+\begin{enumerate}
+    \item Compute the prefix|suffix sum arrays. Are they of any help?
+    \item Divide and conquer: Try checking the condition for
+    \begin{enumerate}
+        \item a[0]...a[n/2 - 1] (recursively)
+        \item a[n/2]...a[n - (n/2) - 1] (recursively)
+        \item Compute prefix sum of (a) and suffix sum of (b)
+        and check for subarrays formed by combining the two.
+    \end{enumerate}
+    If (c) can be done in less than O($n^2$) time, we've usually found a solution.
+    \item Consider a sliding window along the array to capture selected
+    subarrays. 
+\end{enumerate}
+\subsubsection{Spans}
+Questions that involve finding the latest previous element that is greater than the 
+current value in a sequence can be solved better by ignoring any values that are
+surrounded by higher values; remove any element if it is smaller than its previous
+element.\\
+TODO: get infographic?
 \end{document}

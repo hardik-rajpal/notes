@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1690613960 "c:/CODE/atgit/notes/cp/notes.tex" "notes.pdf" "notes" 1690613963
+["pdflatex"] 1690899826 "c:/CODE/atgit/notes/cp/notes.tex" "notes.pdf" "notes" 1690899828
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1684321659 82347 0a47e4f8d01f5d55a2e12fd68cc2a137 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
@@ -117,11 +117,12 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/cp/notes.tex" 1690613960 12883 4697cb995ac5e4cfd3843df53f45a6d9 ""
-  "notes.aux" 1690613962 3004 8fa5272fd622188f3c757d0d2d346dbd "pdflatex"
-  "notes.out" 1690613962 1553 91e177661b3cebb656a8e0e50b077384 "pdflatex"
-  "notes.tex" 1690613960 12883 4697cb995ac5e4cfd3843df53f45a6d9 ""
-  "notes.toc" 1690613962 934 a68cb0afc8c94909084f3718c1ad1d21 "pdflatex"
+  "c:/CODE/atgit/notes/cp/notes.tex" 1690899825 17623 b4f8a4f5e8ce5b3cc84d90e69db956d4 ""
+  "notes.aux" 1690899828 4365 c618b422bab2301deac76ae88dc38c47 "pdflatex"
+  "notes.out" 1690899828 2316 5963ef7196985327a4d149dfa3ca3b44 "pdflatex"
+  "notes.tex" 1690899825 17623 b4f8a4f5e8ce5b3cc84d90e69db956d4 ""
+  "notes.toc" 1690899828 1450 7475aa94e318ebb8d041d9029ba5b7bf "pdflatex"
+  "parts/bigfattable.tex" 1690620697 1130 73a86bfbe6a4fa1316e431f2d4a5d95c ""
   (generated)
   "notes.aux"
   "notes.log"
