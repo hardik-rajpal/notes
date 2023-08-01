@@ -11,8 +11,9 @@
 \contentsline {subsection}{\numberline {2.1}BFS|DFS}{6}{subsection.2.1}%
 \contentsline {section}{\numberline {3}Misc. Algorithms}{6}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Binary Search}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Array Scan}{7}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Min/Max in Arrays}{7}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Two constraints}{7}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Sub-Array Sum}{8}{subsubsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3}Spans}{8}{subsubsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.2}Buckets}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Array Scan}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Min/Max in Arrays}{7}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Two constraints}{8}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Sub-Array Sum}{8}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Spans}{8}{subsubsection.3.4.3}%
