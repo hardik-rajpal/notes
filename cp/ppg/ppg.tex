@@ -9,7 +9,33 @@
     \textbf{Space:} #4
 }
 \author{Hardik Rajpal}
+
 \begin{document}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 \title{Pre-Placement Grind}
 \maketitle
 \tableofcontents
@@ -160,6 +186,79 @@ TODO pseudo code
     % \item \algodis{Radix/Counting Sort}
     % {}{}{}
 \end{enumerate}
+\section{Week 2}
+TODO move notes over from the other notebook.
+\section{Week 3}
+\subsection{Complete Search}
+\subsubsection*{Subset Processing}
+We use the function below with 0. (n = size of given set.)
+\begin{lstlisting}[language=C++,caption=Subset Generation]
+void search(int k) {
+    if (k == n) {
+        // process subset
+        subsets.push_back(subset);
+    }
+    else{
+        search(k+1);
+        subset.push_back(k);
+        search(k+1);
+        subset.pop_back();
+    }
+}
+\end{lstlisting}
+\begin{lstlisting}
+for (int b = 0; b < (1<<n); b++) {
+    //b runs from 00..00 to 11...11
+    vector<int> subset;
+    for (int i = 0; i < n; i++) {
+        if (b&(1<<i)){
+            subset.push_back(i)
+        };
+    }
+}
+\end{lstlisting}
+\subsubsection*{Permutation Generation}
+TODO: write up backtracking and permutation ideas.
+
+\subsubsection*{Backtracking En General}
+If the dimensions of inputs are smaller than usual, backtracking is an option.
+As with other algorithms, you want to maximize this as much as possible. Optimizations
+are possible by:
+\begin{enumerate}
+    \item Transforming the inputs so as to reduce the search space.\\
+    Example: If you are searching for a subset whose sum is a given target,
+    Searching the space of frequency map is better than searching subsets in the
+    untransformed set, at least when duplicates are abundant.
+    \item Cutting off fruitless search paths as soon as possible.
+    \item Specifying "min" requirements before taking a path, and equivalently, specifying "max" allowed values in a path to be explored further.
+    \item Optimizing the data structures used to record the current state and restrictions. Particularly,
+    \begin{itemize}
+        \item Using vectors instead of maps where possible.
+        \item Using bitmap \texttt{int}s when only inclusion is to be checked.
+    \end{itemize}
+\end{enumerate}
+The abstract code for backtracking looks like ths:
+\begin{lstlisting}[language=C++]
+    //declare global/class member variables.
+    void search(int p){
+        //p signifies path/position being inspected
+        //in the search space.
+        if(searchTerminalConditions()){
+            if(globalVarSolutionValid){
+                //update collection of solutions.
+            }
+        }
+        else{
+            for(possible path of exploration){
+                //(1)update global vars so as to take this path.
+                search(p+1);
+                //(2)undo the updates made to global variables.
+                //(not necessary if (1) overrides/uses previous updates.)
+            }
+            //undo any leftover changes made to global variables.
+        }
+    }
+\end{lstlisting}
 \section{Aptitude Test Pointers}
 \subsection{Number Sequence}
 These questions are hella annoying. So, I've written down a list of possibilities 
