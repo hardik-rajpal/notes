@@ -261,6 +261,17 @@ Note: \texttt{iter} denotes the iterator return type. \texttt{first} and \texttt
         \item Returns true if there exists a permutation greater than the current one.
     \end{itemize}
     \citem{bool prev\_permutation(first, last[, struct comp])} (O(n))
+    \citem{void nth\_element(first, iteratorToNthElem,last[, struct comp])} (O(sdt::distance(first,last)))
+    \begin{itemize}
+        \item Alters the array so that *iteratorToNthElem is the nth smallest element.
+        \item Modify the comparator to get nth largest element or other variations.
+        \item All elements before iteratorToNthElem are less than the nth smallest element.
+        \item All elements after iteratorToNthElem are greater than or equal to it.
+    \end{itemize}
+    \citem{void insert(v1.end(),v2.begin(),v2.end());} (O(v2.size()))
+    \begin{itemize}
+        \item Appends whole of v2 to end of v1.
+    \end{itemize}
 \end{itemize}
 \section{Graph Algorithms}
 \subsection{BFS|DFS}

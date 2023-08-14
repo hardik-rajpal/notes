@@ -218,8 +218,8 @@ for (int b = 0; b < (1<<n); b++) {
 }
 \end{lstlisting}
 \subsubsection*{Permutation Generation}
-TODO: write up backtracking and permutation ideas.
-
+TODO: write up permutation ideas.
+TODO: selection of subsets satisfying a property.
 \subsubsection*{Backtracking En General}
 If the dimensions of inputs are smaller than usual, backtracking is an option.
 As with other algorithms, you want to maximize this as much as possible. Optimizations
@@ -229,13 +229,20 @@ are possible by:
     Example: If you are searching for a subset whose sum is a given target,
     Searching the space of frequency map is better than searching subsets in the
     untransformed set, at least when duplicates are abundant.
-    \item Cutting off fruitless search paths as soon as possible.
+    \item Cutting off fruitless search paths as soon as possible. (Pruning the search tree.)
     \item Specifying "min" requirements before taking a path, and equivalently, specifying "max" allowed values in a path to be explored further.
     \item Optimizing the data structures used to record the current state and restrictions. Particularly,
     \begin{itemize}
         \item Using vectors instead of maps where possible.
         \item Using bitmap \texttt{int}s when only inclusion is to be checked.
     \end{itemize}
+    \item Instead of using min/max to bring index values within range, which will likely incur repeated
+    searches at the boundary, use an if block to disregard paths associated with values
+    that exceed the bounds.
+    \item A modification of the needle may speed up the search. For example, the search for a word
+    may be sped up by searching for its reversed word if the end letter is less frequent than the letter at
+    the start.
+    
 \end{enumerate}
 The abstract code for backtracking looks like ths:
 \begin{lstlisting}[language=C++]
@@ -259,30 +266,30 @@ The abstract code for backtracking looks like ths:
         }
     }
 \end{lstlisting}
-\section{Aptitude Test Pointers}
-\subsection{Number Sequence}
-These questions are hella annoying. So, I've written down a list of possibilities 
-here that I can refer to while cheating in the test. (That's a joke.)
-\begin{enumerate}
-    \item A.P, G.P, AGP. HP.
-    \item Check difference, 2nd difference ...
-    \item Incorporating a well-known series.
-    \item Consider $x^{f(x)}$ for monotonic series with large gaps.
-    \begin{enumerate}
-        \item Primes
-        \item Fibonacci (spot by nth difference ~ n-1th difference)
-    \end{enumerate}
-    \item Two series of alternating numbers interleaved or alternating next() function.
-    \begin{enumerate}
-        \item The next function alternates between constant difference and constant factor.
-        \item The next function alternates between f(x)=ax+d and g(x)=bx+c
-    \end{enumerate}
-    \item If the numbers go up and down, it's a result of interleaving or the relation between neighbours keeps switching between two functions.
-    \item Given alphabet series,
-    \begin{enumerate}
-        \item Convert to positions and reverse positions.
-        \item Consider vowel and consonant relations.
-    \end{enumerate}
-    \item The sequence might involve manipulating a permutation of the previous element lmao.
-\end{enumerate}
+\textbf{Pruning:} A way of adding intelligence to the backtracking algorithm and
+reducing the time spent in fruitless paths. Additionally, we can leverage symmetries
+of the search space to check only a fraction of the entire possible solution set. Clearly,
+optimizations at the start of the search tree save a lot more time than those at the end.
+\subsubsection*{Meet in the Middle}
+Another name for \textbf{Divide and Conquer}. It refers to splitting the search space up
+into two halves and combining the results of the two halves. It works if there is an
+efficient way to combine the results. Even 1 level of splitting (and extracting solutions
+from the halves using brute force) can have worthwhile optimizations: O($2^n$) $\implies$ O($2^{n/2}$).
+
+\section{Week 4}
+\subsection{Greedy Algorithms}
+\subsubsection*{\href{https://leetcode.com/discuss/general-discussion/1061059/ABCs-of-Greedy}{Reading Notes}}
+Greedy Solutions focus on looking at the problem in smaller steps, and at each step
+we select the option that offers the most obvious and immediate benefit. It's sort
+of like assuming there's only one maximum point in the search space, and hence,
+we just move in the direction with the most inclination. Some popular greedy 
+algorithms are:
+\begin{itemize}
+    \item Dijkstra's shortest path.
+    \item Kruskal's minimum spanning tree.
+    \item Prim's minimum spanning tree.
+    \item Huffman encoding.
+\end{itemize}
+
+\input{parts/aptitude}
 \end{document} 

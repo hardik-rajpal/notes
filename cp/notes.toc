@@ -9,12 +9,12 @@
 \contentsline {subsection}{\numberline {1.6}Built-In Utilities}{5}{subsection.1.6}%
 \contentsline {section}{\numberline {2}Graph Algorithms}{6}{section.2}%
 \contentsline {subsection}{\numberline {2.1}BFS|DFS}{6}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Misc. Algorithms}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Binary Search}{6}{subsection.3.1}%
+\contentsline {section}{\numberline {3}Misc. Algorithms}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Binary Search}{7}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Buckets}{7}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Array Scan}{7}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Min/Max in Arrays}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.4}Min/Max in Arrays}{8}{subsection.3.4}%
 \contentsline {subsubsection}{\numberline {3.4.1}Two constraints}{8}{subsubsection.3.4.1}%
 \contentsline {subsubsection}{\numberline {3.4.2}Sub-Array Sum}{8}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}Spans}{8}{subsubsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.5}Linked Lists}{8}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.4.3}Spans}{9}{subsubsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.5}Linked Lists}{9}{subsection.3.5}%
