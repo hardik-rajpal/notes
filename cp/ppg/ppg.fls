@@ -2,17 +2,17 @@ PWD c:\CODE\atgit\notes\cp\ppg
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT c:\CODE\atgit\notes\cp\ppg\ppg.tex
 OUTPUT ppg.log
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
@@ -696,7 +696,8 @@ INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\tex\latex\jknappen\ur
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs5.tfm
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT .\ppg.toc
 INPUT ppg.toc
@@ -714,7 +715,10 @@ INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.t
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs7.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs5.tfm
 OUTPUT ppg.toc
-INPUT C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT C:\Users\HARDIK RAJPAL\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
