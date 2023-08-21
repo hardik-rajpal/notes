@@ -217,6 +217,23 @@ int, vector, etc.)
         }
     };
 \end{lstlisting}
+\subsubsection{\href{https://stackoverflow.com/a/46128321/14681493}{Better Comparators}}
+\subsection*{Static Functions}
+\begin{lstlisting}
+class Solution{
+public:
+    static vector<int> fm;
+    static bool compare(int i1, int i2){
+        return fm[i1] < fm[i2] || i1 < i2;
+    }
+    void solver(){
+        set<int,decltype(Solution::compare)*> myset(Solution::compare);
+        //or in a sort function:
+        sort(inds.begin(),inds.end(),&(Solution::compare));
+    }
+};
+Solution::vector<int> fm = {};
+\end{lstlisting}
 \subsection{Iterators}
 Without going into the non-trivial hierarchy of iterators, note that:
 \begin{itemize}

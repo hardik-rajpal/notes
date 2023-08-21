@@ -398,6 +398,35 @@ int dijkstras(vector<vector<int>>& ps, int s, int target) {
     return res;
 }
 \end{lstlisting}
+\subsubsection*{Stack Based Questions}
+These usually involve finding the (lexicographically) minimal
+subsequence. We maintain a stack to track the sequence
+selected so far. To reverse a stack to get the subsequence, the
+most optimal method is:
+\begin{lstlisting}
+while(s.size()){
+    ans.push_back(s.top());
+    s.pop();
+}
+reverse(ans.begin(),ans.end());
+\end{lstlisting}
+\subsubsection*{Heap+Queue}
+Honestly I've only seen one question with this paradigm. However,
+it's worth a shot if you realize you have to process numbers
+starting always with the largest/smallest element, and have to 
+track elements being available/unavailable over time.
+I know that's a very vague and oddly specific situation,
+but I couldn't just walk by a problem and not make this note.
+\\
+Additionally, in scheduling problems, consider trying to find
+a way to arrange the given tasks, which might result in a
+closed form solution.
+\subsection{Greedy Matching}
+Given two arrays to match elements such that the matching function
+can be put into a total order over the elements (ISTG I will word this better,
+later), we can sort two arrays and take the first matches offered
+by traversing one array, selecting the first matched element with
+the element being traversed.
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 
