@@ -427,6 +427,39 @@ can be put into a total order over the elements (ISTG I will word this better,
 later), we can sort two arrays and take the first matches offered
 by traversing one array, selecting the first matched element with
 the element being traversed.
+\subsection{Misc Data Structures}
+Multiple problems tagged "Greedy" are really just a matter of
+organizing the input data in a structure such as a (frequency)
+map or a heap. Or we're just sorting the input array.
+So, consider this when thinking of approaching 
+a question greedily.
+\chapter{Week 5}
+\section{Dynamic Programming}
+A common optimization to look out for when writing the code
+for dynamic programming problems, try to ensure that
+\begin{enumerate}
+    \item The code doesn't compute paths that aren't going to be useful.
+    \item The code doesn't recompute any path more than once.
+\end{enumerate}
+As per \href{https://leetcode.com/problems/house-robber/discuss/156523/From-good-to-great.-How-to-approach-most-of-DP-problems}{this article}, the approach to most dynamic programming problems can be broken
+down to:
+\begin{enumerate}
+    \item Find recursive relation.
+    \item Recursive (top-down).
+    \item Add Memoization.
+    \item Iterative + memoization (bottom-up).
+    \item Further optimizations.
+    \begin{itemize}
+        \item Discarding paths
+        \item Reducing space complexity.
+    \end{itemize}
+\end{enumerate}
+\subsection{Common Patterns}
+\subsubsection{Min (Max) Path to Reach Target}
+\subsubsection{Distinct Ways}
+\subsubsection{Merging Intervals}
+\subsubsection{DP on Strings}
+\subsubsection{Decision Making}
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 
