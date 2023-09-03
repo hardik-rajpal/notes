@@ -42,6 +42,8 @@ escapeinside={/*!}{!*/}
     \item Page Frame: Unit of physical address space to which a page can be mapped. Same unit, but \textbf{pages} exist in the
     virtual address space whereas \textbf{page frames} exist
     in the physical address space.
+    \item Spatial Locality: nearby instructions (in the control flow) access nearby memory locations.\\ Ex. with code for sequential array processing.
+    \item Temproal Locality: nearby instructions (in the control flow) accessing a single memory address repeatedly.
 \end{enumerate}
 \section{Address Space}
 The program is actually loaded into random physical addresses, but due to the address space
@@ -159,7 +161,7 @@ management by the OS (by moving unused segments to disk).
 \item Split the address space (abstraction visible to the process) 
 into fixed-size units called pages. The corresponding contiguous units in the physical address space are called page frames.
 \item To record each page's mapping for each process, the OS
-maintains a \textbf{page table} per process.
+maintains a \textbf{page table} per process that is pointed to by the \textbf{Page Table Base Register (PTBR)}.
 \item Translation: (neglecting bits other than VPN and offset)
 \begin{center}
 \includegraphics[width=5cm]{res/paging.png}
@@ -169,7 +171,7 @@ maintains a \textbf{page table} per process.
 \subsubsection{Inside The Page Table}
 \begin{itemize}
 \item The OS stores the page table in memory, in units of
-\textbf{page table entries} (PTEs).
+\textbf{page table entries} (PTEs) because of the sheer size of page tables.
 \item Each PTE has a physical address to which it maps and a collection of metadata bits.
 \item The PTEs are stored in a (nested) array-like structure, such
 that a VPNs can be used as indices into the structure, pointing
@@ -204,13 +206,100 @@ at the PTE that contains their corresponding PFN.
      \item Hardware caching bits: help determine how hardware caching works for the page. 
 \end{enumerate}
 \end{itemize}
+\subsubsection{How It Works}
+When the OS reads a command to access/write to a memory location at \texttt{VA0},
+\begin{enumerate}
+    \item Extract \texttt{VPN} and \texttt{offset} from \texttt{VA0}.
+    \item Access \textbf{PTE} stored at \texttt{PTBR + VPN}. \hfill \textbf{Memory Access 1 (PTE read)}
+    \item Extract the \texttt{PA} and \textbf{permission bits} from \textbf{PTE}.
+    \item Verify \textbf{permission bits}.
+    \begin{itemize}
+        \item If page is invalid, raise \texttt{Segmentation Fault} exception.
+        \item If permissions are insufficient, raise \texttt{Protection Fault} exception. 
+    \end{itemize}
+    \item Read/write to data stored at \texttt{PA + offset}. \hfill \textbf{Memory Access 2 (Data access)}
+\end{enumerate}
+\subsubsection{TLB}
+\begin{itemize}
+    \item It's a part of the MMU and is a hardware cache of popular V2P translations.
+    \item The process of memory access with the TLB is:
+    \begin{enumerate}
+    \item Extract \texttt{VPN} and \texttt{offset} from \texttt{VA0}.
+    \item If TLB has an entry for \texttt{VA0} (TLB hit)
+    \begin{itemize}
+        \item If permissions are insufficient, raise \texttt{Protection Fault} exception.
+        \item Extract \texttt{PA} for \texttt{VA} from TLB.
+        \item Read/write to data at \texttt{PA + offset}. \hfill \textbf{Memory Access 1 (Data access)}
+    \end{itemize}
+    \item Otherwise, carry out steps 2, 3 and 4 of the usual access routine. \hfill \textbf{Memory Access 1 (PTE read)}
+    \item Instead of step 5, insert the translation \texttt{(VPN,PA,Protection Bits)} into the TLB.
+    \item Retry the memory access instruction (start at 1 of this sequence).
+    \end{enumerate}
+    \item Like most caches, TLB is built on the premise that most 
+    translations are found in the cache (hits). The little overhead 
+    costs of using a TLB (little because it's near the processing 
+    core and designed to be quite fast), are made up for by the hit cases. 
+    \item The speed of a cache comes partly from its minimal size; any large cache is by definition slow.
+\end{itemize}
+\subsubsection{TLB Misses}
+\begin{itemize}
+\item In CISC computers, the hardware would handle the TLB miss entirely (low trust on the OS designers).
+\\On a miss,
+\begin{itemize}
+    \item The hardware would walk the page table using \texttt{PTBR} to get the \texttt{PA} for the \texttt{VPN} that induced a miss.
+    \item It would update the TLB with the new translation.
+    \item Then hit retry on the instruction that resulted in a TLB miss.
+\end{itemize}
+\item In RISC computers, the TLB is software-managed. On a TLB miss, the hardware just raises an exception (\texttt{TLB\_MISS}).
+\begin{enumerate}
+\item This pauses the current instruction stream, raises the privilege level to kernel mode and jumps to a \textbf{trap handler}.
+\item The targeted code looks up the translation in the page table, uses \textbf{privileged} instructions to update the TLB, and returns from the trap.
+\end{enumerate}
+Note that:
+\begin{itemize}
+    \item Note that on return the execution must pick up \textbf{at the causal instruction} that caused the trap, instead of the usual return-from-trap where execution picks up \textbf{after the causal instruction.}
+    \item While accessing the code for trap handler for \texttt{TLB\_MISS}, the OS should not incur a TLB miss, which would imply an infinite chaing of TLB misses. To avoid this, we can:
+    \begin{enumerate}
+        \item Keep TLB miss handlers in \textbf{unmapped} physical memory, so that their execution does not involve address translation (and hence TLBs).
+        \item Reserve entries in TLB for permanently-valid (\textbf{wired}) translations and use some of these slots for the trap-handler code's memory address' translation.
+    \end{enumerate}
+\end{itemize}
+\item The advantage of a software-managed TLB include:
+\begin{itemize}
+    \item Flexibility: the OS 
+    can store the PTEs in any data structure it wants, as it's 
+    allowed to update the page table walk function, since it's not 
+    burned into a chip.
+    \item Simplicity: the hardware just has to raise an exception and relies on the OS to resolve the TLB miss. 
+\end{itemize} 
+\end{itemize}
+\subsubsection{TLB Contents}
+\begin{itemize}
+    \item The TLB has 32/64/128 entries and is \textbf{fully associative} ($\equiv$ any translation can be anywhere in the TLB, and the hardware searches the entire TLB in parallel to find the entry for \texttt{VPN}).
+    \item The TLB entry has: VPN $|$ PFN $|$ other bits.
+    \item The other bits are:
+        \begin{itemize}
+            \item Valid bit: denoting if \textbf{the TLB entry is valid, NOT the page.}
+            \item Protection bits.
+            \item Address-space identifier (ASID) (to identify if the entry is for the given process or in a shared region).
+            \item Dirty bit, to indicate if the page has been modified since it was brought into memory.
+        \end{itemize}
+    \item On a context switch, the OS must ensure one processes translations in the TLB are not used by another process (unless it's a shared memory region). This can be done via:
+    \begin{enumerate}
+    \item Simply flushing the TLB on a context switch (marking each entry as invalid). This can be coded up in the OS or the hardware
+    can be set to flush the TLB whenever the PTBR is updated.
+    \item Maintain ASID for each entry and a privileged register to hold the ASID of the current process. Note that ASIDs require much fewer (8ish bits) as compared to PIDs (32ish bits).
+    \item 
+    \end{enumerate}
+\end{itemize}
 \subsubsection{Advantages of paging}
 \begin{itemize}
     \item Flexibility is an important advantage of paging: it works 
-    regardless of how the process uses the address space, how the heap
-    and stack grow or how they are used.
+    regardless of how the process uses the address space, how the heap and stack grow or how they are used.
+    \item Flexibility also ensures it can handle sparse address spaces and minimize internal fragmentation.
     \item Simplicity: when new pages are requested, the OS simply
     traverses a free list and returns the first pages that it finds.
+    \item It avoid external fragmentation altogether by having fixed-size units.
 \end{itemize}
 \section{Free Space Management}
 \chapter{Concurrency}
