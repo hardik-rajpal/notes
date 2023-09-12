@@ -219,7 +219,62 @@ When the OS reads a command to access/write to a memory location at \texttt{VA0}
     \end{itemize}
     \item Read/write to data stored at \texttt{PA + offset}. \hfill \textbf{Memory Access 2 (Data access)}
 \end{enumerate}
-\subsubsection{TLB}
+\subsubsection{Making Paging Faster}
+The procedure given above is without the use of \hyperref[subsec:TLB]{TLBs}, which are always used in the real world to speed up paging. 
+\subsubsection{Reducing The Page Table's Size}
+\begin{enumerate}
+\item Increase Page Size: the factor by which the page size is increased is the factor by which the page table's size is reduced.
+\begin{itemize}
+\item This approach is commonly used by DBMSs and other high-end
+commercial applications. However, their goal is to reduce pressure
+on the TLB by reducing the number of translations, instead of minimizing the page table's size.
+\item The major problem with this is internal fragmentation. Hence, it's only suitable if the programs are guaranteed to use the
+large pages allocated to them almost thoroughly.
+\end{itemize}
+\item  Hybrid approach: Paging + Segments
+\begin{itemize}
+    \item We first note that in each table, most of the PTEs are 
+    invalid, and only a select few are mapped to physical page 
+    frames.
+    \item This approach involves maintaining a separate page table
+    for the code, stack and heap segments of the virtual address 
+    space.
+    \item We have base and bound registers for each segment as before, except that the \textbf{base}
+    points to the physical address of the page table of that segment.
+    \item Note that all six registers must be updated on a context
+    switch.
+    \item The translation involves:
+    \begin{lstlisting}
+    V2P(VA v){
+        segment = v[0:2];//or bit operations.
+        VPN = v[2:k];//or bit operations.
+        offset = v[k:];//or bit operations.
+        addressOfPTE = Base[segment] + (VPN*sizeof(PTE));
+        PTE = read(addressOfPTE);
+        PFN = PTE[:c]
+        PA =  PFN + offset;
+        return PA;
+    }
+    \end{lstlisting}
+    \item However, like segmentation, (i) this method can't help 
+    with 
+    the wastage of memory due sparse usage within segments (ex. a 
+    sparsely used heap), and (ii) leads to external fragmentation, 
+    as the variable sized page tables need to be allocated 
+    contiguous chunks of memory.
+\end{itemize}
+\item Multi-level page tables:
+\end{enumerate}
+\subsubsection{Advantages of paging}
+\begin{itemize}
+    \item Flexibility is an important advantage of paging: it works 
+    regardless of how the process uses the address space, how the heap and stack grow or how they are used.
+    \item Flexibility also ensures it can handle sparse address spaces and minimize internal fragmentation.
+    \item Simplicity: when new pages are requested, the OS simply
+    traverses a free list and returns the first pages that it finds.
+    \item It avoid external fragmentation altogether by having fixed-size units.
+\end{itemize}
+\subsection{TLB}
 \begin{itemize}
     \item It's a part of the MMU and is a hardware cache of popular V2P translations.
     \item The process of memory access with the TLB is:
@@ -243,7 +298,14 @@ When the OS reads a command to access/write to a memory location at \texttt{VA0}
 \end{itemize}
 \subsubsection{TLB Misses}
 \begin{itemize}
+\item We say a program exceeds the TLB coverage if it generates
+a large number of TLB misses, by accessing (in a short period of time) more pages than the number of translations the TLB can fit.
+\item One solution to this is to allow larger pages for storing
+key data structures that such programs access repeatedly, and thus
+allowing a single translation in the TLB to serve many memory accesses.
+\item Support for large pages is often exploited by programs such as DBMSs, which have large and randomly accessed data structures.
 \item In CISC computers, the hardware would handle the TLB miss entirely (low trust on the OS designers).
+\item With physically-indexed caches, some translation of the VA has to take place for the lookup itself, and thus they are very slow. Check cache notes if any.
 \\On a miss,
 \begin{itemize}
     \item The hardware would walk the page table using \texttt{PTBR} to get the \texttt{PA} for the \texttt{VPN} that induced a miss.
@@ -251,6 +313,8 @@ When the OS reads a command to access/write to a memory location at \texttt{VA0}
     \item Then hit retry on the instruction that resulted in a TLB miss.
 \end{itemize}
 \item In RISC computers, the TLB is software-managed. On a TLB miss, the hardware just raises an exception (\texttt{TLB\_MISS}).
+\item With software-managed TLBs, it is important that the instructions provided by the hardware to read/write to the TLB,
+are only allowed to be run in privileged modes.
 \begin{enumerate}
 \item This pauses the current instruction stream, raises the privilege level to kernel mode and jumps to a \textbf{trap handler}.
 \item The targeted code looks up the translation in the page table, uses \textbf{privileged} instructions to update the TLB, and returns from the trap.
@@ -281,26 +345,32 @@ Note that:
         \begin{itemize}
             \item Valid bit: denoting if \textbf{the TLB entry is valid, NOT the page.}
             \item Protection bits.
+            \item Global bit, to indicate globally shared translations. If this is set, ASID bit is ignored.
             \item Address-space identifier (ASID) (to identify if the entry is for the given process or in a shared region).
             \item Dirty bit, to indicate if the page has been modified since it was brought into memory.
+            \item Coherence bits: they determine how a page is cached by the hardware.
+            \item Page mask field: to support multiple page sizes.
         \end{itemize}
     \item On a context switch, the OS must ensure one processes translations in the TLB are not used by another process (unless it's a shared memory region). This can be done via:
     \begin{enumerate}
     \item Simply flushing the TLB on a context switch (marking each entry as invalid). This can be coded up in the OS or the hardware
     can be set to flush the TLB whenever the PTBR is updated.
-    \item Maintain ASID for each entry and a privileged register to hold the ASID of the current process. Note that ASIDs require much fewer (8ish bits) as compared to PIDs (32ish bits).
-    \item 
+    \item Maintain ASID for each entry and a privileged register to hold the ASID of the current process. Note that ASIDs require much fewer (8ish bits) as compared to PIDs (32ish bits).\\
+    Additionally, ASIDs (along with the permission bits) enable sharing of code pages across processes.
     \end{enumerate}
 \end{itemize}
-\subsubsection{Advantages of paging}
-\begin{itemize}
-    \item Flexibility is an important advantage of paging: it works 
-    regardless of how the process uses the address space, how the heap and stack grow or how they are used.
-    \item Flexibility also ensures it can handle sparse address spaces and minimize internal fragmentation.
-    \item Simplicity: when new pages are requested, the OS simply
-    traverses a free list and returns the first pages that it finds.
-    \item It avoid external fragmentation altogether by having fixed-size units.
-\end{itemize}
+\label{subsec:TLB}
+\subsubsection{Replacement Policy}
+We want to maximize the hit-rate in the TLB based on our 
+choice of a replacement policy. Some common choices are:
+\begin{enumerate}
+\item Evict Least Recently Used entry: relies on temporal locality 
+of address usage. The least recently used entry in the cache will
+probably not be used any time soon, as future access will be closer
+to the more recent accesses in the cache.
+\item Random: Avoids making corner-case worst-possible decisions all 
+the time. (For example, a for loop which requires TLB eviction, with the LRU policy in place.) 
+\end{enumerate}
 \section{Free Space Management}
 \chapter{Concurrency}
 \chapter{Misc.}
