@@ -40,6 +40,29 @@
 \maketitle
 \tableofcontents
 \pagebreak
+\chapter{Misc.}
+\section{Misc. Confirmed Optimizations}
+\begin{enumerate}
+    \item For maps,
+\begin{lstlisting}
+    auto iter = m.find(k);
+    if(iter!=m.end()){return iter->second;}
+    //is much faster than:
+    if(m.count(k)){return m[k];}
+\end{lstlisting}
+    \item Replace sets that check for inclusion by bit operations with an integer if the number elements $<$ 32 for ints and 64 for long longs. 
+    \item Pass params by reference where possible.
+    \item Instead of a reference parameter, consider using a pointer to that variable stored in a class data member.
+    \item Replace data types by smaller data types where possible:
+        \begin{itemize}
+            \item long long by int
+            \item int by char
+        \end{itemize} 
+    \item Replace fixed-length vectors by array$<$type,fixed-length$>$.
+    \item Replace maps by vectors if they are indexed by integers within a fixed range. Ex: the alphabet as indices.
+    \item That die roll problem optimization. (Needs to be phrased more mathematically.)
+    \item Use of suffix arrays + descending order (or its prefix counterpart) to cut of paths in backtracking.
+\end{enumerate}
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
@@ -460,7 +483,113 @@ down to:
 \subsubsection{Merging Intervals}
 \subsubsection{DP on Strings}
 \subsubsection{Decision Making}
-
+\chapter{OOP (in C++)}
+\section{OOPs}
+\begin{itemize}
+    \item Access-specifiers:
+    \begin{enumerate}
+        \item private: can only be accessed inside the class.
+        \item protected: can be accessed inside the class and inside derived classes.
+        \item public: can be accessed everywhere.
+    \end{enumerate}
+\end{itemize}
+\section{Inheritance from \href{https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint}}
+\begin{lstlisting}[caption=Syntax]
+    class DerivedClass: access-specifier BaseClass{
+        //access-specifier is one on public/private/protected.
+    };
+\end{lstlisting}
+\begin{itemize}
+    \item Allows us to define a class in terms of another class.
+    \item Derived classes inherit properties of base classes.
+    \item Inheritance implements "is-a" relationship. Ex: mammal is-a animal, dog is-a mammal => dog is-a animal also holds.
+    \item Derived classes inherit all properties of base classes except:
+    \begin{enumerate}
+        \item Constructors, destructors and copy constructors.
+        \item Overloaded operators.
+        \item Friend functions.
+    \end{enumerate}
+    \item The base classes can be inherited through public, 
+    protected or private inheritance, which is specified the 
+    access specifier before its name in the declaration of the 
+    derived class. The results are:
+    \begin{enumerate}
+        \item Public: access permissions of public and protected members of the base class are carried forward in the inherited class.
+        \item Protected: access permissions of public and protected members of the base class are lowered to protected.
+        \item Private: access permissions of public and protected members of the base class are lowered to private.
+    \end{enumerate}
+\end{itemize}
+\subsection{Multiple Inheritance}
+TODO: problems/issues with multiple inheritance.
+\begin{lstlisting}[caption=Syntax]
+    class DerivedClass: access-specifier baseA, access-specifier baseB ... {
+    //access-specifier is one of public/protected/private.
+    };
+\end{lstlisting}
+\section{Overloading}
+\begin{itemize}
+    \item A single identifier (function name/operator) corresponds to two different implementations, based on the argument list supplied to it.
+    \item Overload resolution refers to the compiler's task of selecting the most appropriate implementation when it encounters a call to an overloaded function.
+    \item Note: operators can be overloaded outside classes too:
+    \begin{lstlisting}
+        //As a member function:
+        Box operator+(const Box&);
+        //Not as a member function:
+        Box operator+(const Box&, const Box&);
+    \end{lstlisting}
+    \item Most operators can be overloaded:
+    \begin{center}
+        \includegraphics[width=8cm]{rsrc/overloadableops.png}
+    \end{center}
+    \item Operators that can't be overloaded:
+    \begin{enumerate}
+        \item ::
+        \item .*
+        \item .
+        \item ?:
+    \end{enumerate}
+    \item Unary operators include: ++ (post,pre), -- (post,pre), -, ~ and !
+    \item TODO special cases for each overloading.
+\end{itemize}
+    \section{Polymorphism}
+Polymorphism means a call to a member function (after resolution of overloads), can lead to different implementations being called, based on the type of object that invokes the function.
+\subsection{Static Linkage}
+\begin{lstlisting}
+class Shape {
+   public:
+      int area() {
+         cout << "Parent class area :"...
+      }
+};
+class Rectangle: public Shape {
+   public:
+      int area () { 
+         cout << "Rectangle class area :"...
+      }
+};
+class Triangle: public Shape {
+   public:
+      int area () { 
+         cout << "Triangle class area :"... 
+      }
+};
+int main() {
+   Shape *shape;
+   Rectangle rec(10,7);
+   Triangle  tri(10,5);
+   shape = &rec;
+   shape->area();
+   shape = &tri;   
+   shape->area();
+   //both calls print "Parent class area:..."
+   return 0;
+}
+\end{lstlisting}
+Without any prefixes in the functions defined in the derived classes (that are identifiable with functions in the base class),
+the compiler assumes that any calls to these functions from an object of type base*/base always needs the implementation from the parent class. This is known as static linkage or static resolution (of the function call) or early binding, as the implementation for the area function is fixed at runtime to that of the base class (for objects of or pointers to the base class).\\
+Note that calls from \texttt{rec} or \texttt{tri} would have called their respective functions, not the base class' function.
+\subsection{Dynamic Linkage}
+Prefixing function identifiers that are shared across derived and base classes with \texttt{virtual}, allows for dynamic linkage, or dynamic resolution or late binding. With the said prefix, the compiler identifies the right implementation to call by the contents of the object or pointer being used to invoke the function. This is polymorphism.
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 
