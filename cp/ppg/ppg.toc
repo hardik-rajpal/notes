@@ -27,5 +27,9 @@
 \contentsline {section}{\numberline {7.4}Polymorphism}{14}{section.7.4}%
 \contentsline {subsection}{\numberline {7.4.1}Static Linkage}{15}{subsection.7.4.1}%
 \contentsline {subsection}{\numberline {7.4.2}Dynamic Linkage}{15}{subsection.7.4.2}%
-\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{16}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Number Sequence}{16}{section.8.1}%
+\contentsline {subsubsection}{Pure Virtual Functions}{15}{section*.24}%
+\contentsline {section}{\numberline {7.5}Data Abstraction and Encapsulation}{16}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Abstract Classes a.k.a C++ Interfaces}{17}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Notes from interview questions}{17}{section.7.7}%
+\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{18}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Number Sequence}{18}{section.8.1}%

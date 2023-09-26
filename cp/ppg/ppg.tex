@@ -590,6 +590,110 @@ the compiler assumes that any calls to these functions from an object of type ba
 Note that calls from \texttt{rec} or \texttt{tri} would have called their respective functions, not the base class' function.
 \subsection{Dynamic Linkage}
 Prefixing function identifiers that are shared across derived and base classes with \texttt{virtual}, allows for dynamic linkage, or dynamic resolution or late binding. With the said prefix, the compiler identifies the right implementation to call by the contents of the object or pointer being used to invoke the function. This is polymorphism.
+\subsubsection{Pure Virtual Functions}
+If a function is always intended to be overridden in the derived classes and there's no meaningful definition in the base class,
+we can just declare the function in the base class and set it to zero to avoid compilation errors about no definition being found for
+the function in the base class.
+\begin{lstlisting}
+class Shape{
+    //virtual int area();
+    //Above line compiles if there are no to area() from any objects of shape/derived classes.
+    //In the presence of such calls, even if area() is defined in derived classes and their
+    //objects are used to call area() (from the right pointer, or a pointer of type Shape*)
+    //compilation errors ensue.
+    //However,
+    virtual int area()=0;//goes through compilation successfully.
+};
+\end{lstlisting}
+Note:
+\begin{itemize}
+\item We say a function demonstrates polymorphism if we can use a pointer of the base class
+to access functions of different derived classes and have different implementations
+being used based on the derived class to which the object belongs. 
+\item Without the virtual keyword, even if functions with identical identifiers (name
+and arguments considered) are declared in derived and base classes, polymorphism is not
+observed. Function calls from pointers of the base class' type call its own implementation,
+not that of derived classes. 
+\item Once a function is declared as virtual in a class, it demonstrates polymorphism 
+across all derived descendant classes, even without the virtual keyword being present 
+intermediate classes.
+\item The \texttt{final} keyword can be used to throw a compilation error if a function
+that we don't want any base classes to override is overridden:
+\begin{lstlisting}
+class Rectangle:public Shape{
+    public:
+    int area()final{
+        cout<<"Rect Area"<<endl;
+        return 0;
+    }
+};
+//Now if a class called square attempts to override area, a compilation error is thrown.
+\end{lstlisting}
+\item Using the final keyword in a non-virtual function (that was not declared to be virtual in any of the ancestors) throws a compilation error.
+\item \textbf{Object Slicing:} When an object of a derived class is assigned to an object (not a pointer) of
+a base class, only members inherited from the base class are kept and the others are discarded. Thus,
+all functions that may have been overridden are reverted to their definitions in the base class.
+\begin{lstlisting}
+void printarea(Shape s){
+    s.area();
+}
+void printareaReference(Shape &s){
+    s.area();//NO slicing. 
+}
+Shape s; Rect r;
+s = r;//slicing.
+Shape &s = r;
+printarea(r);//slicing. prints "Shape area..."
+printareaReference(r);//No slicing. prints "Rectangle area..."
+\end{lstlisting}
+In JAVA, and other languages where each non-primitive variable is actually a reference, object
+slicing doesn't happen.
+\end{itemize}
+\section{Data Abstraction and Encapsulation}
+The idea is to write classes with a well-defined boundary between:
+\begin{enumerate}
+\item Implementation: how the class works, the variables and functions it needs for its work.
+\item Interface: the function calls and variables accessible to the users of the class.
+\end{enumerate}
+Data abstraction allows:
+\begin{itemize}
+\item Implementation of a class to evolve without affecting code that uses it.
+\item Prohibiting users from possibly disturbing the state of the objects of the class,
+which may affect correctness of its functions. Ex. A user sets the \texttt{top} pointer
+inside a stack's implementation to the start of the array, without updating the length,
+which is non-zero. This results in a segmentation fault.
+\end{itemize}
+It is enforced using access specifiers. Data encapsulation is about
+bundling all the related data and functions that use it into one class,
+keeping as much implementation detail from the user as possible.
+\section{Abstract Classes a.k.a C++ Interfaces}
+An abstract class is a class with at least one \textbf{pure virtual function}.
+Such classes define an interface that all derived classes have to support (have an
+implementation of).
+\section{Notes from interview questions}
+\begin{itemize}
+    \item The constructors of parent base classes are called in the order that they are declared and before the constructor of the derived class.
+    \item Note that destructors are called in the completely reverse order of constructors. (Think of it as a stack of objects of base classes, with the derived class at the top).
+\begin{lstlisting}
+    class Derived: public Base1, public Base2...
+    //base1 constructor.
+    //base2 constructor.
+    //derived constructor.
+    ...
+    //derived destructor.
+    //base 2 destructor.
+    //base 1 destructor.
+\end{lstlisting}
+    \item When two sibling classes are used to derive a new class, multiple (redundant) copies
+    of the base class's members are made. This can be avoided by using the virtual keyword in
+    the declaration of the sibling classes:
+    \begin{lstlisting}
+        class base{};
+        class b1: virtual public base{};//
+        class b2: virtual public base{};//without virtual in both of them, copies are made.
+        class derived: public b1, public b2{};
+    \end{lstlisting}
+\end{itemize}
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 
