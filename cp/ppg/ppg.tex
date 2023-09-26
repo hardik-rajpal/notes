@@ -693,7 +693,34 @@ implementation of).
         class b2: virtual public base{};//without virtual in both of them, copies are made.
         class derived: public b1, public b2{};
     \end{lstlisting}
+    \begin{itemize}
+        \item Without \texttt{virtual}, each parent class maintains its copy of variables from the base class,\\
+        and sizeof(derived) = (sizeof(b1)+size(b2)).
+        \item With \texttt{virtual},\\ sizeof(derived) = (sizeof(b1 without b data)+sizeof(b2 without b data) + sizeof(b)+16B)
+        \item The 16B are for book keeping. It can also be 8B on some systems.
+        \item Note that all parent classes are prefixed with \texttt{virtual} and share ancestors, have a single copy of the ancestor's variables in the derived class.
+        \item The book-keeping info grows with 8B for each new parent class. It doesn't grow with the size of the base class (or any class).
+    \end{itemize}
+    \item In multilevel inheritance (A->B->C), any function calls from an object of type C are linearly searched for up the hierarchy, and the first implementation is taken.
+    \item Pointers of a parent type can hold a child, but child pointers being assigned to parent objects raises compilation errors.
+    \item Pointers of a parent type can only access members (variables and functions) declared and declared public in the parent.
+    \item When a derived class defines a function with the same name as some function its base class, all functions (even with different signatures) of the base class with the same name become inaccessible to objects.
+    \item However, using a pointer of the base type to point to the object of the derived class, both the overridden method and the unoverridden overload of a method with the same name can be accessed.
+    \item Or, using a scope resolution operator:
+    \begin{lstlisting}
+        d.Base::fun(5);//goes through.
+        Base &b = d;
+        b.fun(5);//goes through.
+    \end{lstlisting}
+    \item Accessing members of the root class, using an object of a class derived from two non-virtual sibling descendants of the root, leads to compilation errors. To avoid this, either declare the siblings as virtual descendants or use scope resolution operators (of the sibling classes, not the root!).
 \end{itemize}
+\subsubsection{Initializer Lists}
+\begin{itemize}
+\item Initializer lists of a derived class can't
+include members of the base class. They need to be initialized using the contructor of the base class.
+\end{itemize}
+\subsubsection{Diamond Problem of Multiple Inheritance}
+TODO
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 
