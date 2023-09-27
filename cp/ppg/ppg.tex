@@ -527,6 +527,7 @@ TODO: problems/issues with multiple inheritance.
     };
 \end{lstlisting}
 \section{Overloading}
+TODO order of usage around operators study.
 \begin{itemize}
     \item A single identifier (function name/operator) corresponds to two different implementations, based on the argument list supplied to it.
     \item Overload resolution refers to the compiler's task of selecting the most appropriate implementation when it encounters a call to an overloaded function.
@@ -537,6 +538,11 @@ TODO: problems/issues with multiple inheritance.
         //Not as a member function:
         Box operator+(const Box&, const Box&);
     \end{lstlisting}
+    \item In general, use const and \& for operands to 
+    \begin{itemize}
+        \item Avoid accidentally modifying them in the operation.
+        \item Avoid time spent copying them around.
+    \end{itemize}
     \item Most operators can be overloaded:
     \begin{center}
         \includegraphics[width=8cm]{rsrc/overloadableops.png}
@@ -549,9 +555,29 @@ TODO: problems/issues with multiple inheritance.
         \item ?:
     \end{enumerate}
     \item Unary operators include: ++ (post,pre), -- (post,pre), -, ~ and !
-    \item TODO special cases for each overloading.
 \end{itemize}
-    \section{Polymorphism}
+\subsection{Overloading ++ (and --)}
+\begin{lstlisting}
+class Digit{
+//postfix: a++ : returns an rval.
+Digit operator++(int){
+    ... return digit;
+}
+//prefix: ++a : returns an lval. (original variable)
+Digit& operator++(){
+    ... return *this;
+}
+}
+\end{lstlisting}
+\begin{itemize}
+\item Both definitions have something unique:
+\begin{enumerate}
+    \item \& in the prefix definition, to ensure it returns an lvalue.
+    \item (int) in the postfix definition is necessary to distinguish it from the prefix definition, as c++ doesn't support return-value-based overloading.
+\end{enumerate}
+\item Also note that though operator++(int) looks like ++a (prefix), it's actually for a++ (postfix).
+\end{itemize}
+\section{Polymorphism}
 Polymorphism means a call to a member function (after resolution of overloads), can lead to different implementations being called, based on the type of object that invokes the function.
 \subsection{Static Linkage}
 \begin{lstlisting}
@@ -721,6 +747,72 @@ include members of the base class. They need to be initialized using the contruc
 \end{itemize}
 \subsubsection{Diamond Problem of Multiple Inheritance}
 TODO
+\subsection{Copy Constructors}
+\begin{lstlisting}
+class Sample{
+    int id;
+    Sample(Sample &t)
+    {
+        id=t.id;
+    }
+};
+//defines what do to do when:
+Sample a,b;
+a = b;//calls copy constructor of a.
+\end{lstlisting}
+\begin{itemize}
+\item Used to intialize members of a newly created object by copying members of an already existing object.
+\item It takes a reference parameter of an object of the same class.
+\item This is known as copy initialization, a.k.a. member-wise initialization.
+\item If not defined explicitly by the programmer, the compiler 
+defines it for us.
+\end{itemize}
+\subsubsection{Types of Copy Constructors}
+\begin{enumerate}
+\item Default Copy Constructor: The implementation offered by the compiler which copies the bases and members of an object in the same order that a constructor would intialize the bases and members of the object.
+\item User Defined Copy Constructor: needed when an object owns pointers or non-shareable references, such as to a file. A destructor and assignment operator should also ideally be written in this case to assist in transfer/destruction of said references.
+\end{enumerate}
+A copy constructor is called when:
+\begin{itemize}
+\item An object of the class is \textbf{returned by value.}
+\item An object of the class is \textbf{passed by value} as an argument.
+\item An object is constructed based on another object of the same class. Ex: \texttt{Shape s1 = {1,2}; Shape s2(s1) or Shape s2 = s1;}
+\item The compiler generates \textbf{a temporary object.}
+\end{itemize}
+Note that it's not called when a previously declared object is assigned another object. This calls the assignment operator.
+\begin{lstlisting}
+Shape s1,s2;
+s1 = {1,3};
+Shape s3(s1);//calls copy constructor.
+Shape s4 = s1;//calls copy constructor.
+s2 = s1;//calls assignment operator.
+\end{lstlisting}
+Note that a call to the copy constructor is not guarranteed as
+the compiler performs optimizations like \textbf{return value 
+optimization} and \textbf{copy elision} to avoid unnecessary 
+copies where possible. (TODO)\\
+Other points:
+\begin{itemize}
+\item Use a user-defined copy constructor when the default copy constructor results in a shallow copy (say, if some members are pointers). Deep-copy is only possible in a user-defined constructor.
+\item Copy constructors can be made private, and this makes objects of the class non-copyable. It's particularly useful (as a lazy technique to avoid shallow copies) if the class has pointers of dynamically allocated resources. The right way is to write a deep-copy-constructor and make it public.
+\item A copy constructor which takes the object argument by value leads to a compilation error, as at runtime it would have lead to an infinite chain of copy constructor calls.
+\item Use const in the argument to make sure:
+\begin{enumerate}
+    \item The source object isn't accidentally modified.
+    \item The copy-constructor can be called with temporary objects created by the compiler, which can't be bound to non-const references.
+    \begin{lstlisting}
+        //if copy constructor doesn't say const Shape &s1,
+        Shape s2 = fun();//fun returns s2 by value.
+        //the above code throws a compilation error, at the last line.
+        //If const is present, it compiles.
+    \end{lstlisting}
+\end{enumerate} 
+\item In default constructors, default constructors of parents are called before those of derived classes, but, in copy constructors, the parent's default constructors (not copy constructors are called), unless the implementation of the derived class' copy constructor specifically calls their copy constructors.
+\end{itemize}
+\subsubsection{Copy Elision (a.k.a. Copy Omission)} 
+The compiler avoids making copies of objects (in pass by value/return by value scenarios) where possible.
+
+
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 

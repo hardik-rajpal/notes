@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  26 SEP 2023 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  27 SEP 2023 13:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -478,33 +478,33 @@ Chapter 7.
 [13
 
 ]
-<rsrc/overloadableops.png, id=429, 502.2765pt x 233.07076pt>
+<rsrc/overloadableops.png, id=439, 502.2765pt x 233.07076pt>
 File: rsrc/overloadableops.png Graphic file (type png)
 <use rsrc/overloadableops.png>
-Package pdftex.def Info: rsrc/overloadableops.png  used on input line 542.
+Package pdftex.def Info: rsrc/overloadableops.png  used on input line 548.
 (pdftex.def)             Requested size: 227.62204pt x 105.62415pt.
- [14 <./rsrc/overloadableops.png>] [15] [16] [17] [18]
+ [14 <./rsrc/overloadableops.png>] [15] [16] [17] [18] [19] [20]
 Chapter 8.
 (parts/aptitude.tex) 
 AED: lastpage setting LastPage
-[19
+[21
 
 ] (ppg.aux)
 Package rerunfilecheck Info: File `ppg.out' has not changed.
-(rerunfilecheck)             Checksum: 26ED8390604E11D014FD48673EE84075;4014.
+(rerunfilecheck)             Checksum: 08ACD5F117832A59018D0884CAFDA06B;4354.
  ) 
 Here is how much of TeX's memory you used:
- 13627 strings out of 478338
- 209018 string characters out of 2832889
- 902221 words of memory out of 3000000
- 31494 multiletter control sequences out of 15000+600000
+ 13745 strings out of 478338
+ 210332 string characters out of 2832889
+ 891227 words of memory out of 3000000
+ 31566 multiletter control sequences out of 15000+600000
  479994 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  72i,6n,77p,414b,2054s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ppg.pdf (20 pages, 302932 bytes).
+Output written on ppg.pdf (22 pages, 317658 bytes).
 PDF statistics:
- 706 PDF objects out of 1000 (max. 8388607)
- 365 named destinations out of 1000 (max. 500000)
- 238 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 775 PDF objects out of 1000 (max. 8388607)
+ 411 named destinations out of 1000 (max. 500000)
+ 254 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,36 +1,29 @@
-#include<iostream>
+// C++ program to demonstrate the working of copy elision
+// via RVO
+#include <iostream>
 using namespace std;
-
-class Base
-{
-protected:
-	int a;
+ 
+class GFG {
 public:
-	Base() {a = 0;}
+	int a = 1;
+    GFG() { cout << "Default Constructor\n"; }
+    GFG(const GFG&) // Copy Construcctor
+    {
+        cout << "Copy Constructor\n";
+    }
 };
-
-class Derived1: public Base
+ 
+GFG func()
 {
-public:
-	int c;
-};
-
-
-class Derived2: public Base
+	GFG g;//calls default constructor.
+	return g; // RVO example //calls copy constructor
+}
+ 
+int main()
 {
-public:
-	int c;
-};
-
-class DerivedDerived: public Derived1, public Derived2
-{
-public:
-	void show() { cout << Base::a; }
-};
-
-int main(void)
-{
-	DerivedDerived d;
-	d.show();
-	return 0;
+    // GFG G = func();
+	GFG G = func();
+	//above line initializes a temp G.
+	//
+    return 0;
 }

@@ -24,14 +24,18 @@
 \contentsline {section}{\numberline {7.2}Inheritance from \href {https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint}}{13}{section.7.2}%
 \contentsline {subsection}{\numberline {7.2.1}Multiple Inheritance}{14}{subsection.7.2.1}%
 \contentsline {section}{\numberline {7.3}Overloading}{14}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Polymorphism}{14}{section.7.4}%
+\contentsline {subsection}{\numberline {7.3.1}Overloading ++ (and --)}{15}{subsection.7.3.1}%
+\contentsline {section}{\numberline {7.4}Polymorphism}{15}{section.7.4}%
 \contentsline {subsection}{\numberline {7.4.1}Static Linkage}{15}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}Dynamic Linkage}{15}{subsection.7.4.2}%
-\contentsline {subsubsection}{Pure Virtual Functions}{15}{section*.24}%
-\contentsline {section}{\numberline {7.5}Data Abstraction and Encapsulation}{16}{section.7.5}%
+\contentsline {subsection}{\numberline {7.4.2}Dynamic Linkage}{16}{subsection.7.4.2}%
+\contentsline {subsubsection}{Pure Virtual Functions}{16}{section*.24}%
+\contentsline {section}{\numberline {7.5}Data Abstraction and Encapsulation}{17}{section.7.5}%
 \contentsline {section}{\numberline {7.6}Abstract Classes a.k.a C++ Interfaces}{17}{section.7.6}%
 \contentsline {section}{\numberline {7.7}Notes from interview questions}{17}{section.7.7}%
 \contentsline {subsubsection}{Initializer Lists}{18}{section*.25}%
 \contentsline {subsubsection}{Diamond Problem of Multiple Inheritance}{18}{section*.26}%
-\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{19}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Number Sequence}{19}{section.8.1}%
+\contentsline {subsection}{\numberline {7.7.1}Copy Constructors}{18}{subsection.7.7.1}%
+\contentsline {subsubsection}{Types of Copy Constructors}{19}{section*.27}%
+\contentsline {subsubsection}{Copy Elision (a.k.a. Copy Omission)}{20}{section*.28}%
+\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{21}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Number Sequence}{21}{section.8.1}%
