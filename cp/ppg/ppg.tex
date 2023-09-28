@@ -35,7 +35,7 @@
     tabsize=2
 }
 
-\lstset{style=mystyle}
+\lstset{style=mystyle,language=C++}
 \title{Pre-Placement Grind}
 \maketitle
 \tableofcontents
@@ -229,7 +229,7 @@ void search(int k) {
     }
 }
 \end{lstlisting}
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 for (int b = 0; b < (1<<n); b++) {
     //b runs from 00..00 to 11...11
     vector<int> subset;
@@ -380,7 +380,7 @@ root value to the confluence of values at \texttt{rv} and
 \end{enumerate}
 Modifications can be made to record the predecessors in the paths
 or calculate the weights of the paths.
-\begin{lstlisting}[caption=Shortest Path]
+\begin{lstlisting}[language=C++,caption=Shortest Path]
 int distance(vector<int> &pi, vector<int> &pj);
 int dijkstras(vector<vector<int>>& ps, int s, int target) {
     int n = ps.size(), res = 0, i = s;
@@ -400,7 +400,7 @@ int dijkstras(vector<vector<int>>& ps, int s, int target) {
     return res;
 }
 \end{lstlisting}
-\begin{lstlisting}[caption=Dijkstra's MST]
+\begin{lstlisting}[language=C++,caption=Dijkstra's MST]
 int distance(vector<int> &pi, vector<int> &pj);
 int dijkstras(vector<vector<int>>& ps, int s, int target) {
     int n = ps.size(), res = 0, i = s,connected = 0;
@@ -426,7 +426,7 @@ These usually involve finding the (lexicographically) minimal
 subsequence. We maintain a stack to track the sequence
 selected so far. To reverse a stack to get the subsequence, the
 most optimal method is:
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 while(s.size()){
     ans.push_back(s.top());
     s.pop();
@@ -494,7 +494,7 @@ down to:
     \end{enumerate}
 \end{itemize}
 \section{Inheritance from \href{https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint}}
-\begin{lstlisting}[caption=Syntax]
+\begin{lstlisting}[language=C++,caption=Syntax]
     class DerivedClass: access-specifier BaseClass{
         //access-specifier is one on public/private/protected.
     };
@@ -521,7 +521,7 @@ down to:
 \end{itemize}
 \subsection{Multiple Inheritance}
 TODO: problems/issues with multiple inheritance.
-\begin{lstlisting}[caption=Syntax]
+\begin{lstlisting}[language=C++,caption=Syntax]
     class DerivedClass: access-specifier baseA, access-specifier baseB ... {
     //access-specifier is one of public/protected/private.
     };
@@ -532,7 +532,7 @@ TODO order of usage around operators study.
     \item A single identifier (function name/operator) corresponds to two different implementations, based on the argument list supplied to it.
     \item Overload resolution refers to the compiler's task of selecting the most appropriate implementation when it encounters a call to an overloaded function.
     \item Note: operators can be overloaded outside classes too:
-    \begin{lstlisting}
+    \begin{lstlisting}[language=C++]
         //As a member function:
         Box operator+(const Box&);
         //Not as a member function:
@@ -557,7 +557,7 @@ TODO order of usage around operators study.
     \item Unary operators include: ++ (post,pre), -- (post,pre), -, ~ and !
 \end{itemize}
 \subsection{Overloading ++ (and --)}
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 class Digit{
 //postfix: a++ : returns an rval.
 Digit operator++(int){
@@ -580,7 +580,7 @@ Digit& operator++(){
 \section{Polymorphism}
 Polymorphism means a call to a member function (after resolution of overloads), can lead to different implementations being called, based on the type of object that invokes the function.
 \subsection{Static Linkage}
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 class Shape {
    public:
       int area() {
@@ -620,7 +620,7 @@ Prefixing function identifiers that are shared across derived and base classes w
 If a function is always intended to be overridden in the derived classes and there's no meaningful definition in the base class,
 we can just declare the function in the base class and set it to zero to avoid compilation errors about no definition being found for
 the function in the base class.
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 class Shape{
     //virtual int area();
     //Above line compiles if there are no to area() from any objects of shape/derived classes.
@@ -645,7 +645,7 @@ across all derived descendant classes, even without the virtual keyword being pr
 intermediate classes.
 \item The \texttt{final} keyword can be used to throw a compilation error if a function
 that we don't want any base classes to override is overridden:
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 class Rectangle:public Shape{
     public:
     int area()final{
@@ -659,7 +659,7 @@ class Rectangle:public Shape{
 \item \textbf{Object Slicing:} When an object of a derived class is assigned to an object (not a pointer) of
 a base class, only members inherited from the base class are kept and the others are discarded. Thus,
 all functions that may have been overridden are reverted to their definitions in the base class.
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 void printarea(Shape s){
     s.area();
 }
@@ -700,7 +700,7 @@ implementation of).
 \begin{itemize}
     \item The constructors of parent base classes are called in the order that they are declared and before the constructor of the derived class.
     \item Note that destructors are called in the completely reverse order of constructors. (Think of it as a stack of objects of base classes, with the derived class at the top).
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
     class Derived: public Base1, public Base2...
     //base1 constructor.
     //base2 constructor.
@@ -713,7 +713,7 @@ implementation of).
     \item When two sibling classes are used to derive a new class, multiple (redundant) copies
     of the base class's members are made. This can be avoided by using the virtual keyword in
     the declaration of the sibling classes:
-    \begin{lstlisting}
+    \begin{lstlisting}[language=C++]
         class base{};
         class b1: virtual public base{};//
         class b2: virtual public base{};//without virtual in both of them, copies are made.
@@ -733,7 +733,7 @@ implementation of).
     \item When a derived class defines a function with the same name as some function its base class, all functions (even with different signatures) of the base class with the same name become inaccessible to objects.
     \item However, using a pointer of the base type to point to the object of the derived class, both the overridden method and the unoverridden overload of a method with the same name can be accessed.
     \item Or, using a scope resolution operator:
-    \begin{lstlisting}
+    \begin{lstlisting}[language=C++]
         d.Base::fun(5);//goes through.
         Base &b = d;
         b.fun(5);//goes through.
@@ -748,7 +748,7 @@ include members of the base class. They need to be initialized using the contruc
 \subsubsection{Diamond Problem of Multiple Inheritance}
 TODO
 \subsection{Copy Constructors}
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 class Sample{
     int id;
     Sample(Sample &t)
@@ -780,7 +780,7 @@ A copy constructor is called when:
 \item The compiler generates \textbf{a temporary object.}
 \end{itemize}
 Note that it's not called when a previously declared object is assigned another object. This calls the assignment operator.
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
 Shape s1,s2;
 s1 = {1,3};
 Shape s3(s1);//calls copy constructor.
@@ -800,7 +800,7 @@ Other points:
 \begin{enumerate}
     \item The source object isn't accidentally modified.
     \item The copy-constructor can be called with temporary objects created by the compiler, which can't be bound to non-const references.
-    \begin{lstlisting}
+    \begin{lstlisting}[language=C++]
         //if copy constructor doesn't say const Shape &s1,
         Shape s2 = fun();//fun returns s2 by value.
         //the above code throws a compilation error, at the last line.
@@ -812,7 +812,91 @@ Other points:
 \subsubsection{Copy Elision (a.k.a. Copy Omission)} 
 The compiler avoids making copies of objects (in pass by value/return by value scenarios) where possible.
 
+\section{From LearnCPP.com}
+\subsection{14.4 Const objects}
+\begin{lstlisting}[language=C++]
+const Date today {2020, 10, 14};//valid.
+const Date today = {2020, 10, 14};//valid.
+//Note that const objects must be initialized, unless a default
+//constructor is defined.
+\end{lstlisting}
 
+Objects that are declared with \texttt{const} keyword (as a local variable, or a function argument) impose certain restrictions (that upon violation lead to compiler errors.):
+\begin{itemize}
+\item Their members variables can't be changed, neither via direct access nor calls to member functions that change them.
+\item Additionally, const objects can't call non-const member functions. \texttt{const} before the definition body indicates that the member function doesn't modify the members of the class; it doesn't impose any restrictions on the returned value or aruments.
+\begin{lstlisting}[language=C++]
+class Date{
+    //can't be called by a const object, despite not
+    //altering any variables in its definition:
+    void print(){
+        cout<<"non-const member function.";
+    }
+    //can be called by const objects:
+    void print2() const {
+        cout<<"const member function.";
+    }
+}
+\end{lstlisting}
+\item If the declaration and definition are written separately, \texttt{const} must be present after the function signature in both places.
+\begin{lstlisting}[language=C++]
+class Date{
+    void print() const;
+};
+void Date::print()const{
+    ...
+}
+\end{lstlisting}
+\item An attempt to modify the class inside a const function raises a compilation error, even inside unreachable if-blocks.
+\item Within the definition of a const member function, \texttt{this} is a const pointer to a const object.
+\item No constructor can be declared as a constant, as they need to modify the member variables, regardless of what their implementation says.
+\item It is perfectly fine to call const member functions from non-const objects.
+\item Functions can be overloaded based on whether they are const or not. So, const objects call the const variant while non-const objects call the non-const variant. This is usually done if constness changes the return value.
+\begin{lstlisting}[language=C++]
+//These are valid overloads:
+int fun(){
+
+};
+int fun()const{
+
+};
+//These are invalid as const keyword specifiers return type.
+int fun(){}
+const int fun(){}
+//Also note that
+const int fun(){};
+//is exactly the same as:
+int const fun(){};
+//and the two are different from
+int fun()const{};
+\end{lstlisting}
+\end{itemize}
+\subsection{14.6 Access functions}
+\begin{itemize}
+\item Trivial member functions to access selectd private data members.
+\item Of two types: Setters (mutators) and getters (accessors).
+\item Getters are made const so they can be called on const objects while setters have to be non-const.
+\item For efficiency, getters can be written to return constant lvalue references, instead of returning by value:
+\begin{lstlisting}
+const std::string &getName()const{return m_name;}
+\end{lstlisting}
+\item Note that such functions' returned references become invalid the moment the object is destroyed. So, the references should not be stored (and accessed) beyond the lifetime of the object.
+\begin{lstlisting}
+const std::string & ref = createEmployee().getName();
+//we store the reference to a property in the rvalue implicit
+//temporary object, created by the compiler.
+//accessing ref later leads to undefined behaviour. 
+\end{lstlisting}
+\item References returned from functions to private members should be constant; otherwise, they permit direct modification of private members.
+\end{itemize}
+\subsubsection{Ref-qualifier overloads}
+\begin{lstlisting}
+const std::string& getName() const & { return m_name; } // when called on an lvalue (single &), return member by reference
+const std::string getName() const && { return m_name; } // when called on an rvalue (double &&), return member by value
+// Alternately, we can disable the use of a member functions for rvalue objects
+const std::string& getName2() const && = delete;         // when called on an rvalue, emit a compilation error
+\end{lstlisting}
+TODO friend functions.
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document} 

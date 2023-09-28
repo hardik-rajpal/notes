@@ -1,29 +1,26 @@
 // C++ program to demonstrate the working of copy elision
 // via RVO
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
- 
-class GFG {
-public:
-	int a = 1;
-    GFG() { cout << "Default Constructor\n"; }
-    GFG(const GFG&) // Copy Construcctor
-    {
-        cout << "Copy Constructor\n";
+class Date{
+    public:
+    int m,y,d;
+    Date(){
+        m=9;y=2023;d=28;
     }
+    int print(int arg){
+        cout<<m<<" "<<d<<" "<<y<<endl;
+        srand(arg);
+        return rand();
+    }
+    const int print()const{return m;}
+    // int const print(){return 0;}
 };
- 
-GFG func()
-{
-	GFG g;//calls default constructor.
-	return g; // RVO example //calls copy constructor
-}
- 
+
 int main()
 {
-    // GFG G = func();
-	GFG G = func();
-	//above line initializes a temp G.
-	//
+    const Date d;
+    time_t timev;
+    cout<<d.print()<<endl;
     return 0;
 }
