@@ -897,6 +897,21 @@ const std::string getName() const && { return m_name; } // when called on an rva
 const std::string& getName2() const && = delete;         // when called on an rvalue, emit a compilation error
 \end{lstlisting}
 TODO friend functions.
+\section{Friends}
+A friend is a class or function (member or non-member) that has been granted full access to the private and protected members of another class. Using friends, classes can selectively give full access to their members without unnecessary impacts.\\
+The friendship is established by (declared in) the class removing its access control for some other entity.
+\subsection{Friend non-member Functions}
+With non-member functions, an object of the class must be accepted as an argument to access the relevant data.
+\begin{lstlisting}
+class Shape{
+    int area;
+    friend double paintcost(const Shape& shape);
+};
+double paintcost(const Shape& shape){
+    return shape.area*costunit;//accesses private member and compiles.
+}
+\end{lstlisting}
+Note that the friend function can also be defined inside the class, and remain a non-member function because of the \texttt{friend} keyword. 
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
-\end{document} 
+\end{document}

@@ -41,5 +41,7 @@
 \contentsline {subsection}{\numberline {7.8.1}14.4 Const objects}{20}{subsection.7.8.1}%
 \contentsline {subsection}{\numberline {7.8.2}14.6 Access functions}{21}{subsection.7.8.2}%
 \contentsline {subsubsection}{Ref-qualifier overloads}{21}{section*.29}%
-\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{22}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Number Sequence}{22}{section.8.1}%
+\contentsline {section}{\numberline {7.9}Friends}{21}{section.7.9}%
+\contentsline {subsection}{\numberline {7.9.1}Friend non-member Functions}{22}{subsection.7.9.1}%
+\contentsline {chapter}{\numberline {8}Aptitude Test Pointers}{23}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Number Sequence}{23}{section.8.1}%
