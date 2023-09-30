@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  30 SEP 2023 12:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  30 SEP 2023 23:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -434,83 +434,87 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 41.
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
-{C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (ppg.toc)
-\tf@toc=\write4
-\openout4 = `ppg.toc'.
-
-
+{C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (ppg.toc
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.43 \chapter
-             {Misc.} [1
+l.50 ...nd Member Functions}{25}{subsection.7.9.2}
+                                                  % [1
 
-] [2]
+])
+\tf@toc=\write4
+\openout4 = `ppg.toc'.
+
+ [2]
 Chapter 1.
 [3
 
-]
+] [4]
 Chapter 2.
-[4
+[5
 
-] [5] [6]
+] [6] [7]
 Chapter 3.
-[7
+[8
 
 ]
 Chapter 4.
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 216.
-[8
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 249.
+[9
 
-] [9]
+] [10]
 Chapter 5.
-[10
+[11
 
 ]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 347.
- [11] [12]
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 380.
+ [12] [13]
 Chapter 6.
-[13
-
-]
-Chapter 7.
 [14
 
 ]
-<rsrc/PoweredDevice2.png, id=472, 207.174pt x 128.27925pt>
+Chapter 7.
+[15
+
+]
+<rsrc/PoweredDevice2.png, id=542, 207.174pt x 128.27925pt>
 File: rsrc/PoweredDevice2.png Graphic file (type png)
 <use rsrc/PoweredDevice2.png>
-Package pdftex.def Info: rsrc/PoweredDevice2.png  used on input line 546.
+Package pdftex.def Info: rsrc/PoweredDevice2.png  used on input line 579.
 (pdftex.def)             Requested size: 207.17348pt x 128.27893pt.
- [15 <./rsrc/PoweredDevice2.png>]
-<rsrc/overloadableops.png, id=498, 502.2765pt x 233.07076pt>
+ [16 <./rsrc/PoweredDevice2.png>]
+<rsrc/overloadableops.png, id=568, 502.2765pt x 233.07076pt>
 File: rsrc/overloadableops.png Graphic file (type png)
 <use rsrc/overloadableops.png>
-Package pdftex.def Info: rsrc/overloadableops.png  used on input line 601.
+Package pdftex.def Info: rsrc/overloadableops.png  used on input line 634.
 (pdftex.def)             Requested size: 227.62204pt x 105.62415pt.
- [16] [17 <./rsrc/overloadableops.png>] [18] [19] [20] [21] [22] [23] [24]
+ [17] [18 <./rsrc/overloadableops.png>] [19] [20] [21] [22] [23] [24] [25]
 Chapter 8.
+[26
+
+] [27]
+Chapter 9.
 (parts/aptitude.tex) 
 AED: lastpage setting LastPage
-[25
+[28
 
 ] (ppg.aux)
 Package rerunfilecheck Info: File `ppg.out' has not changed.
-(rerunfilecheck)             Checksum: 28440FAD134DE07E92AECB6A1D76CA7E;5477.
+(rerunfilecheck)             Checksum: 54E4CA83F669EC664404527E140AA552;7036.
  ) 
 Here is how much of TeX's memory you used:
- 13741 strings out of 478338
- 211071 string characters out of 2832889
- 890954 words of memory out of 3000000
- 31457 multiletter control sequences out of 15000+600000
+ 13777 strings out of 478338
+ 211528 string characters out of 2832889
+ 890966 words of memory out of 3000000
+ 31469 multiletter control sequences out of 15000+600000
  479994 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  72i,6n,77p,414b,2113s stack positions out of 10000i,1000n,20000p,200000b,80000s
- <C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ppg.pdf (26 pages, 352498 bytes).
+ <C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on ppg.pdf (29 pages, 402829 bytes).
 PDF statistics:
- 939 PDF objects out of 1000 (max. 8388607)
- 515 named destinations out of 1000 (max. 500000)
- 307 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1039 PDF objects out of 1200 (max. 8388607)
+ 539 named destinations out of 1000 (max. 500000)
+ 403 words of extra memory for PDF output out of 10000 (max. 10000000)
 

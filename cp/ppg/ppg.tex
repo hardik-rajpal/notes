@@ -63,6 +63,38 @@
     \item That die roll problem optimization. (Needs to be phrased more mathematically.)
     \item Use of suffix arrays + descending order (or its prefix counterpart) to cut of paths in backtracking.
 \end{enumerate}
+\section{Binary Representations}
+\subsection{Unsigned numbers}
+Represent n using k bits $b_{k-1}b_{k-2}...b_0$:
+\begin{equation}
+n \in \{0,1,...2^{k}-1\}, n = \sum_{i=0}^{k-1}b_i\times2^{i}
+\end{equation}
+\subsection{1's complement}
+Represent n using k bits $b_{k-1}b_{k-2}...b_0$:
+\begin{equation}
+n \in {-(2^{k-1}-1),...-0,0,1,...2^{k-1}-1}, n = (-1)^{b_{k-1}}(\sum_{i=0}^{k-2} (c_i) \times 2^{i})
+\end{equation} 
+\begin{itemize}
+\item Where if $b_{k-1}==1$, $c_i=1-b_i$, else $c_i=b_i$.
+\item It has two representations of zero: 1* and 0*.
+\item MSB = 1 $\implies$ n $\leq$ 0, else n $\geq$ 0.
+\item Bits to n is equivalent to 
+\begin{itemize}
+    \item Identify sign based on MSB.
+    \item Flip all other bits and find the unsigned integer they represent.
+\end{itemize}
+\item To take one's complement of a number is to find its negative counterpart.
+\item It is equivalent to just flipping every bit.
+\end{itemize}
+\subsection{2's complement}
+Represent n using k bits $b_{k-1}b_{k-2}...b_0$:
+\begin{equation}
+n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i=0}^{i=k-1} b_i \times 2^i
+\end{equation}
+\begin{itemize}
+\item To take 2's complement of a number is to flip its bits and add 1 to it.
+\item This is equivalent to finding its negative in the 2's complement notation.
+\end{itemize}
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
@@ -202,7 +234,8 @@ after and before the chosen element.
     {It involves iterating over the array once, and in each iteration,
     if the current element is less than its left neighbour, we move it
     leftwards until its left neighbour is lower than it. It is in-place
-    and stable.}
+    and stable. Best case happens when the array is sorted: O(n). Worst case
+    is when it's in descending order: O($n^2$). Average time is O($n^2$).}
     {O($n^2$)}{O(1)}
     % \item \algodis{Radix/Counting Sort}
     % {}{}{}
@@ -980,6 +1013,92 @@ class Storage{
 \item Additionally, to use members of the class where friendship is declared (\texttt{Storage}), it should have been declared before the definition of the friend member function.
 \item A better solution is of course to split the code up into separate files.
 \end{itemize}
+
+\chapter{DSA Revision Notes}
+\section{Stacks, Queues, Linked Lists}
+\begin{itemize}
+\item Implementation of stack, queue, deque usually involve maintaining a
+fixed-size array and a pointer to the top/front/back of the queue that moves around.
+\item The growth strategies for a stack's underlying array are:
+\begin{itemize}
+    \item Growth: f(N) = 2N;
+    \item Tight: f(N) = N+c;
+\end{itemize}
+\item Push operation that call growing the underlying array cost f(N)+N+1 units.
+\item 
+\end{itemize}
+\section{Hash Tables}
+\begin{itemize}
+\item Load factor $\alpha = n/m$, where the hash table has $m$ slots (unique indices)
+and holds $n$ elements. $\alpha = $ average number of elements in each slot.
+\item A hash function maps the keys of a hash table to its indices.
+\item Hash functions are the composition of:
+\begin{enumerate}
+    \item Hash codemap: $KeySet \Longrightarrow Z$
+    \item Compression map: $Z \Longrightarrow [0,1,...N-1]$
+\end{enumerate}
+\item Both have to deterministic and dependent on the key.
+\item Strings are usually hashed using polynomials, with the characters
+as coefficients. Common points of evaluation of polynomials are
+x = 33, 37, 39 or 41.
+\item Some common compression maps:
+\
+begin{itemize}
+    \item $h(z) = z \% m$, where m is prime (~not too close to powers of 2.) m=$b^e$ makes for a bad compression map.
+    $x \% 2^e$ gives last e bits of x.
+    \item $h(z) = floor(m(fractional(zA)))$, where A $\in$ (0,1) and m = size of the table.
+    \item Often use m = $2^p$ for above.
+    \item Fibonacci hashing involves using A = $\frac{\sqrt{5}-1}{2}$
+    \item $h(z) = |ak+b| mod m$ where a,N are coprime.
+\end{itemize}
+\subsection{Universal Hashing}
+\begin{itemize}
+\item A solution to the idea of adversarial choices of elements for a determined hash function.
+\item A collection H of hash functions is universal if \\
+For a randomly chosen h $\in$ H and two keys $k$ and $l$,\\
+$P(h(k)=h(l)) < 1/m$
+\end{itemize}
+\subsection{Collision Resolution}
+\subsubsection{Chaining}
+\begin{itemize}
+\item Each key is mapped to a linked list with elements that share the key.
+\item Chaining is the most time efficient collision resolution method.
+\item Linked lists can be sorted if necessary.
+\item Search time = O($\alpha$).
+\end{itemize}
+\subsubsection{Open Addressing}
+\begin{itemize}
+\item Allows storage of at most m elements.
+\item Introduce NULL elements. Use an array of size m, initialized to NULLs.
+\item Systematically probe slots when searching for an element.
+\item Modify the hash function to take the probe number i as the second parameter.\\
+$h:\Longrightarrow Keyset \times {0, 1, 2 ... m-1}$
+\item Hash function determines the sequence of slots to be examined for a given key.
+\item ${h(k,0), h(k,1)...h(k,m-1)}$ is a permutation of ${0,1, ... m-1}$
+\item Variations of probing include:
+\begin{enumerate}
+    \item Linear probing
+    \begin{itemize}
+        \item if h(k) is used, find next empty slot for insertion.
+        \item Use a tombstone marker to delete elements, so later search queries can read the tombstone and check further elements.
+        \item For deletion, search all next slots where h(slot value) = h(k) or slot value == tombstone.
+        \item Rehash if there are too many tombstones.
+        \item Inserts are allowed to use tombstones.
+    \end{itemize}
+    \item Double hashing
+    \begin{itemize}
+        \item set h1(k) = initprobe and h2(k) = offset.
+        \item Search for empty slots starting at initprobe, in offsets of h2(k) mod m.
+        \item Avoid functions h2(k) which can be give zero.
+        \item If m is prime, this method examines every slot in the table.
+        \item Expected number of probes to find an empty slot = $\frac{1}{1-\alpha}$ (Or an unsuccessful search.)
+    \end{itemize}
+\end{enumerate}
+\end{itemize}
+\section{Trees}
+
+\section{KMP}
+\subsection{}
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document}

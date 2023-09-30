@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1696055556 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1696055558
+["pdflatex"] 1696096124 "c:/CODE/atgit/notes/cp/ppg/ppg.tex" "ppg.pdf" "ppg" 1696096126
   "C:/Users/HARDIK" 0 -1 0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1691860764 83945 ac50c7d48cf90009e98682356c799067 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1659703485 11548 758b1a062362f0cb8e36887f0e20f26b ""
@@ -33,7 +33,9 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmtt8.tfm" 1136765053 768 d7b9a2629a0c353102ad947dc9221d49 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1247596666 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1247596666 32080 340ef9bf63678554ee606688e7b5339d ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1247596667 30251 6afa5cb1d0204815a708a080681d4674 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1247596667 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb" 1247596667 37912 07513ec114ac737ab54cea0152f4424b ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1247596667 36281 c355509802a035cadc5f15869451dcee ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
@@ -41,6 +43,7 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1247596667 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1247596667 32762 7fee39e011c23b3589931effd97b9702 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1247596666 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247596666 32716 08e384dc442464e7285e891af9f45947 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1247596667 31099 342ef5a582aacbd3346f3cf4579679fa ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb" 1247596666 24287 6b803fa9eb1ddff9112e00519b09dd9e ""
@@ -113,12 +116,12 @@
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1696055553 48715 c971ef0a62c8850b226e2f3d7deece78 ""
+  "c:/CODE/atgit/notes/cp/ppg/ppg.tex" 1696096123 54150 55886fcfd3183e167903530c64e00b8c ""
   "parts/aptitude.tex" 1692098479 1281 ed07e645fe0eb5634f2a0b5e996b5b75 ""
-  "ppg.aux" 1696055558 7811 684351cceb710cd9ad599cc6e37de12e "pdflatex"
-  "ppg.out" 1696055558 5477 28440fad134de07e92aecb6a1d76ca7e "pdflatex"
-  "ppg.tex" 1696055553 48715 c971ef0a62c8850b226e2f3d7deece78 ""
-  "ppg.toc" 1696055558 3944 a88e0f11d75ee08c71a6953965089991 "pdflatex"
+  "ppg.aux" 1696096126 9536 7d52b4fd669c6c549778a8c1ed131559 "pdflatex"
+  "ppg.out" 1696096126 7036 54e4ca83f669ec664404527e140aa552 "pdflatex"
+  "ppg.tex" 1696096123 54150 55886fcfd3183e167903530c64e00b8c ""
+  "ppg.toc" 1696096126 5019 720c5ebbb1a3e9988dd417de74c02b59 "pdflatex"
   "rsrc/PoweredDevice2.png" 1696052722 3217 1e285d1bd863085f996eecfc06421e84 ""
   "rsrc/overloadableops.png" 1695631440 16393 b3288d8e947f57f33b3840fc92c83cb9 ""
   (generated)
