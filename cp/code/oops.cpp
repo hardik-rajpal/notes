@@ -2,25 +2,21 @@
 // via RVO
 #include <bits/stdc++.h>
 using namespace std;
-class Date{
+class Storage{
+    int val = 1023;
     public:
-    int m,y,d;
-    Date(){
-        m=9;y=2023;d=28;
-    }
-    int print(int arg){
-        cout<<m<<" "<<d<<" "<<y<<endl;
-        srand(arg);
-        return rand();
-    }
-    const int print()const{return m;}
-    // int const print(){return 0;}
+    friend class Display;
 };
-
+class Display{
+    public:
+    void print(const Storage& storage){
+        cout<<storage.val<<endl;
+    }
+};
 int main()
 {
-    const Date d;
-    time_t timev;
-    cout<<d.print()<<endl;
+    Storage s;
+    Display d;
+    d.print(s);
     return 0;
 }

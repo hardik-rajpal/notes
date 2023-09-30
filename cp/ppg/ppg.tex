@@ -493,7 +493,7 @@ down to:
         \item public: can be accessed everywhere.
     \end{enumerate}
 \end{itemize}
-\section{Inheritance from \href{https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint}}
+\section{Inheritance from \href{https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint} and LearnCpp.com}
 \begin{lstlisting}[language=C++,caption=Syntax]
     class DerivedClass: access-specifier BaseClass{
         //access-specifier is one on public/private/protected.
@@ -520,12 +520,67 @@ down to:
     \end{enumerate}
 \end{itemize}
 \subsection{Multiple Inheritance}
-TODO: problems/issues with multiple inheritance.
 \begin{lstlisting}[language=C++,caption=Syntax]
     class DerivedClass: access-specifier baseA, access-specifier baseB ... {
     //access-specifier is one of public/protected/private.
     };
 \end{lstlisting}
+\begin{itemize}
+\item \textbf{Mixins}: a small class that can be inherited from (in combination with other classes) to add properties to the derived class.
+\item The constructors of parent base classes are called in the order that they are declared and before the constructor of the derived class.
+\item Note that destructors are called in the completely reverse order of constructors. (Think of it as a stack of objects of base classes, with the derived class at the top).
+\begin{lstlisting}[language=C++]
+class Derived: public Base1, public Base2...
+//base1 constructor.
+//base2 constructor.
+//derived constructor.
+...
+//derived destructor.
+//base 2 destructor.
+//base 1 destructor.
+\end{lstlisting}
+\item If two parent classes contain members with the same signature (name, args), a call to the signature from their common child class' object raises a compilation error. This is resolved using scope resolution operators.
+\end{itemize}
+\subsubsection{Diamond Problem of Multiple Inheritance}
+\begin{itemize}
+\item When two parent classes that share a base class are used to derive a child class, the inheritance tree looks like this:
+\begin{center}
+\includegraphics{rsrc/PoweredDevice2.png}
+\end{center}
+\item Each parent class has its own copy of the base class data members (resulting in redundant copies), and we can't call public members of the base class from the new derived class.
+\item The diamond problem refers to our liking for a single instance of the base class in such cases of multiple inheritance, which is different from what happens when we try to implement such a hierarchy.
+\item The solution is to use the keyword virtual while declaring the parent classes to identify them as virtual base classes:
+\begin{lstlisting}[language=C++]
+    class base{};
+    class b1: virtual public base{};//
+    class b2: virtual public base{};//without virtual in both of them, copies are made.
+    class derived: public b1, public b2{};
+\end{lstlisting}
+\begin{itemize}
+    \item Without \texttt{virtual}, each parent class maintains its copy of variables from the base class,\\
+    and sizeof(derived) = (sizeof(b1)+size(b2)).
+    \item With \texttt{virtual},\\ sizeof(derived) = (sizeof(b1 without b data)+sizeof(b2 without b data) + sizeof(b)+16B)
+    \item The 16B are for book keeping. It can also be 8B on some systems.
+    \item Note that all parent classes are prefixed with \texttt{virtual} and share ancestors, have a single copy of the ancestor's variables in the derived class.
+    \item The book-keeping info grows with 8B for each new parent class. It doesn't grow with the size of the base class (or any class).
+\end{itemize}
+\item The construction of the base class becomes the responsibility of the derived class:
+\begin{lstlisting}
+class Copier: public Scanner, public Printer{
+public:
+Copier():PoweredDevice()/*base class*/, Scanner(), Printer(){
+    //Order of constructor defintions run.
+    //Base
+    //base1
+    //base2
+    //Derived
+}
+}
+\end{lstlisting}
+\item The point above is true because of Printer, Scanner being virtual base classes. The order of constructors holds \textbf{even when single inheritance is done from a virtual base class}.
+
+\item Accessing members of the root class, using an object of a class derived from two non-virtual sibling descendants of the root, leads to compilation errors. To avoid this, either declare the siblings as virtual descendants or use scope resolution operators (of the sibling classes, not the root!).
+\end{itemize}
 \section{Overloading}
 TODO order of usage around operators study.
 \begin{itemize}
@@ -698,35 +753,6 @@ Such classes define an interface that all derived classes have to support (have 
 implementation of).
 \section{Notes from interview questions}
 \begin{itemize}
-    \item The constructors of parent base classes are called in the order that they are declared and before the constructor of the derived class.
-    \item Note that destructors are called in the completely reverse order of constructors. (Think of it as a stack of objects of base classes, with the derived class at the top).
-\begin{lstlisting}[language=C++]
-    class Derived: public Base1, public Base2...
-    //base1 constructor.
-    //base2 constructor.
-    //derived constructor.
-    ...
-    //derived destructor.
-    //base 2 destructor.
-    //base 1 destructor.
-\end{lstlisting}
-    \item When two sibling classes are used to derive a new class, multiple (redundant) copies
-    of the base class's members are made. This can be avoided by using the virtual keyword in
-    the declaration of the sibling classes:
-    \begin{lstlisting}[language=C++]
-        class base{};
-        class b1: virtual public base{};//
-        class b2: virtual public base{};//without virtual in both of them, copies are made.
-        class derived: public b1, public b2{};
-    \end{lstlisting}
-    \begin{itemize}
-        \item Without \texttt{virtual}, each parent class maintains its copy of variables from the base class,\\
-        and sizeof(derived) = (sizeof(b1)+size(b2)).
-        \item With \texttt{virtual},\\ sizeof(derived) = (sizeof(b1 without b data)+sizeof(b2 without b data) + sizeof(b)+16B)
-        \item The 16B are for book keeping. It can also be 8B on some systems.
-        \item Note that all parent classes are prefixed with \texttt{virtual} and share ancestors, have a single copy of the ancestor's variables in the derived class.
-        \item The book-keeping info grows with 8B for each new parent class. It doesn't grow with the size of the base class (or any class).
-    \end{itemize}
     \item In multilevel inheritance (A->B->C), any function calls from an object of type C are linearly searched for up the hierarchy, and the first implementation is taken.
     \item Pointers of a parent type can hold a child, but child pointers being assigned to parent objects raises compilation errors.
     \item Pointers of a parent type can only access members (variables and functions) declared and declared public in the parent.
@@ -738,15 +764,12 @@ implementation of).
         Base &b = d;
         b.fun(5);//goes through.
     \end{lstlisting}
-    \item Accessing members of the root class, using an object of a class derived from two non-virtual sibling descendants of the root, leads to compilation errors. To avoid this, either declare the siblings as virtual descendants or use scope resolution operators (of the sibling classes, not the root!).
 \end{itemize}
 \subsubsection{Initializer Lists}
 \begin{itemize}
 \item Initializer lists of a derived class can't
 include members of the base class. They need to be initialized using the contructor of the base class.
 \end{itemize}
-\subsubsection{Diamond Problem of Multiple Inheritance}
-TODO
 \subsection{Copy Constructors}
 \begin{lstlisting}[language=C++]
 class Sample{
@@ -896,11 +919,10 @@ const std::string getName() const && { return m_name; } // when called on an rva
 // Alternately, we can disable the use of a member functions for rvalue objects
 const std::string& getName2() const && = delete;         // when called on an rvalue, emit a compilation error
 \end{lstlisting}
-TODO friend functions.
 \section{Friends}
 A friend is a class or function (member or non-member) that has been granted full access to the private and protected members of another class. Using friends, classes can selectively give full access to their members without unnecessary impacts.\\
 The friendship is established by (declared in) the class removing its access control for some other entity.
-\subsection{Friend non-member Functions}
+\subsection{Friend (non-member) Functions}
 With non-member functions, an object of the class must be accepted as an argument to access the relevant data.
 \begin{lstlisting}
 class Shape{
@@ -911,7 +933,55 @@ double paintcost(const Shape& shape){
     return shape.area*costunit;//accesses private member and compiles.
 }
 \end{lstlisting}
-Note that the friend function can also be defined inside the class, and remain a non-member function because of the \texttt{friend} keyword. 
+\begin{itemize}
+\item Note that the friend function can also be defined inside the class, and remain a non-member function because of the \texttt{friend} keyword.
+\item A function can be a friend of multiple classes, all of 
+which appear in its argument list. These are used when it makes 
+less syntactic sense to make the function a member of either 
+class.
+\begin{lstlisting}
+friend void printWeather(const Temperature& temp, const Humidity& hum){
+    //access private members of both temp and hum at once.
+}
+\end{lstlisting}
+\item Access specifiers make no difference to the availability of friend functions as they are non-members anyways.
+\item Friend functions should also use the class' interface where possible, instead of directly accessing data, as this insulates them from future change in the class.
+\end{itemize}
+
+\subsection{Friend Classes and Member Functions}
+\begin{itemize}
+    \item Friend classes can access private and protected members of another class.
+\begin{lstlisting}
+class Storage{
+    //private members here.
+    friend class Display;
+    //Display declared as a friend of storage.
+    //Display accesses all members of storage.
+    //Note: no forward declaration required.
+};
+class Display{
+    void print(const Storage& storage);
+}
+\end{lstlisting}
+\item Friendship is not reciprocal.
+\item Friendship is not transitive.
+\item Frienship is not inherited. Classes derived from a friend are not friends.
+\end{itemize}
+\subsubsection{Friend Member Functions}
+\begin{itemize}
+\item One point worth prattling about is that the compiler needs to have seen the declaration of a member function before it can be declared as a friend somewhere using the syntax below:
+\begin{lstlisting}
+class Storage{
+    //private members.
+    friend void Display::displayStorage(Storage &storage);
+    //compiler should have seen displayStorage in Display 
+    //before this line.
+};
+\end{lstlisting} 
+\item This implies the compiler should have encounted the \textbf{full definition of the class} to which the member function belongs, not just a forward declaration.
+\item Additionally, to use members of the class where friendship is declared (\texttt{Storage}), it should have been declared before the definition of the friend member function.
+\item A better solution is of course to split the code up into separate files.
+\end{itemize}
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document}
