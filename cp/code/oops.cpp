@@ -14,9 +14,7 @@ class Display{
     }
 };
 int main()
-{
-    Storage s;
-    Display d;
-    d.print(s);
+{   
+
     return 0;
 }
