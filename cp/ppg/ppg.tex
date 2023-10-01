@@ -1199,6 +1199,18 @@ Tree search(Tree t,Value v){
 \end{itemize}
 \item Method implementations:
 \begin{enumerate}
+\item Replace: Given x,y and parent(x), replace x by y as a child of parent(x).
+\begin{lstlisting}
+void replace(Node*x, Node*y, Node*px){
+    if(px->left==x){
+        px->left = y;
+    }
+    else{
+        //(px->right==x)
+        px->right = y;
+    }
+}
+\end{lstlisting}
 \item Search: as given above.
 \item Insert: search for node in tree, insert as a child where NULL is found.
 \item Successor:
@@ -1305,14 +1317,17 @@ void eulerian(Node n){
 \end{enumerate}
 \subsection{AVL Trees}
 \begin{itemize}
-\item They are aka height-balanced trees.
-\item They are binary (searchable,sorted) trees, with the added property of balance.
+\item They are aka height-balanced binary search trees.
 \item If $h(n)$ denotes the height of the tree rooted at n:
 \begin{center}
-    $h(n) = 1+max_{u \in n.children}(h(u))$\\
+    $h(n) = 1+max(h(n\rightarrow left),h(n\rightarrow right))$\\
     $h(n) = 1 \implies $ n is a leaf.\\
 \end{center}
-\item $\forall n \in \{Internal Nodes\}, |h(u)-h(v)| \le 1$, where $u$ and $v$ are children of n.
+\item Define the balance factor of a node as:
+\begin{center}
+    $BF(n) = h(n\rightarrow right) - h(n\rightarrow left)$
+\end{center}
+\item $\forall n \in \{Internal Nodes\}, |h(n\rightarrow right)-h(n\rightarrow left)| \le 1$
 \item $h(root) \le log_{\phi}(n)$
 \item If the leaf closest to the root is at level k:
 \begin{enumerate}
@@ -1328,9 +1343,112 @@ void eulerian(Node n){
     \item On the first $(h-1)/2$ levels, AVL tree is complete (full).
     \item $ 2^{(h-1)/2}\le n \le 2^{h}$
 \end{enumerate}
-\item Method implementations :
+\item Method implementations:
 \begin{enumerate}
-\item Insertion: 
+\item Update: (private) method to update height values and balance factor values across the tree (or subtree passed as argument.)
+\item Rotaion: operation used in insertion and deletion for balance restoration.
+\begin{center}
+\includegraphics[width=8cm]{rsrc/AVL-rotation.jpg}
+\end{center}
+\begin{itemize}
+\item Either structure being a valid BST implies the other is a valid BST.
+\end{itemize}
+\begin{lstlisting}
+void rotate(Node* u,Node* v){
+    //u is the parent to v.
+    Node *p = parent(u);
+    if(u->left==v){
+        u->left = v->right;
+        v->right = u;
+        if(p->left==u){
+            p->left = v;
+        }
+        else{
+            p->right = v;
+        }
+    }
+    else{
+        u->right = v->left;
+        v->left = u;
+        if(p->left==u){
+            p->left = v;
+        }
+        else{
+            p->right = v;
+        }
+    }
+}
+\end{lstlisting}
+\item Insertion: O(logn)
+\begin{lstlisting}
+void insert(Node *n, Value x){
+    PathTraversed path = bstInsert(n,x);
+    //path.last = x's node.
+    //find closest ancestor of x that is imbalanced.
+    //imbalance is possible because of a height increment.
+    Node *top, *mid, *bot;
+    bot = path.back();//x's node.
+    mid = parent(bot);
+    top = parent(mid);
+    //top will point to the imbalanced node.
+    //top->mid->bot belongs to the path.
+    while(balanced(top) && parent(top)!=top){
+        //root check condition.
+        path.pop_back();
+        back = mid;    
+        mid = top;
+        top = parent(top);
+    }
+    if(!balanced(top)){
+        if(BF(top)*BF(mid)>=0){
+            //left-left or right-right cases.
+            rotate(top,mid);
+            //balanced.
+        }
+        else if(BF(top)*BF(mid)<0){
+            //left-right or right-left cases
+            rotate(mid,bot);
+            rotate(top,bot);
+            //balanced.
+        }
+    }
+}
+\end{lstlisting}
+\item Deletion: O(logn) We follow a similar strategy to deletion in BSTs, followed by recursive balancing.
+\begin{lstlisting}
+void delete(Node*n, Node* x){
+    Node *z = parent(x,n);
+    //if its the root, the pointer is modified.
+    if(!(x->left && x->right)){
+        replace(x,oneChildOf(x),z);
+    }
+    else{
+        //x has two children.
+        Node *s = successor(n,x);
+        delete(n,s);
+        replace(x,s,parent(x));
+        z = parent(s,n);
+    }
+    while(parent(z)!=z){
+        while(balanced(z) && parent(z)!=z){
+            //find first imbalanced ancestor until root.
+            z = parent(z);
+        }
+        y = childWithLargerHeight(z);
+        x = childWithLargerHeight(y);
+        if(BF(z)*BF(y)>=0){
+            rotate(z,y);
+        }
+        else{
+            rotate(y,x);
+            rotate(z,x);
+        }
+    }
+}
+\end{lstlisting} 
+\begin{itemize}
+\item Insertion is quicker because there's only one point where rebalancing is necessary, whereas in deletion, the imbalance may be transferred higher up the tree.
+\end{itemize}
 \end{enumerate}
 \end{itemize}
 \section{KMP}
