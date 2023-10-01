@@ -373,6 +373,88 @@ the time. (For example, a for loop which requires TLB eviction, with the LRU pol
 \end{enumerate}
 \section{Free Space Management}
 \chapter{Concurrency}
+From Neso Academy's OS lectures.
+\section{Basics of Threads}
+\begin{itemize}
+\item Each program may have multiple processes associated with it. Each process may have multiple threads; threads are a basic unit of execution or CPU utilization.
+\item A thread comprises of:
+\begin{enumerate}
+\item A thread ID
+\item A program counter
+\item A register set
+\item A stack.
+\end{enumerate}
+\item Threads of the same process share:
+\begin{enumerate}
+\item Code section
+\item Data section
+\item Other OS resources, such as files and signals.
+\end{enumerate}
+\item A \textbf{traditional/heavyweight} has a single thread of control. Having multiple threads of control allows a process to perform multiple tasks at a time.
+\begin{center}
+\includegraphics[width=11cm]{res/threads.png}
+\end{center}
+\item The benefits of multithreaded programming are:
+\begin{enumerate}
+\item \textbf{Responsiveness}: interactive applications allow a program to continue running even one of its tasks is blocked in its thread in a lengthy operation, thereby allowing responsiveness.
+\item \textbf{Resource Sharing}: Code, data and files are shared between threads, allowing for better utilization of system resources.
+\item \textbf{Economy}: Saves the costs of allocating a separate process for each task.
+\item \textbf{Utilization of Multiprocessor Arch.}: Multithreading on a multi-CPU machine increases concurrency by using parallelism.
+\end{enumerate}
+\end{itemize}
+\section{Multithreading Models and Hyperthreading}
+\begin{itemize}
+\item There are two types of threads:
+\begin{enumerate}
+\item User threads: Supported above the kernel and are managed without kernel support.
+\item Kernel threads: Supported and managed directly by the OS.
+\end{enumerate}
+\item Multithreading models describe the type of relations between user and kernel threads. There are three common types:
+\begin{enumerate}
+\item Many-to-One
+\item One-to-One
+\item One-to-Many
+\end{enumerate}
+\end{itemize}
+\subsection{Many-to-One}
+\begin{itemize}
+\item Many user-level threads are mapped to a single kernel thread.
+\item Thread management is done by the thread library in user space; thus, it is efficient.
+\item The limitations are:
+\begin{enumerate}
+\item The entire process will block if a thread makes a system call.
+\item Since only one thread can access the kernel at a time, multiple threads are unable to run in parallel on multiple processors.
+\end{enumerate}
+\end{itemize}
+\subsection{One-to-One}
+\begin{itemize}
+\item A bijection between user-level and kernel-level threads.
+\item Provides more concurrency than the many-to-one model by allowing another thread to run when a thread makes a blocking system call.
+\item Also allows multiple threads to run in parallel on multiple processors.
+\item The limitations are:
+\begin{enumerate}
+\item Creating a user thread requires creating a corresponding kernel thread, which is costly.
+\item The overhead of creating kernel threads can burden the performance of an application; most implementations of this model restrict the number of threads supported by the system.
+\end{enumerate}
+\end{itemize}
+\subsection{Many-to-Many}
+\begin{itemize}
+\item Each user thread is mapped to many shared kernel threads. \# kernel threads $\le$ \# user threads.
+\item The number of kernel threads may be specific to a particular application or machine.
+\item Developers can create as many user threads as necessary, and the corresponding kernel threads can run in parallel on a multiprocessor.
+\item Blocking system calls result in the kernel scheduling another thread for execution.
+\item This model makes the best of the previous two models and is what is implemented in most systems.
+\item However, with its difficulty of implementation and increasing number of cores, one-to-one is increasingly preferred.
+\end{itemize}
+\section{Hyperthreading a.k.a. Simultaneous Multithreading (SMT)}
+\begin{itemize}
+\item Multiple multithreaded programs running at the same time.
+\item Hyperthreaded systems allow their processor cores' resources to become multiple logical processors for performance.
+\item In hyperthreading, physcial cores are logically divided into multiple virtual cores, to support multiple threads running concurrently.
+\item It enables the processor to execute two (or more) threads, sets of instructions, at the same time.
+\item Hyperthreading allows two streams to be executed concurrently, it s like having two separate processors working together.
+\end{itemize}
+\section{Notes from Interview Questions}
 \chapter{Misc.}
 \chapter{References}
 \begin{enumerate}

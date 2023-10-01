@@ -820,6 +820,14 @@ a = b;//calls copy constructor of a.
 \item This is known as copy initialization, a.k.a. member-wise initialization.
 \item If not defined explicitly by the programmer, the compiler 
 defines it for us.
+\item The following definition of a copy constructor makes the object of this class uncopyable:
+\begin{lstlisting}
+class Derived{
+    Derived(const Derived&) = delete;
+};
+\end{lstlisting}
+\item Attempting to copy \texttt{Derived} objects in the code throws a compilation error.
+\item Hence, \texttt{throw d} also throws a compilation error, as \texttt{throw} implies copy operations. (See Exceptions section.)
 \end{itemize}
 \subsubsection{Types of Copy Constructors}
 \begin{enumerate}
@@ -1068,6 +1076,144 @@ resume in the stack's state of the function that contains said catch block.
 \item The catch-all handler should be the last block in the catch block chain,
 to allow for specific error-handling as much as possible.
 \end{itemize}
+\subsection{Exceptions within classes}
+\begin{itemize}
+\item If a constructor of class A throws an exception, all the initialized members call their 
+respective destructors, but ~A() is never called, as construction never succeeded.
+\item This can lead to missed cleanup for resources that had been allocatd in A() before the exception.
+\item However, if each resource that demands cleanup was declared inside a member of A, that had
+its own destructor with the requisite cleanup code, the cleanup would go through.
+\item However, creating a class to manage each resource, and be a member in A, isn't efficient.
+\item STL provides classes that have destructors for cleanup:
+\begin{itemize}
+    \item \texttt{std::unqiue\_pointer<T>} : for pointers that are freed on destruction.
+\end{itemize}
+\end{itemize}
+\subsection{Classes for Exceptions}
+\begin{itemize}
+\item Seeing as primitive types convey vague information about the error, it is
+preferable to define classes that are meant to be thrown around.
+\item A hierarchy of such classes is useful and often done.
+\item Catch blocks with an argument of a base class also catch all errors of derived classes
+without slicing, if the argument is a reference argument, and with slicing otherwise.
+\item If the base catch block precedes the derived catch block, the base catch block executes.
+\item Otherwise, the derived catch block executes.
+\item Hence, catch blocks for derived classes should be written before (above) those for base classes.
+\item All of the exceptions thrown by STL in C++ are of classes derived from \texttt{std::exception}.
+\begin{lstlisting}
+catch(std::exception &e){
+    cout<<e.what()<<endl;//prints the error description.
+}
+\end{lstlisting}
+\item Note that \texttt{e.what()} messages vary across compilers.
+\item A common derived class to use is \texttt{std::runtime\_error("message for what")}.
+\item We can of course further extend the STL class hierarchy in our codebase.
+\item Rethrowing exceptions is a common practice.
+\item If an exception is caught by an argument that is of a class less-derived than the exception,
+the right way to rethrow the exception is \texttt{throw;} (an empty throw statement).
+\item A statement like \texttt{throw baseException;} slices the derived exception class.
+\end{itemize}
+\subsection{Storing Exceptions}
+\begin{itemize}
+\item When an exception is thrown, its data is initially on the local stack.
+\item If the stack needs to be unwound for it to be caught, the compiler copies
+its data to memory location reserved for exceptions off the stack, until
+a catch block is encountered.
+\end{itemize}
+\subsection{Function Try Blocks}
+\begin{itemize}
+\item One use case of function try blocks is when we want to catch
+an exception thrown by the constructor of a base class, in the constructor of the 
+derived class.
+\begin{lstlisting}
+class B : public A
+{
+public:
+    B(int x) try : A{x} // note addition of try keyword here
+    {
+        //usual constructor stuff
+    }
+    catch (...) // note this is at same level of indentation as the function itself
+    {
+            // Exceptions from member initializer list or constructor body are caught here
+            std::cerr << "Exception caught\n";
+            throw; // rethrow the existing exception
+    }
+};
+\end{lstlisting}
+\item Note that function level catch blocks \textbf{for constructors} must throw an exception.
+They are not allowed to resolve and just consume exceptions.
+\item Implicit rethrows are called at the end of the catch-block, hence it is better to generally avoid
+letting control get to the end of these catch blocks.
+\begin{center}
+\includegraphics[width=13cm]{rsrc/functiontrycatch.png}
+\end{center}
+\item We shouldn't use the catch block to clean up resources of a failed constructor, as the object was never created if an exception was thrown.
+\end{itemize}
+\subsection{Common Design Mistakes}
+\begin{itemize}
+\item Cleanup calls to resources established and used inside a try block should be outside the catch block, so they're called in normal execution, and in exceptional execution. This is assuming that control exits the catch block.
+\begin{lstlisting}
+try
+{
+    openFile(filename);
+    writeFile(filename, data);
+}
+catch (const FileException& exception)
+{
+    std::cerr << "Failed to write to file: " << exception.what() << '\n';
+}
+// Make sure file is closed
+closeFile(filename);
+\end{lstlisting}
+\item Additionally, the variables must be in scope for the cleanup calls, and must be declared outside the try block.
+\item Or as discussed earlier, we can uses STL classes like \texttt{unique\_pointer<T>} or other resource
+classes with destructors that perform the cleanup.
+\item Generally abstain from using exceptions in destructors as an exception thrown during stack unwounding
+"confuses" the compiler between continuing the unwound or handling the exception.
+Instead, write the error to a log file.
+\item It should be noted that exceptions come with performance costs such as:
+\begin{enumerate}
+    \item Mainly: the expensive operation of unwinding the stack on an exception and finding the suitable catch block.
+    \item An heavier executable.
+    \item The program runs slower due to additional checks.
+\end{enumerate}
+\item Some compilers implement \textbf{zero-cost exceptions}, where the runtime cost
+ of exception-handling is zero for a no-exception scenario, but incurs large penalties
+ in exceptional scenarios.
+\end{itemize}
+\subsection{Exception Specifications}
+\begin{itemize}
+\item Language mechanism to document what kind of exceptions a function can throw, in its declaration.
+\item The \texttt{noexcept} keyword in a function declaration guarrantees that the function won't throw an exception.
+\begin{lstlisting}
+void doSomething() noexcept{
+    //body that can't throw any exception out.   
+}
+\end{lstlisting}
+\item If a \texttt{noexcept} function is overridden,
+the overriding function should also be declared as \texttt{noexcept}.
+\item If at runtime, an exception is emitted from a \texttt{noexcept} function,
+\texttt{std::terminate()} is called immediately, even if there exist handlers around
+the function call.
+\item The promise of \texttt{noexcept} is contractual; it is not enforced by the compiler.
+\item Functions differing only in there exception values (like those differing only in their 
+return values) can not be overloads of each other; they are all the same.
+\item The noexcept operator can be used to store variables conveying whether a function or
+expression can potentially throw errors or not:
+\begin{lstlisting}
+void foo() {throw -1;}
+void boo() {};
+void goo() noexcept {};
+struct S{};
+constexpr bool b1{ noexcept(5 + 3) }; // true; ints are non-throwing
+constexpr bool b2{ noexcept(foo()) }; // false; foo() throws an exception
+constexpr bool b3{ noexcept(boo()) }; // false; boo() is implicitly noexcept(false)
+constexpr bool b4{ noexcept(goo()) }; // true; goo() is explicitly noexcept(true)
+constexpr bool b5{ noexcept(S{}) };   // true; a struct's default constructor is noexcept by default
+\end{lstlisting}
+\end{itemize}
+
 \chapter{DSA Revision Notes}
 \section{Stacks, Queues, Linked Lists}
 \begin{itemize}
