@@ -49,15 +49,21 @@
 \contentsline {subsection}{\numberline {7.9.1}Friend (non-member) Functions}{24}{subsection.7.9.1}%
 \contentsline {subsection}{\numberline {7.9.2}Friend Classes and Member Functions}{25}{subsection.7.9.2}%
 \contentsline {subsubsection}{Friend Member Functions}{25}{section*.29}%
-\contentsline {chapter}{\numberline {8}DSA Revision Notes}{26}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Stacks, Queues, Linked Lists}{26}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Hash Tables}{26}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Universal Hashing}{27}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Collision Resolution}{27}{subsection.8.2.2}%
-\contentsline {subsubsection}{Chaining}{27}{section*.30}%
-\contentsline {subsubsection}{Open Addressing}{27}{section*.31}%
-\contentsline {section}{\numberline {8.3}Trees}{27}{section.8.3}%
-\contentsline {section}{\numberline {8.4}KMP}{27}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}}{27}{subsection.8.4.1}%
-\contentsline {chapter}{\numberline {9}Aptitude Test Pointers}{28}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Number Sequence}{28}{section.9.1}%
+\contentsline {chapter}{\numberline {8}More C++ Stuff}{26}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Exceptions from LearnCpp.com}{26}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Stack unwinding}{27}{subsection.8.1.1}%
+\contentsline {chapter}{\numberline {9}DSA Revision Notes}{28}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Stacks, Queues, Linked Lists}{28}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Hash Tables}{28}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Universal Hashing}{29}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Collision Resolution}{29}{subsection.9.2.2}%
+\contentsline {subsubsection}{Chaining}{29}{section*.30}%
+\contentsline {subsubsection}{Open Addressing}{29}{section*.31}%
+\contentsline {section}{\numberline {9.3}Trees}{30}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Binary Search Tree}{30}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Traversals}{31}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}AVL Trees}{32}{subsection.9.3.3}%
+\contentsline {section}{\numberline {9.4}KMP}{32}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}}{32}{subsection.9.4.1}%
+\contentsline {chapter}{\numberline {10}Aptitude Test Pointers}{33}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Number Sequence}{33}{section.10.1}%

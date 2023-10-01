@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  30 SEP 2023 23:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=pdflatex 2022.8.5)  1 OCT 2023 10:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -478,13 +478,13 @@ Chapter 7.
 [15
 
 ]
-<rsrc/PoweredDevice2.png, id=542, 207.174pt x 128.27925pt>
+<rsrc/PoweredDevice2.png, id=572, 207.174pt x 128.27925pt>
 File: rsrc/PoweredDevice2.png Graphic file (type png)
 <use rsrc/PoweredDevice2.png>
 Package pdftex.def Info: rsrc/PoweredDevice2.png  used on input line 579.
 (pdftex.def)             Requested size: 207.17348pt x 128.27893pt.
  [16 <./rsrc/PoweredDevice2.png>]
-<rsrc/overloadableops.png, id=568, 502.2765pt x 233.07076pt>
+<rsrc/overloadableops.png, id=598, 502.2765pt x 233.07076pt>
 File: rsrc/overloadableops.png Graphic file (type png)
 <use rsrc/overloadableops.png>
 Package pdftex.def Info: rsrc/overloadableops.png  used on input line 634.
@@ -495,26 +495,30 @@ Chapter 8.
 
 ] [27]
 Chapter 9.
+[28
+
+] [29] [30] [31] [32]
+Chapter 10.
 (parts/aptitude.tex) 
 AED: lastpage setting LastPage
-[28
+[33
 
 ] (ppg.aux)
 Package rerunfilecheck Info: File `ppg.out' has not changed.
-(rerunfilecheck)             Checksum: 54E4CA83F669EC664404527E140AA552;7036.
+(rerunfilecheck)             Checksum: F8F1F5C51DDBCC75C08038705ABFE017;7880.
  ) 
 Here is how much of TeX's memory you used:
- 13777 strings out of 478338
- 211528 string characters out of 2832889
- 890966 words of memory out of 3000000
- 31469 multiletter control sequences out of 15000+600000
+ 13969 strings out of 478338
+ 214078 string characters out of 2832889
+ 1005976 words of memory out of 3000000
+ 31519 multiletter control sequences out of 15000+600000
  479994 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,6n,77p,414b,2113s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,6n,77p,414b,2183s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\HARDIK RAJPAL\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/HARDIK RAJPAL/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ppg.pdf (29 pages, 402829 bytes).
+Output written on ppg.pdf (34 pages, 441839 bytes).
 PDF statistics:
- 1039 PDF objects out of 1200 (max. 8388607)
- 539 named destinations out of 1000 (max. 500000)
- 403 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1250 PDF objects out of 1440 (max. 8388607)
+ 681 named destinations out of 1000 (max. 500000)
+ 451 words of extra memory for PDF output out of 10000 (max. 10000000)
 

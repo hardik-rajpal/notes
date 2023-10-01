@@ -978,7 +978,6 @@ friend void printWeather(const Temperature& temp, const Humidity& hum){
 \item Access specifiers make no difference to the availability of friend functions as they are non-members anyways.
 \item Friend functions should also use the class' interface where possible, instead of directly accessing data, as this insulates them from future change in the class.
 \end{itemize}
-
 \subsection{Friend Classes and Member Functions}
 \begin{itemize}
     \item Friend classes can access private and protected members of another class.
@@ -1013,7 +1012,62 @@ class Storage{
 \item Additionally, to use members of the class where friendship is declared (\texttt{Storage}), it should have been declared before the definition of the friend member function.
 \item A better solution is of course to split the code up into separate files.
 \end{itemize}
+\chapter{More C++ Stuff}
+\section{Exceptions from LearnCpp.com}
+\begin{itemize}
+\item The primary issue with error-handling without exceptions is that
+the error-handling code ends up intricately linked to the normal control
+flow of code; constraining both how the code is laid out and how errors can 
+be reasonably handled.
+\item Exceptions allow decoupling of error-handling code from the regular flow of control.
+\item Three C++ keywords are used for this:
+\begin{enumerate}
+\item \texttt{throw} It is followed by an object of any kind (int/double/class).
+\item \texttt{try} Encloses the block of code that can raise an error.
+\item \texttt{catch} Specifies the object to be expected if an error is thrown and what to do with it.
+\end{enumerate}
+\item Each try block can have many catch blocks, each expecting a different 
+type of object to be thrown, but must have at least one.
+\item Execution resumes normally at the end of the catch block.
+\item Exceptions of non-primitive types should be caught in const references to avoid unnecessary copies.
+\item The variable name of a parameter can be excluded if it is not used inside the catch block.
+Though it's type must be specified nonetheless.
+\item The compiler searches for matching enclosing "catch" blocks for a thrown exception up the program,
+until it is caught. If no catch block is found, the program fails with an exception error.
+\item The compiler only ever casts derived classes of exceptions to their parents classes, but it never
+casts between primitive types.
+\item The catch block can serve one of four purposes:
+\begin{enumerate}
+\item Convey the caught error to the user in a neat way, say, by printing to the console.
+\item Return a value or error code back to the current function's caller.
+\item Throw another exception, to be caught by an outer try-catch block.
+\item Terminate the program cleanly.
+\end{enumerate}
+\end{itemize}
+\subsection{Stack unwinding}
+\begin{itemize}
+\item If the current function doesn't have a try-catch block enclosing the thrown exception,
+the current searches down the call stack to find the first enclosing try-catch block.
+\item On finding said block, the stack unwinds (locals are popped off) until the control can 
+resume in the stack's state of the function that contains said catch block.
+\item If no catch block is found all the way to main, the program terminates \textbf{without} unwounding the stack.
+\item This may lead to trouble if some locals have non-trivial destructors.
+\item The stack not being unwound allows retention of all the debug info related to the exception.
+\item Behold the catch-all handler, that catches all exceptions:
+\begin{lstlisting}
+    try{
+        //exception throwing code.
+    }
+    catch(int a){
 
+    }
+    catch(...){
+        cout<<"All non-int exceptions lead here"<<endl;
+    }
+\end{lstlisting}
+\item The catch-all handler should be the last block in the catch block chain,
+to allow for specific error-handling as much as possible.
+\end{itemize}
 \chapter{DSA Revision Notes}
 \section{Stacks, Queues, Linked Lists}
 \begin{itemize}
@@ -1096,7 +1150,189 @@ $h:\Longrightarrow Keyset \times {0, 1, 2 ... m-1}$
 \end{enumerate}
 \end{itemize}
 \section{Trees}
-
+\begin{itemize}
+\item In a tree, degree of a node may refer to the number of children it has.
+\item \textbf{Binary Tree}: An ordered tree with each node having at most two children.
+\item \textbf{Complete Binary Tree}: Each level i has $2^i$ nodes, i = 0, 1, ... h.
+\begin{itemize}
+    \item \# Leaves = $l$ = $2^h$; Total nodes = n = $2^{h+1} - 1$; \# Internal nodes = m = $2^{h}-1 = l - 1$
+    \item height = h = $log_2(l) = log_2((n+1)/2)$
+\end{itemize}
+\item If a binary tree has n nodes,
+\begin{equation*}
+n \le 2^{h+1} - 1 \implies n-1 \le h \le log_2((n+1)/2)
+\end{equation*}
+\begin{equation*}
+1 \le l \le m+1, l = n-m \implies l \le \frac{(n+1)}{2}
+\end{equation*}
+\end{itemize}
+\subsection{Binary Search Tree}
+\begin{itemize}
+\item Structure used for ordered dictionaries, where the keys are stored
+in a binary tree.
+\begin{lstlisting}
+Tree search(Tree t,Value v){
+    if(t->value==v){
+        return t;
+    }
+    else if(t->value < v){
+        if(t->left){
+            return search(t->left,v);
+        }
+        return NULL;
+    }
+    else{
+        //t->value > v
+        if(t->right){
+            return search(t->right,v);
+        }
+        return NULL;
+    }
+}
+\end{lstlisting}
+\item Inorder traversal of a BST gives a sorted projection of all the keys. This is called BST-sort.
+\item Has the same complexity cases as quick-sort:
+\begin{itemize}
+    \item WCS: O($n^2$)
+    \item BCS: O($nlogn$)
+    \item Average over $n!$ permutations: O($nlogn$)
+\end{itemize}
+\item Method implementations:
+\begin{enumerate}
+\item Search: as given above.
+\item Insert: search for node in tree, insert as a child where NULL is found.
+\item Successor:
+\begin{lstlisting}
+Node *n successor(Node *x, Node *n){
+    if(x->right){
+        return leftMostChild(x->right);
+    }
+    else{
+        Node *y = parent(x,n);
+        while(y!=NULL && x==y->right){
+            x = y;
+            y = parent(x,n);
+        }
+        //y == root or y is closest ancestor such that x is in y->right.
+        return y;
+    }
+}
+\end{lstlisting}
+\item Deletion:
+\begin{lstlisting}
+void delete(Node *x, Node *n){
+    if(!(x->left&&x->right)){
+        //x has at most one child.
+        Node *y = parent(x,n);
+        if(y->left==x){
+            y->left = oneChildOf(x);//may return null if x has no children.
+        }
+        else if(y->right==x){
+            y->right = oneChildOf(x);
+        }
+    }
+    else{
+        //x has two children.
+        Node *s = Successor(x,n);
+        delete(s,n);
+        Node *y = parent(x,n);
+        //transfer the children
+        s->right = x->right;s->left = x->left;
+        if(y->left==x){
+            y->left = s;
+        }
+        else if(y->right==x){
+            y->right = s;
+        }
+    }
+}
+\end{lstlisting}
+\end{enumerate}
+\end{itemize}
+\subsection{Traversals}
+\begin{enumerate}
+\item Pre-order: Do me pre my children; process each node before its children are processed.
+\begin{lstlisting}
+void preorder(Node n){
+    process(n);
+    for(Node &u:n.children){
+        preorder(u);
+    }
+}
+\end{lstlisting}
+\begin{itemize}
+    \item Used in reading documents, webpages.
+\end{itemize}
+\item Post-order: Do me post my children; process each node after its children are processed.
+\begin{lstlisting}
+void postorder(Node n){
+    for(Node &u:n.children){
+        postorder(u);
+    }
+    process(n);
+}
+\end{lstlisting}
+\begin{itemize}
+\item Used by the disk-usage command and evaluation of arithmetic expressions.
+\end{itemize}
+\item In-order: Do me between my children; process left children first,
+followed by the given node, followed by the right children.
+\begin{lstlisting}
+void inorder(Node n){
+    for(Node &u:n.leftchildren){
+        inorder(u);
+    }
+    process(n);
+    for(Node &u:n.leftchildren){
+        inorder(u);
+    }
+}
+\end{lstlisting}
+\item Eulerian: Generic traversal combining pre-, post- and in-order traversals.
+\begin{lstlisting}
+void eulerian(Node n){
+    process(n);//First process
+    for(Node &u:n.leftchildren){
+        eulerian(u);
+    }
+    process(n);//Second process
+    for(Node &u:n.leftchildren){
+        eulerian(u);
+    }
+    process(n);//Third process.
+}
+\end{lstlisting}
+\end{enumerate}
+\subsection{AVL Trees}
+\begin{itemize}
+\item They are aka height-balanced trees.
+\item They are binary (searchable,sorted) trees, with the added property of balance.
+\item If $h(n)$ denotes the height of the tree rooted at n:
+\begin{center}
+    $h(n) = 1+max_{u \in n.children}(h(u))$\\
+    $h(n) = 1 \implies $ n is a leaf.\\
+\end{center}
+\item $\forall n \in \{Internal Nodes\}, |h(u)-h(v)| \le 1$, where $u$ and $v$ are children of n.
+\item $h(root) \le log_{\phi}(n)$
+\item If the leaf closest to the root is at level k:
+\begin{enumerate}
+    \item $h(root) \le 2k-1$
+    \item All nodes at levels 1...k-2 have 2 children.
+    \item 2 $\implies$ n $ \ge 2^k - 1 $
+    \item 1, 3 $\implies 2^{k-1} \le n \le 2^{2k-1}$
+    \item 4 $\implies 2^{(h-1)/2} \le n \le 2^{h}$
+\end{enumerate}
+\item In an AVL tree of height h,
+\begin{enumerate}
+    \item The leaf closest to the root is at level $\ge (h+1)/2$.
+    \item On the first $(h-1)/2$ levels, AVL tree is complete (full).
+    \item $ 2^{(h-1)/2}\le n \le 2^{h}$
+\end{enumerate}
+\item Method implementations :
+\begin{enumerate}
+\item Insertion: 
+\end{enumerate}
+\end{itemize}
 \section{KMP}
 \subsection{}
 \chapter{Aptitude Test Pointers}
