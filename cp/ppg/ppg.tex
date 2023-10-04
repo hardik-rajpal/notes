@@ -81,7 +81,8 @@ n \in {-(2^{k-1}-1),...-0,0,1,...2^{k-1}-1}, n = (-1)^{b_{k-1}}(\sum_{i=0}^{k-2}
 \item Bits to n is equivalent to 
 \begin{itemize}
     \item Identify sign based on MSB.
-    \item Flip all other bits and find the unsigned integer they represent.
+    \item If MSB ==1, flip all bits.
+    \item Find the unsigned integer they represent and combine the sign.
 \end{itemize}
 \item To take one's complement of a number is to find its negative counterpart.
 \item It is equivalent to just flipping every bit.
@@ -176,7 +177,7 @@ Some search algorithms are discussed below:
     \item The preferred formula for evaluating the middle point of
     the interval in binary search is
     $m = l + (r-l)/2$, and not
-    $m = (l+r)/2$, as the latter can suffer due to overflow.
+    $m = (l+r)/2$, as the latter can suffer overflow.
     \item Global variables can also be used to maintain a ``best value yet" while searching through a space with binary search. For ex. find the first element $\geq$ x in an array.
     \item Problems where an array can be mapped to a boolean variable and is guarranteed to have either
     \begin{itemize}
@@ -276,7 +277,7 @@ TODO: write up permutation ideas.
 TODO: selection of subsets satisfying a property.
 \subsection*{Backtracking En General}
 If the dimensions of inputs are smaller than usual, backtracking is an option.
-As with other algorithms, you want to maximize this as much as possible. Optimizations
+As with other algorithms, you want to optimize this as much as possible. Optimizations
 are possible by:
 \begin{enumerate}
     \item Transforming the inputs so as to reduce the search space.\\
@@ -304,7 +305,7 @@ The abstract code for backtracking looks like ths:
     void search(int p){
         //p signifies path/position being inspected
         //in the search space.
-        if(searchTerminalConditions()){
+        if(checkTerminalConditions()){
             if(globalVarSolutionValid){
                 //update collection of solutions.
             }

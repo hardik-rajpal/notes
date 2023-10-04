@@ -39,7 +39,7 @@
     tabsize=2
 }
 \setlist[enumerate,1]{label=\textbf{\arabic*.}}
-\lstset{style=mystyle}
+\lstset{style=mystyle,language=C++}
 \maketitle
 \tableofcontents
 \pagebreak
@@ -241,7 +241,7 @@ Without going into the non-trivial hierarchy of iterators, note that:
     \item \texttt{iter += n} is supported by random-access iterators, available with vectors and deques (and maybe others?).
     \item \texttt{void advance(iter,n)} is supported by all iterators: use this instead.
     \item \texttt{iter next(iter,n)} and \texttt{iter prev(iter,n)} is supported by all iterators.
-    \item \texttt{distance(iter\_before,iter\_after)} is the more general version of \texttt{iter\_before - iter\_after}.
+    \item \texttt{distance(iter\_before,iter\_after)} is the more general version of \texttt{iter\_after - iter\_before}.
 \end{itemize}
 An iterator pointing at an element is ``corrupted" on removing the element.
 Hence, any useful data should be copied over from the iterator before removing the element.
