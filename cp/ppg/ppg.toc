@@ -69,7 +69,12 @@
 \contentsline {subsection}{\numberline {9.3.1}Binary Search Tree}{33}{subsection.9.3.1}%
 \contentsline {subsection}{\numberline {9.3.2}Traversals}{34}{subsection.9.3.2}%
 \contentsline {subsection}{\numberline {9.3.3}AVL Trees}{35}{subsection.9.3.3}%
-\contentsline {section}{\numberline {9.4}KMP}{37}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}}{37}{subsection.9.4.1}%
-\contentsline {chapter}{\numberline {10}Aptitude Test Pointers}{38}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Number Sequence}{38}{section.10.1}%
+\contentsline {section}{\numberline {9.4}String Stuff}{37}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}KMP}{37}{subsection.9.4.1}%
+\contentsline {subsubsection}{Linear Time LPS}{38}{section*.32}%
+\contentsline {section}{\numberline {9.5}Tries}{38}{section.9.5}%
+\contentsline {chapter}{\numberline {10}Javascript Notes from \href {https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}{40}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Data Types, typeof and instanceof from \href {https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}{40}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Notes from Questions}{41}{section.10.2}%
+\contentsline {chapter}{\numberline {11}Aptitude Test Pointers}{44}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Number Sequence}{44}{section.11.1}%

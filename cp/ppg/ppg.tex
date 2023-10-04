@@ -1597,8 +1597,294 @@ void delete(Node*n, Node* x){
 \end{itemize}
 \end{enumerate}
 \end{itemize}
-\section{KMP}
-\subsection{}
+\section{String Stuff}
+The common problem of finding a pattern P in a text T (|T| > |P|)
+can be solved efficiently by:
+\begin{enumerate}
+    \item Either preprocessing the pattern (KMP)
+    \item Or preprocessing the text (Tries)
+\end{enumerate}
+The latter is preferred if multiple patterns are searched for a in a single piece of text.
+\subsection{KMP}
+\begin{lstlisting}
+vector<int> kmp(string t, string p){
+    int l = p.size();
+    int n = t.size();
+    //this lps implementation is inefficient. O(l^3).
+    vector<int> lps(l,0);//lps[0,1,...l-1].
+    //lps[0] = 0.
+    for(int i=2;i<=l;i++){
+        for(int j=1;j<i;j++){
+            if(p.substr(0,j)==p.substr(i-j,j) && (i==l || (p[j]!=p[i]))){
+                lps[i-1] = max(lps[i-1],j);
+            }
+        }
+    }
+    int j = 0, i=0;
+    vector<int> matches = {};
+    for(;i<l && j<n;){
+        if(t[j]!=p[i]){
+            //mismatch
+            if(i==0){
+                j+=1;
+            }
+            else{
+                i = lps[i-1];
+            }
+        }
+        else{
+            //match=>increment both.
+            i++;
+            j++;
+            if(i==l){
+                i = lps[i-1];
+                matches.push_back(j-l);
+            }
+        }
+    }
+    return matches;
+}
+\end{lstlisting}
+\subsubsection{Linear Time LPS}
+It's complicated man. Maybe do this later.
+\section{Tries}
+\begin{itemize}
+\item Tries are meant to store data indexed by strings from a fixed set of characters.
+\item Said data can be the occurrences of the index string in a large body of text.
+\item A generic implementation is give below:
+\begin{lstlisting}
+class Trie{
+    int charindex(char c);//each char mapped to an integer,
+    vector<Trie*> chars = vector<Trie*>(numChars,NULL);//integers indexing a Trie pointer,
+    Data data;//initialized to empty.
+    void insert(string index,Data data){
+        int i = 0;
+        Trie* t = this;
+        while(i<index.size()){
+            if(!t->chars[charindex(index[i])]){
+                t->chars[charindex(index[i])] = new Trie;
+            }
+            t = t->chars[charindex(index[i])];
+            i++;
+        }
+        t->data = data;
+    }
+    Data* get(string index){
+        int i = 0;
+        Trie* t = this;
+        while(i<index.size()){
+            if(!t->chars[charindex(index[i])]){
+                return NULL;
+            }
+            t = t->chars[charindex(index[i])];
+            i++;
+        }
+        return &(t->data);
+    }
+    void remove(string index){
+        int i = 0;
+        Trie* t = this;
+        while(i<index.size()){
+            if(!t->chars[charindex(index[i])]){
+                return;
+            }
+            t = t->chars[charindex(index[i])];
+            i++;
+        }
+        return t->data = NULL;
+    }
+};
+\end{lstlisting}
+\item This implementation's space complexity is O(|W|J), where J is the number of unique
+ordered pairs (i,c) such that data has been indexed using a string which has c at index i.
+W is the character set.
+\item A more space-efficient, and thus access time-inefficient implementation would be
+to use maps from chars to Trie pointers.
+\item A suffix Trie can be constructed in O(|T|) time, which means pattern matching can be done
+in O(|P|+|T|+k) time, where k is the number of times the pattern occurs in T.  
+\end{itemize}
+\chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
+\section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
+\begin{itemize}
+\item There are five different data types to hold values:
+\begin{enumerate}
+    \item string
+    \item number
+    \item boolean
+    \item object
+    \item function
+\end{enumerate}
+\item There are 6 types of objects:
+\begin{enumerate}
+\item Object
+\item Date
+\item Array
+\item String
+\item Number
+\item Boolean
+\end{enumerate}
+\item There are 2 data types that cannot contain values:
+\begin{enumerate}
+\item null (typeof returns object though)
+\item undefined
+\end{enumerate}
+\item The \texttt{typeof} operator returns the data type of a variable.
+\begin{lstlisting}
+// Returns "string"
+typeof "John"
+//Returns number:
+typeof 3.14
+typeof NaN
+// Returns "boolean:"
+typeof false
+// Returns "object:"
+typeof [1,2,3,4]              
+typeof {name:'John', age:34}  
+typeof new Date()
+typeof null
+// Returns "function:"
+typeof function () {}         
+//Returns "undefined:"
+typeof myCar //variable not yet defined.
+typeof undefined//keyword undefined.
+\end{lstlisting}
+\item \texttt{typeof} can't be used to determine if an object is an array or a date.
+\item Primitive Data: single simple data value with no additional properties or methods. typeof returns one of "string", "number", "boolean" or "undefined".
+\item Non-primitive, aka Reference Data: typeof returns "function" or "object".
+\item To check if an object is an array (and similarly for Date):
+\begin{lstlisting}
+function isArray(myArray) {
+  return myArray.constructor === Array;
+}
+\end{lstlisting}
+\item Empty Values: need not be undefined. Ex. an empty sring has both a legal value and a type.
+\item undefined and null are equal in value but different in type.
+\begin{lstlisting}
+null === undefined // false
+null == undefined // true
+\end{lstlisting}
+\item \texttt{instanceof} operator returns true if an object is an instance of the specified object.
+\item Note some peculiarites below:
+\begin{lstlisting}
+const cars = ['a','b','c'];
+cars instanceof Array; //true
+cars instanceof Object; //true
+cars instanceof string[];
+/*Syntax error, rhs of instanceof is not an Object*/
+let a = cars[0];
+a instanceof string;
+/*Syntax error, rhs of instanceof is not an Object*/
+a instanceof String;//false
+//a has primitive type string, not String.
+a = Object(cars[0])
+a instanceof Object;//true
+a instanceof String;//true
+
+//Additionally
+a = {c:'b'};
+typeof a; // returns object.
+a instanceof Object;//return true 
+\end{lstlisting}
+\item \texttt{void} operator takes a piece of code and ensures voids the return value (to return undefined)
+\end{itemize}
+\section{Notes from Questions}
+\begin{itemize}
+\item Initially used for building dynamic web pages.
+\item Hoisting: all variable and function declarations are moved to the top of the code by the interpreter. This means order of declaration is irrelevant.
+\item \texttt{"user strict"}, with quotes at the start of a file turns off hoisting.
+\item \texttt{==} compares values of two variables while \texttt{===} compares values and types.
+\item var vs let:
+\begin{enumerate}
+    \item var variables are hoisted, let variables are not.
+    \item var variables have function scope, let variables have block scope.
+    \item let variables are closer to other programming languages in terms of the first two points.
+\end{enumerate}
+\item Implicit type coercion: when data types of two operands don't match, implicit type coercion takes place.
+\begin{enumerate}
+    \item String coercion: 3+"3" = "33";
+    \item Number coercion: 3-"3" = 0, because there's no string operator corresponding to -.
+    \item Boolean coercion: takes place when using logical operators, ternary operators, if statments and loop checks. Involves understanding:
+    \begin{enumerate}
+        \item Falsy values: values coerced to false. The exhaustive set is false, 0, 0n, -0, "", null, undefined, NaN.
+        \item Truthy values: values not coerced to false.
+    \end{enumerate}
+    \item Equality coercion: happens with == operator. Both variales are converted to the same type and their values are compared. No coercion happens with ===.
+\end{enumerate}
+\item Logical operators ($||$ and \&\&) return one of the operands, not true or false, based on which is truthy and falsy, following lazy evaluation.
+\item It's a dynamically typed language, so variable types are checked during runtime and can change over runtime. Statically typed languages have type checks during compile time.
+\item \texttt{NaN} indicates a value that is not a legal number.
+\begin{itemize}
+    \item typeof NaN returns number.
+    \item use isNaN(x) to check if x is NaN.
+    \item only non-numeric and non-empty strings (empty$\implies$0), undefined and NaN return true for isNaN()
+    \item Even '131n' return true for isNaN.
+\end{itemize}
+\item Mutability: the property of a variable to be modified without using the assignment operator.
+\item Primitive data types are immutable.
+\item Non-primitive data types, aka reference data types, are mutable. These include Objects and Functions.
+\item All \texttt{objects} are on the heaps, and the variables that hold them are actually pointers that reside on the stack.
+\begin{lstlisting}
+const staff2 = staff;//where staff is an Object.
+//staff2 as a pointer holds the same address as staff, so:
+staff2.name = '';//also modifies staff.
+\end{lstlisting}
+\item To copy an object, use
+\begin{lstlisting}
+const staff2 = Object.assign({},staff);//cast if necessary, like Array.from...
+//or
+const staff2 = {...staff};
+\end{lstlisting}
+\item Note that both ... and Object.assign only create shallow copies; the reference properties of the objects inside are still copied by reference:
+\begin{lstlisting}
+let b = [1,2,3];
+let d = {j:b};
+d.j.push(2);//b is modified too.
+let c = {...d};
+c.j.push(2);//b is modified too.
+let e = Object.assign({},d);
+e.j.push(2);//b is modified too.
+\end{lstlisting}
+\begin{lstlisting}
+let b = [1,2,3];
+let d = {j:b};
+\end{lstlisting}
+\item References in javascript:
+\begin{itemize}
+\item Primitive data types are passed by value, non-primitive data types are passed by reference.
+\end{itemize}
+\item Objects can be made immutable by using:
+\begin{enumerate}
+\item \texttt{Object.preventExtensions(staff)}: disallows adding new properties. 
+\begin{itemize}
+    \item Properties can still be deleted or modified.
+    \item New property definitions using '.' and assignment fail silently.
+    \item New property definitions using \texttt{Object.defineProperty} throw a TypeError.
+\end{itemize}
+\item \texttt{Object.seal(staff)}: Only permits modifying existing properties. 
+\begin{itemize}
+\item Deletion and addition of properties is disallowed.
+\item \texttt{Object.isSealed(staff)} used to check if an object is sealed.
+\item '.' operations fail silently
+\item \texttt{defineProperty} for new properties throw a TypeError.
+\item Deletions fail silently.
+\end{itemize}
+\item \texttt{Object.freeze(staff)} disallows all modifications, including deletion and insertion of properties.
+\begin{itemize}
+\item Check using \texttt{Object.isFrozen(staff)}
+\item Same rules as errors/silent failing as above.
+\item It's not a recursize freeze. Properties of reference properties of a frozen object can still be modified. A recursive deep-freeze function may be written to avoid this fall.
+\end{itemize}
+\end{enumerate}
+\item Variables declared using \texttt{const} may be mutable or immutable; but they can't be assigned to later.
+\end{itemize}
+
+
+
+
+
+
+
+
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document}
