@@ -96,6 +96,32 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item To take 2's complement of a number is to flip its bits and add 1 to it.
 \item This is equivalent to finding its negative in the 2's complement notation.
 \end{itemize}
+
+\section{Modular Arithmetic}
+\begin{itemize}
+\item a \% b returns the remainder when a is divided by b.
+\item $a \% b = a - floor(a/b)*b$.
+\item $a \equiv b mod n \iff a\%n == b\% n \iff (a-b) \% n == 0 $
+\item The congruence relation modulo n splits integers into\\n residue (equivalence) classe $\{C_i\}_{i=0}^{i=n-1}$:
+\begin{equation}
+    C_i = {z \| z \% n = i};
+\end{equation}
+\item Representative of $C_i$ is $r_i \in C_i, 0 \le r_i \le n-1$
+\item Operations:
+\begin{itemize}
+\item $a + b \% m = ((a \% m) + (b \% m)) \% m$
+\item $a - b \% m = ((a \% m) - (b \% m)) \% m$
+\item TODO check C++ negative mods.
+\item $(a*b) \% m = ((a \% m) * (b \% m)) \% m$
+\item $(a/b) \% m = ((a \% m) * (b^{-1} \% m)) \% m$
+\end{itemize}
+\item Exponentiation.
+\item TODO: check iff condition.
+\item $a^e = b^e $ iff $a == b$ (mod m, of course)
+\item $a^e = a^c $ iff $e == c$ mod $\phi(n)$
+\item TODO: CRT, problems.
+\end{itemize}
+
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}

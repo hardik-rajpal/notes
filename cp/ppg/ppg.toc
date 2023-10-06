@@ -4,77 +4,78 @@
 \contentsline {subsection}{\numberline {1.2.1}Unsigned numbers}{3}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}1's complement}{4}{subsection.1.2.2}%
 \contentsline {subsection}{\numberline {1.2.3}2's complement}{4}{subsection.1.2.3}%
-\contentsline {chapter}{\numberline {2}Week 1}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Searching Algorithms}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Sorting Algorithms}{6}{section.2.2}%
-\contentsline {chapter}{\numberline {3}Week 2}{8}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Week 3}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Complete Search}{9}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Week 4}{11}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Greedy Algorithms}{11}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Union Find}{11}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Greedy Matching}{13}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Misc Data Structures}{13}{subsection.5.1.3}%
-\contentsline {chapter}{\numberline {6}Week 5}{14}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Dynamic Programming}{14}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Common Patterns}{14}{subsection.6.1.1}%
-\contentsline {subsubsection}{Min (Max) Path to Reach Target}{14}{section*.18}%
-\contentsline {subsubsection}{Distinct Ways}{14}{section*.19}%
-\contentsline {subsubsection}{Merging Intervals}{14}{section*.20}%
-\contentsline {subsubsection}{DP on Strings}{14}{section*.21}%
-\contentsline {subsubsection}{Decision Making}{14}{section*.22}%
-\contentsline {chapter}{\numberline {7}OOP (in C++)}{15}{chapter.7}%
-\contentsline {section}{\numberline {7.1}OOPs}{15}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Inheritance from \href {https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint} and LearnCpp.com}{15}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Multiple Inheritance}{16}{subsection.7.2.1}%
-\contentsline {subsubsection}{Diamond Problem of Multiple Inheritance}{16}{section*.23}%
-\contentsline {section}{\numberline {7.3}Overloading}{17}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}Overloading ++ (and --)}{18}{subsection.7.3.1}%
-\contentsline {section}{\numberline {7.4}Polymorphism}{18}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}Static Linkage}{18}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}Dynamic Linkage}{19}{subsection.7.4.2}%
-\contentsline {subsubsection}{Pure Virtual Functions}{19}{section*.24}%
-\contentsline {section}{\numberline {7.5}Data Abstraction and Encapsulation}{20}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Abstract Classes a.k.a C++ Interfaces}{20}{section.7.6}%
-\contentsline {section}{\numberline {7.7}Notes from interview questions}{20}{section.7.7}%
-\contentsline {subsubsection}{Initializer Lists}{21}{section*.25}%
-\contentsline {subsection}{\numberline {7.7.1}Copy Constructors}{21}{subsection.7.7.1}%
-\contentsline {subsubsection}{Types of Copy Constructors}{22}{section*.26}%
-\contentsline {subsubsection}{Copy Elision (a.k.a. Copy Omission)}{22}{section*.27}%
-\contentsline {section}{\numberline {7.8}From LearnCPP.com}{23}{section.7.8}%
-\contentsline {subsection}{\numberline {7.8.1}14.4 Const objects}{23}{subsection.7.8.1}%
-\contentsline {subsection}{\numberline {7.8.2}14.6 Access functions}{24}{subsection.7.8.2}%
-\contentsline {subsubsection}{Ref-qualifier overloads}{24}{section*.28}%
-\contentsline {section}{\numberline {7.9}Friends}{24}{section.7.9}%
-\contentsline {subsection}{\numberline {7.9.1}Friend (non-member) Functions}{24}{subsection.7.9.1}%
-\contentsline {subsection}{\numberline {7.9.2}Friend Classes and Member Functions}{25}{subsection.7.9.2}%
-\contentsline {subsubsection}{Friend Member Functions}{25}{section*.29}%
-\contentsline {chapter}{\numberline {8}More C++ Stuff}{26}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Exceptions from LearnCpp.com}{26}{section.8.1}%
-\contentsline {subsection}{\numberline {8.1.1}Stack unwinding}{27}{subsection.8.1.1}%
-\contentsline {subsection}{\numberline {8.1.2}Exceptions within classes}{27}{subsection.8.1.2}%
-\contentsline {subsection}{\numberline {8.1.3}Classes for Exceptions}{27}{subsection.8.1.3}%
-\contentsline {subsection}{\numberline {8.1.4}Storing Exceptions}{28}{subsection.8.1.4}%
-\contentsline {subsection}{\numberline {8.1.5}Function Try Blocks}{28}{subsection.8.1.5}%
-\contentsline {subsection}{\numberline {8.1.6}Common Design Mistakes}{29}{subsection.8.1.6}%
-\contentsline {subsection}{\numberline {8.1.7}Exception Specifications}{29}{subsection.8.1.7}%
-\contentsline {chapter}{\numberline {9}DSA Revision Notes}{31}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Stacks, Queues, Linked Lists}{31}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Hash Tables}{31}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Universal Hashing}{32}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Collision Resolution}{32}{subsection.9.2.2}%
-\contentsline {subsubsection}{Chaining}{32}{section*.30}%
-\contentsline {subsubsection}{Open Addressing}{32}{section*.31}%
-\contentsline {section}{\numberline {9.3}Trees}{33}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Binary Search Tree}{33}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}Traversals}{34}{subsection.9.3.2}%
-\contentsline {subsection}{\numberline {9.3.3}AVL Trees}{35}{subsection.9.3.3}%
-\contentsline {section}{\numberline {9.4}String Stuff}{37}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}KMP}{37}{subsection.9.4.1}%
-\contentsline {subsubsection}{Linear Time LPS}{38}{section*.32}%
-\contentsline {section}{\numberline {9.5}Tries}{38}{section.9.5}%
-\contentsline {chapter}{\numberline {10}Javascript Notes from \href {https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}{40}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Data Types, typeof and instanceof from \href {https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}{40}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Notes from Questions}{41}{section.10.2}%
-\contentsline {chapter}{\numberline {11}Aptitude Test Pointers}{44}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Number Sequence}{44}{section.11.1}%
+\contentsline {section}{\numberline {1.3}Modular Arithmetic}{4}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Week 1}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Searching Algorithms}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Sorting Algorithms}{7}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Week 2}{9}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Week 3}{10}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Complete Search}{10}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Week 4}{12}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Greedy Algorithms}{12}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Union Find}{12}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Greedy Matching}{14}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Misc Data Structures}{14}{subsection.5.1.3}%
+\contentsline {chapter}{\numberline {6}Week 5}{15}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Dynamic Programming}{15}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Common Patterns}{15}{subsection.6.1.1}%
+\contentsline {subsubsection}{Min (Max) Path to Reach Target}{15}{section*.18}%
+\contentsline {subsubsection}{Distinct Ways}{15}{section*.19}%
+\contentsline {subsubsection}{Merging Intervals}{15}{section*.20}%
+\contentsline {subsubsection}{DP on Strings}{15}{section*.21}%
+\contentsline {subsubsection}{Decision Making}{15}{section*.22}%
+\contentsline {chapter}{\numberline {7}OOP (in C++)}{16}{chapter.7}%
+\contentsline {section}{\numberline {7.1}OOPs}{16}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Inheritance from \href {https://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm}{TutorialsPoint} and LearnCpp.com}{16}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Multiple Inheritance}{17}{subsection.7.2.1}%
+\contentsline {subsubsection}{Diamond Problem of Multiple Inheritance}{17}{section*.23}%
+\contentsline {section}{\numberline {7.3}Overloading}{18}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Overloading ++ (and --)}{19}{subsection.7.3.1}%
+\contentsline {section}{\numberline {7.4}Polymorphism}{19}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Static Linkage}{19}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Dynamic Linkage}{20}{subsection.7.4.2}%
+\contentsline {subsubsection}{Pure Virtual Functions}{20}{section*.24}%
+\contentsline {section}{\numberline {7.5}Data Abstraction and Encapsulation}{21}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Abstract Classes a.k.a C++ Interfaces}{21}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Notes from interview questions}{21}{section.7.7}%
+\contentsline {subsubsection}{Initializer Lists}{22}{section*.25}%
+\contentsline {subsection}{\numberline {7.7.1}Copy Constructors}{22}{subsection.7.7.1}%
+\contentsline {subsubsection}{Types of Copy Constructors}{23}{section*.26}%
+\contentsline {subsubsection}{Copy Elision (a.k.a. Copy Omission)}{23}{section*.27}%
+\contentsline {section}{\numberline {7.8}From LearnCPP.com}{24}{section.7.8}%
+\contentsline {subsection}{\numberline {7.8.1}14.4 Const objects}{24}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {7.8.2}14.6 Access functions}{25}{subsection.7.8.2}%
+\contentsline {subsubsection}{Ref-qualifier overloads}{25}{section*.28}%
+\contentsline {section}{\numberline {7.9}Friends}{25}{section.7.9}%
+\contentsline {subsection}{\numberline {7.9.1}Friend (non-member) Functions}{25}{subsection.7.9.1}%
+\contentsline {subsection}{\numberline {7.9.2}Friend Classes and Member Functions}{26}{subsection.7.9.2}%
+\contentsline {subsubsection}{Friend Member Functions}{26}{section*.29}%
+\contentsline {chapter}{\numberline {8}More C++ Stuff}{27}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Exceptions from LearnCpp.com}{27}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Stack unwinding}{28}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Exceptions within classes}{28}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}Classes for Exceptions}{28}{subsection.8.1.3}%
+\contentsline {subsection}{\numberline {8.1.4}Storing Exceptions}{29}{subsection.8.1.4}%
+\contentsline {subsection}{\numberline {8.1.5}Function Try Blocks}{29}{subsection.8.1.5}%
+\contentsline {subsection}{\numberline {8.1.6}Common Design Mistakes}{30}{subsection.8.1.6}%
+\contentsline {subsection}{\numberline {8.1.7}Exception Specifications}{30}{subsection.8.1.7}%
+\contentsline {chapter}{\numberline {9}DSA Revision Notes}{32}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Stacks, Queues, Linked Lists}{32}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Hash Tables}{32}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Universal Hashing}{33}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Collision Resolution}{33}{subsection.9.2.2}%
+\contentsline {subsubsection}{Chaining}{33}{section*.30}%
+\contentsline {subsubsection}{Open Addressing}{33}{section*.31}%
+\contentsline {section}{\numberline {9.3}Trees}{34}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Binary Search Tree}{34}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Traversals}{35}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}AVL Trees}{36}{subsection.9.3.3}%
+\contentsline {section}{\numberline {9.4}String Stuff}{38}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}KMP}{38}{subsection.9.4.1}%
+\contentsline {subsubsection}{Linear Time LPS}{39}{section*.32}%
+\contentsline {section}{\numberline {9.5}Tries}{39}{section.9.5}%
+\contentsline {chapter}{\numberline {10}Javascript Notes from \href {https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}{41}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Data Types, typeof and instanceof from \href {https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}{41}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Notes from Questions}{42}{section.10.2}%
+\contentsline {chapter}{\numberline {11}Aptitude Test Pointers}{45}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Number Sequence}{45}{section.11.1}%

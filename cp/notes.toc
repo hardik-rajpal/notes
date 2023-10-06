@@ -19,3 +19,4 @@
 \contentsline {subsubsection}{\numberline {3.4.2}Sub-Array Sum}{9}{subsubsection.3.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.3}Spans}{9}{subsubsection.3.4.3}%
 \contentsline {subsection}{\numberline {3.5}Linked Lists}{9}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Moore's Majority Voting}{10}{subsection.3.6}%
