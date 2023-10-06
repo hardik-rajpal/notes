@@ -125,6 +125,20 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item TODO: CRT, problems.
 \end{itemize}
 
+\section{Master Theorem for Recurrence}
+
+\begin{equation}
+T(n) \le aT(n/b) + cn^d \implies
+T(n) \le a^{log_b(n)}T(0) + c.n^d.(\sum_{i=1}^{log_b(n)-1}{\frac{a}{b^d}})
+\end{equation}
+\begin{equation}
+\implies T(n) = 
+\begin{cases}
+O(n^dlog(n)) & a = b^d \\
+O(n^d) & a < b^d \\
+O(n^{log_b(a)}) & a > b^d 
+\end{cases}    
+\end{equation}
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
@@ -831,6 +845,20 @@ implementation of).
 \item Initializer lists of a derived class can't
 include members of the base class. They need to be initialized using the contructor of the base class.
 \end{itemize}
+\subsection{Destructors}
+\begin{itemize}
+\item The default destructor of a base class is accessible to everyone.
+\item If it is overridden, it must be specified at least as protected.
+\item If the destructor is declared as protected, calls to \texttt{delete baseptr}
+throw compilation errors.
+\item Ideally, if \texttt{baseptr}s are intended to be used for polymorphism and 
+we want to avoid \texttt{delete baseptr} calls, we should set the destructor to protected.
+\item Finall, if a the destructor is public, and \texttt{delete baseptr} is called, the 
+destructor of any derived class object held in baseptr is not called, and the chain of destructors
+starts being called from that of the baseptr's class.
+\end{itemize}
+\subsection{New and Delete}
+TODO
 \subsection{Copy Constructors}
 \begin{lstlisting}[language=C++]
 class Sample{
