@@ -111,10 +111,13 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \begin{itemize}
 \item $a + b \% m = ((a \% m) + (b \% m)) \% m$
 \item $a - b \% m = ((a \% m) - (b \% m)) \% m$
-\item TODO check C++ negative mods.
 \item $(a*b) \% m = ((a \% m) * (b \% m)) \% m$
 \item $(a/b) \% m = ((a \% m) * (b^{-1} \% m)) \% m$
 \end{itemize}
+\item Note: in c++,  a \% m where a<0 returns -((-a)\%m), which is not equal to the mathematical result of
+(m - ((-a) \% m)). 
+\item If a < 0, a mod m should be calculated as (m + (a \% m)).
+\item Or the following function extends to both negative and positive a's : (m + (a \% m)) \% m.
 \item Exponentiation.
 \item TODO: check iff condition.
 \item $a^e = b^e $ iff $a == b$ (mod m, of course)
@@ -1910,7 +1913,28 @@ let d = {j:b};
 
 
 
-
+\chapter{Python}
+\section{Misc.}
+\begin{itemize}
+\item The else block at the end of a for loop is executed only if the for loop was exited without using a break statement.
+\item Same rule applies to an else block at the end of a while loop.
+\item The try-except-else-finally block works such that:
+\begin{itemize}
+\item Try block is always executed.
+\item Except block catches particular errors if thrown and hence executes only if errors arise.
+\item Else block executes if NO error was encountered.
+\item Finally block is always executed.
+\end{itemize}
+\item TODO list:
+\begin{itemize}
+\item try-catch-finally better reads.
+\item with block.
+\item functions with args, kwargs.
+\item sys.argv etc.
+\item match case statement.
+\item python pass by reference or value.
+\end{itemize}
+\end{itemize}
 
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}

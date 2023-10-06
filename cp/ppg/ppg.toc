@@ -77,5 +77,7 @@
 \contentsline {chapter}{\numberline {10}Javascript Notes from \href {https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}{41}{chapter.10}%
 \contentsline {section}{\numberline {10.1}Data Types, typeof and instanceof from \href {https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}{41}{section.10.1}%
 \contentsline {section}{\numberline {10.2}Notes from Questions}{42}{section.10.2}%
-\contentsline {chapter}{\numberline {11}Aptitude Test Pointers}{45}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Number Sequence}{45}{section.11.1}%
+\contentsline {chapter}{\numberline {11}Python}{45}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Misc.}{45}{section.11.1}%
+\contentsline {chapter}{\numberline {12}Aptitude Test Pointers}{46}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Number Sequence}{46}{section.12.1}%
