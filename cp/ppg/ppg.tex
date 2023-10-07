@@ -9,7 +9,7 @@
     \textbf{Space:} #4
 }
 \author{Hardik Rajpal}
-
+\newcommand{\trow}[2]{\hline #1 & #2 \\}
 \begin{document}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -96,7 +96,6 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item To take 2's complement of a number is to flip its bits and add 1 to it.
 \item This is equivalent to finding its negative in the 2's complement notation.
 \end{itemize}
-
 \section{Modular Arithmetic}
 \begin{itemize}
 \item a \% b returns the remainder when a is divided by b.
@@ -119,9 +118,10 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item If a < 0, a mod m should be calculated as (m + (a \% m)).
 \item Or the following function extends to both negative and positive a's : (m + (a \% m)) \% m.
 \item Exponentiation.
-\item TODO: check iff condition.
-\item $a^e = b^e $ iff $a == b$ (mod m, of course)
-\item $a^e = a^c $ iff $e == c$ mod $\phi(n)$
+\item $a == b \mod m \implies a^e = b^e \mod m.$
+\item Note: the converse is NOT true. It results in an algebraic equations with possibly multiple roots.
+\item $a^e = a^c \mod n \iff e == c \mod \phi(n)$ and gcd(a,n) == 1.
+\item If n is prime, then $a^e = a^{e \mod \phi(n)} \mod n \forall a$  
 \item TODO: CRT, problems.
 \end{itemize}
 
@@ -139,6 +139,17 @@ O(n^d) & a < b^d \\
 O(n^{log_b(a)}) & a > b^d 
 \end{cases}    
 \end{equation}
+
+\section{Useful In-Built C++ functions}
+\begin{enumerate}
+\item \texttt{swap()}
+\item \texttt{lcm, gcd}
+\item \texttt{cout<<std::boolalpha<<var\_boolean;} Prints true or false instead 1 or 0.
+\end{enumerate}
+\section{Design Rules}
+\begin{enumerate}
+\item One-Definition Rule: TODO
+\end{enumerate}
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
@@ -1078,7 +1089,207 @@ class Storage{
 \item Additionally, to use members of the class where friendship is declared (\texttt{Storage}), it should have been declared before the definition of the friend member function.
 \item A better solution is of course to split the code up into separate files.
 \end{itemize}
+\chapter{C Stuff}
+\section{Calloc vs Malloc}
+\begin{center}
+\begin{tabular}{| p{8cm} | p{8cm} |}
+    \trow{Malloc}{Calloc}
+    \trow{\texttt{(void*) malloc(NumBytes)}}{\texttt{(void*) calloc(NumElems, ElemSizeInBytes)}}
+    \trow{Stands for memory allocation.}{Stands for clear memory allocation.}
+    \trow{Returned memory block has garbage values.}{Returned memory block is initialized to 0.}
+    \trow{Faster than calloc.}{Slower than malloc.}
+    \trow{Doesn't involve memory overheads.}{Involves some memory overheads.}
+    \hline
+\end{tabular}
+\end{center}
 \chapter{More C++ Stuff}
+\section{Templates from LearnCpp.com}
+\begin{itemize}
+\item Templates are declarations of functions of classes with placeholder types.
+\item Placeholder types aka, type template parameters, aka template types.
+\item A placeholder type is not known at the definition of the template, but is decided at a call to the template.
+\item Once a template is written, the compiler can use it to generate as many overloaded entities as needed, using concrete types.
+\item C++ allows three kinds of template parameters:
+\begin{enumerate}
+    \item Type template parameter: represents a type.
+    \begin{itemize}
+        \item Use keywords \texttt{typename} or \texttt{class}.
+        \item \texttt{typename} can be replaced by any type, primitive or a class.
+        \item TODO: are the two equivalent?
+    \end{itemize}
+    \item Non-type template paramater: represents a constexpr value.
+    \item Template template paramater: represents a template.
+\end{enumerate}
+\item Templates are analogous to stencils.
+\item Templates can work with types that didn't even exist when they were written.
+\item It's common convention to use uppercase letters for template parameters.
+\end{itemize}
+\subsection{Function Templates}
+\begin{itemize}
+\item Example:
+\begin{lstlisting}
+template<typename T>
+T max(T x, T y){
+    return (x<y)?y:x;
+}
+// signature is now: T max<T>(T x, T y);
+\end{lstlisting}
+\item A function call looks like: \texttt{max<int>(a,b);}
+\item It is necessary to specify T in every call to \texttt{max<T>}.
+\item When the compiler encounters a call to \texttt{max<int>}, and it doesn't have a corresponding definition yet,
+it uses the template to create a function for the type selected.
+\item This is known as \textbf{(Function) (Template) Instantiation}.
+\item \textbf{Implicit instantiation} refers to instantiation due to a function call statement.
+\item Instantiated functions are called a \textbf{function instance} or \textbf{template function}.
+\item Function instances are normal functions in all regards.
+\item Function instantiation is a compiler task, and thus happens during compilation.
+\end{itemize}
+\subsubsection{Template Argument Deduction}
+\begin{itemize}
+\item If all the template type parameters appear in the function's argument, and 
+the arguments we pass to the function have the right type (without the need for coercion),
+then we can omit the type specification in the function call statement:
+\begin{lstlisting}
+max<int>(a,b);
+max<>(a,b);//Compiler only studies templates for finding an overload.
+max(a,b);//compiler first studies non-template declarations of max, followed by templates. 
+\end{lstlisting}
+\item The order of checking for overloads before templates allows for type-specific optimizations in generic functions.
+\item So, if the type parameters are deducible from the arguments and we want to use the type-specific, non-template
+overload of the function, use \texttt{max(a,b)}, but use \texttt{max<>(a,b)} if you want to use the template overload
+for some reason.
+\item For instantiated functions to successfully compile, it is necessary for their bodies to not invoke any functions or operators not defined for the types being inferred from the function calls.
+\item Note that the compiler generates instantiated functions so long as they make sense syntactically. It is our responsibility to ensure semantic sanity is maintained.
+\item We can disallow particular template overloads using \textbf{function template specialization} like so:
+\begin{lstlisting}
+template <typename T>
+T addOne(T x)
+{
+    return x + 1;
+}
+
+// Use function template specialization to tell the compiler that addOne(const char*) should emit a compilation error
+template <>//empty type parameter list, NOT <char*>
+const char* addOne(const char* x) = delete;
+\end{lstlisting}
+\item Attempt to use deleted function instances raises compilation faults.
+\item It is common practice to put the entire template declaration and definition in header files, rather than just the declaration, as all cpp files need to know the template exists for their function calls to instantiate the relevant overloads from the template.
+\item Functions implicitly instantiated from templates are implicitly inline; inline functions can be defined in multiple files, so long as their definitions are identical.
+\item TODO: inline functions.
+\item The template themselves are not inline, which is a concept that only applies to functions and variables.
+\item Generic programming refers to the practice of using templates and associated template parameters (generic types).
+\item There are some drawbacks to template programming:
+\begin{itemize}
+    \item Code bloat and slow compile times: As the compiler instantiates a function for each call with a unique set of arguments, even compactly written templates cause the two problems.
+    \item Error messages from using templates are much more convoluted than regular error messages.
+\end{itemize}
+\end{itemize}
+\subsubsection{Multiple Template Types}
+\begin{itemize}
+\item Note that a function call with different types being passed in place of T without explicitly mentioning \texttt{<T>} raises compilation errors.
+\begin{lstlisting}
+template <typename T>
+T max(T x, T y)
+{
+    return (x < y) ? y : x;
+}
+int main()
+{
+    std::cout << max(2, 3.5) << '\n';  // compile error
+}
+\end{lstlisting}
+\item The compiler doesn't know which overload to refer to and which argument to coerce.
+\item Type coercion is done only in function overloads, \textbf{not in template argument deduction}.
+\item Note about function overloading:
+\begin{itemize}
+\item This compiles but isn't sound:
+\begin{lstlisting}
+int mymax(int x,int y)...
+mymax(2,2.5);//returns 2
+mymax(2.1,2.5);//returns 2
+\end{lstlisting}
+\item This compiles and is sound:
+\begin{lstlisting}
+double mymax(double x,double y)...
+mymax(2,1);//returns 2. Note that double arguments are trivially sound.
+mymax(2,2.5);//returns 2.5.
+\end{lstlisting}
+\item This doesn't compile:
+\begin{lstlisting}
+int mymax(int x,int y)...
+double mymax(double x,double y)...
+mymax(2,2.5);//compiler error, ambiguous overload.
+\end{lstlisting}
+\end{itemize}
+\item There are three ways to allow this mixing of types in templates.
+\begin{enumerate}
+\item Static Casting the arguments in a function call, without specifying the template type.
+\begin{itemize}
+\item Must use static cast \texttt{static\_cast<T>(var)} instead of dynamic casting \texttt{(type T)(var)}, which happens at runtime, because we need the type to be casted at compile time, to find the right template.
+\end{itemize}
+\item Just provide the template type and avoid the need for template argument deduction.
+\item Declare function template types with multiple type parameters. (Discussed below.)
+\end{enumerate}
+\item Allow multiple types in the argument list and use auto to ensure arithmetic conversions don't lose data.
+\begin{lstlisting}
+template <typename T, typename U>
+auto max(T x, U y)
+{
+    return (x < y) ? y : x;
+}
+//now this works for (T,T) and (T,U) instances.    
+//C++ 20 introduces abbreviated function templates:
+//Below is a shorthand for the above beast:
+auto max(auto x, auto y)
+{
+    return (x < y) ? y : x;
+}
+//should be used only if x and y are allowed to be of different types.
+\end{lstlisting}
+\end{itemize}
+\subsection{Non-type Template Parameters}
+\begin{itemize}
+\item Serve as placeholders for constexpr values passed in during a function call.
+\item A non-type template parameter can have be one of:
+\begin{enumerate}
+    \item An integral type
+    \item An enumeration type
+    \item \texttt{std::nullptr\_t}
+    \item A floating point type (C++ 20)
+    \item A pointer or reference to:
+    \begin{itemize}
+        \item An object
+        \item A function or member function.
+        \item A literal class type (C++ 20).
+    \end{itemize}
+\end{enumerate}
+\item Example of usage:
+\begin{lstlisting}
+bitset<8> b;
+\end{lstlisting}
+\item Syntax:
+\begin{lstlisting}
+template <int N> // declare a non-type template parameter of type int named N
+void print()
+{
+    std::cout << N << '\n'; // use value of N here
+}
+\end{lstlisting}
+\item On seeing a call to \texttt{print<5>()}, the compiler instantiates a print function with N=5.
+\item One application is in creating data structures whose size is fixed at compile time.
+\item One other application is in static asserts for values passed as non-type template parameters. For example, in a sqrt function.
+\item Type conversion of non-int parameters is often performed:
+\begin{lstlisting}
+print<'c'>();//compiles with casting 'c' to int.
+\end{lstlisting}
+\item Though only some types of constexpr conversions are allowed:
+\begin{itemize}
+    \item Integral promotions (ex. char to int).
+    \item Integral conversions (char to long or int to char).
+    \item User-defined conversions (some custom class to int).
+    \item Lval to Rval conversions.
+\end{itemize}
+\end{itemize}
 \section{Exceptions from LearnCpp.com}
 \begin{itemize}
 \item The primary issue with error-handling without exceptions is that

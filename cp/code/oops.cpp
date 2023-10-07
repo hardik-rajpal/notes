@@ -16,10 +16,16 @@ class Derived: public Base{
 int safemod(int a, int m){
     return (m + (a % m)) % m;
 }
+int mymax(int a,int b){
+    cout<<"int max"<<endl;
+    return 0;
+}
+// double mymax(double a,double b){
+//     cout<<"double max"<<endl;
+//     return 0;
+// }
 int main()
 {   
-    Base *b;
-    b = new Derived;
-    delete b;
+    cout<<mymax(1.1,2.3)<<endl;
     return 0;
 }
