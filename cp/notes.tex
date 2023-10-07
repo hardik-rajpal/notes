@@ -211,11 +211,16 @@ int, vector, etc.)
     \item \texttt{greater<T>} for descending orders.
 \end{itemize} Custom comparators are written like so:
 \begin{lstlisting}[caption={Comparators},language=C++]
-    struct U{
-        bool operator()(T t1, T t2)const{
-            //logic comparing t1<t2.
-        }
-    };
+struct U{
+    bool operator()(const T& t1,const T& t2)const{
+        //logic comparing t1<t2.
+    }
+};
+\end{lstlisting}
+Comparators are used as:
+\begin{lstlisting}
+set<T,struct ComparatorForT> myset;//note: type passed.
+sort(v.begin(),v.end(),ComparatorForT());//note: instance passed.
 \end{lstlisting}
 \subsubsection{\href{https://stackoverflow.com/a/46128321/14681493}{Better Comparators}}
 \subsection*{Static Functions}
@@ -228,6 +233,9 @@ public:
     }
     void solver(){
         set<int,decltype(Solution::compare)*> myset(Solution::compare);
+        //decltype return function type,
+        //appending * makes it a pointer.
+        //The function is passed as an argument to the constructor.
         //or in a sort function:
         sort(inds.begin(),inds.end(),&(Solution::compare));
     }
@@ -256,12 +264,12 @@ Hence, any useful data should be copied over from the iterator before removing t
 \subsection{Built-In Utilities}
 Note: \texttt{iter} denotes the iterator return type. \texttt{first} and \texttt{last} denote \texttt{.begin()} and \texttt{.end()} iterators.
 \begin{itemize}
-    \citem{void sort(first,last)} (O(nlogn))
+    \citem{void sort(first,last[, struct comp])} (O(nlogn))
     \citem{void reverse(first,last)} (O(n))
     \citem{void random\_shuffle(first,last)} (O(n))
     \citem{iter max\_element(first,last[,struct comp])} (O(n))
     \citem{iter min\_element(first,last[,struct comp])} (O(n))
-    \citem{int | long long | etc accumulate(first,last,init\_val)} (O(n))
+    \citem{int|long long|etc accumulate(first,last,init\_val[, function\_to\_combine(int,T)])} (O(n))
     \citem{iter lower\_bound(first,last,value)}(O(logn))
     \begin{itemize}
         \item Returns \texttt{iter} to the smallest element $\geq$ \texttt{value}.

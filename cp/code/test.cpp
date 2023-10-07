@@ -68,6 +68,28 @@ int prims(){
     }
     return wtsum;
 }
+struct Boy{
+    int h=0;
+    int iq=0;
+};
+struct BoyComp{
+    bool operator()(Boy b1, Boy b2)const{
+        return b1.h<b2.h;
+    }
+};
+bool compByIQ(const Boy&b1, const Boy&b2){
+    return b1.iq<b2.iq;
+}
 int main(){
-    
+    srand(0);
+    // set<Boy,decltype(compByIQ)*> boys(compByIQ);
+    vector<Boy> boys;
+    for(int i=0;i<4;i++){
+        // boys.insert({rand(),rand()});
+        boys.push_back({rand(),rand()});
+    }
+    sort(boys.begin(),boys.end(),BoyComp());
+    for(const Boy& boy:boys){
+        cout<<"{"<<boy.h<<","<<boy.iq<<"}"<<endl;
+    }
 }

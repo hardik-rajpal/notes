@@ -7,7 +7,7 @@
 \contentsline {subsection}{\numberline {1.4}Comparators}{4}{subsection.1.4}%
 \contentsline {subsubsection}{\numberline {1.4.1}\href {https://stackoverflow.com/a/46128321/14681493}{Better Comparators}}{5}{subsubsection.1.4.1}%
 \contentsline {subsection}{\numberline {1.5}Iterators}{5}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Built-In Utilities}{5}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.6}Built-In Utilities}{6}{subsection.1.6}%
 \contentsline {section}{\numberline {2}Graph Algorithms}{6}{section.2}%
 \contentsline {subsection}{\numberline {2.1}BFS|DFS}{6}{subsection.2.1}%
 \contentsline {section}{\numberline {3}Misc. Algorithms}{7}{section.3}%
