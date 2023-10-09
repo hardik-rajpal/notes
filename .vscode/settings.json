@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "array": "cpp"
+        "array": "cpp",
+        "queue": "cpp"
     },
     "editor.titleBar.enabled":false 
 }

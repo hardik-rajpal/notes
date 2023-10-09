@@ -103,7 +103,7 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item $a \equiv b mod n \iff a\%n == b\% n \iff (a-b) \% n == 0 $
 \item The congruence relation modulo n splits integers into\\n residue (equivalence) classe $\{C_i\}_{i=0}^{i=n-1}$:
 \begin{equation}
-    C_i = {z \| z \% n = i};
+    C_i = \{z \| z \% n = i\};
 \end{equation}
 \item Representative of $C_i$ is $r_i \in C_i, 0 \le r_i \le n-1$
 \item Operations:
@@ -113,9 +113,9 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item $(a*b) \% m = ((a \% m) * (b \% m)) \% m$
 \item $(a/b) \% m = ((a \% m) * (b^{-1} \% m)) \% m$
 \end{itemize}
-\item Note: in c++,  a \% m where a<0 returns -((-a)\%m), which is not equal to the mathematical result of
+\item Note: in c++,  a \% m where a$<$0 returns -((-a)\%m), which is not equal to the mathematical result of
 (m - ((-a) \% m)). 
-\item If a < 0, a mod m should be calculated as (m + (a \% m)).
+\item If a $<$ 0, a mod m should be calculated as (m + (a \% m)).
 \item Or the following function extends to both negative and positive a's : (m + (a \% m)) \% m.
 \item Exponentiation.
 \item $a == b \mod m \implies a^e = b^e \mod m.$
@@ -140,7 +140,7 @@ O(n^{log_b(a)}) & a > b^d
 \end{cases}    
 \end{equation}
 
-\section{Useful In-Built C++ functions}
+\section{Useful Built-In C++ functions}
 \begin{enumerate}
 \item \texttt{swap()}
 \item \texttt{lcm, gcd}
@@ -296,7 +296,7 @@ after and before the chosen element.
     % {}{}{}
 \end{enumerate}
 \chapter{Week 2}
-See the other notes.pdf
+See \href{C:/CODE/atgit/notes/cp/notes.pdf}{the other notes.pdf}
 \chapter{Week 3}
 \section{Complete Search}
 \subsection*{Subset Processing}
@@ -327,8 +327,16 @@ for (int b = 0; b < (1<<n); b++) {
 }
 \end{lstlisting}
 \subsection*{Permutation Generation}
-TODO: write up permutation ideas.
-TODO: selection of subsets satisfying a property.
+Permutation of a vector can be generated as follows:
+\begin{lstlisting}
+vector<int> permutation;
+for (int i = 0; i < n; i++) {
+    permutation.push_back(i);
+}
+do {
+    // process permutation
+} while (next_permutation(permutation.begin(),permutation.end()));
+\end{lstlisting}
 \subsection*{Backtracking En General}
 If the dimensions of inputs are smaller than usual, backtracking is an option.
 As with other algorithms, you want to optimize this as much as possible. Optimizations
@@ -1972,6 +1980,13 @@ to use maps from chars to Trie pointers.
 \item A suffix Trie can be constructed in O(|T|) time, which means pattern matching can be done
 in O(|P|+|T|+k) time, where k is the number of times the pattern occurs in T.  
 \end{itemize}
+\chapter{Operating Systems}
+\href{C:/CODE/atgit/notes/osrev/osrev.pdf}
+{Find separate notes here.}
+\chapter{Networks}
+\href{C:/CODE/atgit/notes/networks/networks.pdf}
+{Find separate notes here.}
+
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
 \section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
 \begin{itemize}

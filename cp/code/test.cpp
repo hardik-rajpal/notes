@@ -83,13 +83,22 @@ bool compByIQ(const Boy&b1, const Boy&b2){
 int main(){
     srand(0);
     // set<Boy,decltype(compByIQ)*> boys(compByIQ);
-    vector<Boy> boys;
+    // set<Boy,BoyComp> boys(compByIQ);
+    // vector<Boy> boys;
+    priority_queue<Boy,vector<Boy>,decltype(compByIQ)*> boys(compByIQ);
     for(int i=0;i<4;i++){
-        // boys.insert({rand(),rand()});
-        boys.push_back({rand(),rand()});
+        Boy boy = {rand(),rand()};
+        // boys.insert(boy);
+        // boys.push_back(boy);
+        boys.push(boy);
     }
-    sort(boys.begin(),boys.end(),BoyComp());
-    for(const Boy& boy:boys){
+    // sort(boys.begin(),boys.end(),BoyComp());
+    // for(const Boy& boy:boys){
+    //     cout<<"{"<<boy.h<<","<<boy.iq<<"}"<<endl;
+    // }
+    while(boys.size()){
+        Boy boy = boys.top();
         cout<<"{"<<boy.h<<","<<boy.iq<<"}"<<endl;
+        boys.pop();
     }
 }
