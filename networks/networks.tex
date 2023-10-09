@@ -3,10 +3,11 @@
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem}
+\newcommand{\protorow}[5]{#1 & #2 & #3 & #4 & #5\\ \hline}
 \makeatletter
 \def\maxwidth#1{\ifdim\Gin@nat@width>#1 #1\else\Gin@nat@width\fi}
 \makeatother
-\newcommand{\protorow}[4]{#1 & #2 & #3 & #4 \\ \hline}
+\hbadness 100001
 \newcommand{\mygraphic}[1]{
 \begin{center}
     \includegraphics[width=\maxwidth{15cm}]{#1}
@@ -19,13 +20,23 @@
 \tableofcontents
 \chapter{Misc}
 \section{Big Fat Protocol Table}
+\begin{itemize}
+\item Model Layer refers to the layer that the protocol is modelled to be a part of.
+\end{itemize}
 \begin{center}
-\begin{tabular}{| p{3cm} | p{3cm} | p{4cm} | p{4cm} | }
+\begin{tabular}{| p{1cm} | p{2cm} | p{2.5cm} | p{5cm} | p{4cm} | }
 \hline
-\protorow{Name}{Operates at Layer}{Function}{Remarks}
-\protorow{ARP}{}{Returns the MAC address corresponding to an IP address}{\hyperref[sec:arp]{Further discussion.}}
+\protorow{Name}{Operates over}{Model Layer}{Function}{Remarks}
+\protorow{ARP}{N/A}{Link}{Returns the MAC address corresponding to an IP address}{\hyperref[sec:arp]{Further discussion.}}
+\protorow{DHCP}{UDP}{Application}{Used to obtain new IP address assignments for hosts.}{\hyperref[sec:dhcp]{Further discussion.}}
+\protorow{ICMP}{IP}{Network}{Used by hosts and routers to communicate network level information}{\hyperref[sec:icmp]{Futher discussion.} \href{https://serverfault.com/questions/511965/why-is-icmp-categorized-as-a-layer-3-protocol}{Why is it on the network layer?}}
 \end{tabular}
 \end{center}
+\section{Addresses}
+\begin{itemize}
+\item Ethernet addresses are 48bits=6Bytes long.
+\item IPv4 addresses are 32bits=4Bytes long.
+\end{itemize}
 \chapter{Link Layer}
 \section{ARP Protocol}
 \label{sec:arp}
@@ -77,5 +88,118 @@
 \item Inform learning bridges of the new location of the host, or the location of a new host.
 \end{enumerate}
 \item Note that since ARP is a stateless protocol, even replies that were never requested are parsed and processed and thus, can function as gratuitous ARPs.
+\end{itemize}
+
+
+\chapter{Network Layer}
+\section{Obtaining IP Addresses}
+\begin{itemize}
+\item Organizations get the address blocks from ISPs, from whom they purchase internet routers. Ex: Reliance, Tata, Sprint, AT\&T.
+\item ISPs in turn get address blocks from Regional Internet Registries (RIR) which are controlled by Internet Corporation for Assigned Names and Numbers (ICANN).
+\item There are five RIRs:
+\mygraphic{rsrc/rirs.png}
+\item ISPs follow CIDR (covered before maybe) to assign blocks to organizations based on their size, and splits up blocks between organizations using different bits after the block's identifying bits.
+\item ISP routers advertise the block address that they've been given by an RIR to other routers for receiving all those packets.
+\item They don't advertise individual organize prefixes, but aggregate them all into the largest possible block.
+\item Given that the organization has an IP prefix, each host needs a unique IP address (hence a suffix).
+\item The address needs to be unique and location (subnet) dependent.
+\item Additionally, it needs to be reconfigurable, unlike ethernet addresses which are fixed by the manufacturer. (Though even those can be modified in some OSes, like Linux).
+\item Before any communication, the host needs:
+\begin{enumerate}
+    \item an IP address
+    \item a mask that specifies what the network portion corresponds to
+    \item the default router's IP address.
+    \item the DNS server's IP address.
+\end{enumerate} 
+\item Manual configuration is one option.
+\item Remote configuration is difficult and error prone.
+\item Enter DHCP:
+\end{itemize}
+\section{DHCP}
+\label{sec:dhcp}
+\begin{itemize}
+\item Operates at application layer, above UDP.
+\item Used to obtain a new IP address assignment on joining a network or booting.
+\item DHCP server maintains a pool of available IP address which it leases out on requests.
+\item Leases expire periodically unless the hosts renew them.
+\item It's advantages include:
+\begin{itemize}
+    \item Easy of configuration, as it's automated.
+    \item Reuse of IP addresses, in the case where the total number of hosts is large but the number of hosts live at any time is very small.
+    \item Support for portability of hosts across the network, across different subnets.
+\end{itemize}
+\item The packet format is:
+\mygraphic{rsrc/dhcppacket.png}
+\begin{itemize}
+\item Operation specifies whether it's a request or reply.
+\item Htype: hardware type: ethernet etc.
+\item Hlen: specifies length of hardware addresses. It's 6 (Bytes) (48 bits) for ethernet.
+\item Hops: indicates number of relays traversed. It's set to zero by the host.
+\item Xid: transaction ID to match requests and replies. All messages corresponding to one DHCP transaction have the same Xid.
+\item Secs: time elapsed since the client started the communication. A larger value means the server gives it more priority in the queue.
+\item Flags: only 1 of 16 bits is used, corresponding to the broadcast flag: whether or not the server broadcasts its replies.
+\begin{itemize}
+\item It's set to 1 when the host broadcasts the discover message, so the server broadcasts its replies as the client doesn't have an IP address yet.
+\item It's set to 0 when the host is renewing the lease, as it has an IP address that the server can send its replies on.
+\end{itemize}  
+\item Ciaddr: specifies the current IP address (if a previous assignment exists).
+\item Yiaddr: (Your IP addr) the IP address that the server offers the client.
+\item Siaddr: (Server IP addr) specified only if the client has to contact some other server as a part of the operation.
+\begin{itemize}
+\item Additionally, the client uses this in the request message to inform all DHCP servers which may have sent it a request of the server whose offer it has chosen to proceed with.
+\item As the messages are broadcast, those rejected DHCP servers note this request message and terminate the transaction.
+\end{itemize}
+\item Giaddr: IP address of Relay agent if any.
+\item Chaddr: Holds the hardware address corresponding to the client.
+\item Sname: hostname of the server if it has one.
+\item File: boot file if the server wants to specify one, it's typically not used.
+\item Options: The client mentions the offered IP address here in the DHCP request packet. The client can also request additional information here, and the server can respond with \hyperref[addinfo]{additional information.}
+\end{itemize}
+\item Note that the same packet format is used by the client and the server.
+\item DHCP has its origins in BOOTP which was used earlier in booting of machines where configuration files were sent over the network.
+\end{itemize}
+\subsection{Operation}
+\begin{enumerate}
+\item Host broadcasts a DHCP discover message, with the broadcast (dstIP=\texttt{255.255.255.255}) restricted to the physical network.
+\begin{itemize}
+    \item Note that all IP-level broadcasts are link-level broadcasts. Routers don't allow letting such messages out into the internet.
+    \item All messages in this exchange have their dst IP address set to broadcast.
+    \item This helps in the case of multiple DHCP servers being around; so that all servers receive the request message meant for a chosen offer, to know they have to terminate the connection.
+    \item This allows the rejected servers to recycle the available IP addresses faster.
+    \item The client sets its src IP address to \texttt{0.0.0.0} if it's requesting an IP address for the first time.
+    \item In some cases of field values in the discover packets, unicast mayb be used. See this \href{https://superuser.com/questions/1536810/why-are-dhcp-messages-broadcast}{\textbf{if necessary.}}
+    \item Otherwise, it uses its assigned IP address.
+    \item The server as expected puts its IP address in the src IP address field.
+\end{itemize}
+\item DHCP server responds with DHCP offer message, while other hosts ignore the discover message.
+\begin{itemize}
+    \item The offered IP address is derived from the subnet IP address, and possibly the hosts' MAC address.
+\end{itemize}
+\item Host receives the offer and requests the offered IP address: DHCP request message.
+\item DHCP server confirms the assignment: DHCP ack. The server also informs the client of the expiration time.
+\end{enumerate}
+\begin{itemize}
+\item If the host requests for it, the DHCP server also passes:
+\label{addinfo}
+\begin{enumerate}
+    \item the subnet mask
+    \item default router's IP address
+    \item domain name
+    \item DNS server info
+\end{enumerate}
+\item One DHCP server can be used over multiple subnets, if DHCP Relays are installed in each subnet that forward messages to (and from) DHCP server via a unicast link.
+\item Routers can act as DHCP relays.
+\end{itemize}
+\subsection{Router Configuration}
+\begin{itemize}
+\item Sysads manually configure the interface addresses on a router using network management tools.
+\end{itemize}
+
+\section{ICMP}
+\label{sec:icmp}
+\begin{itemize}
+\item Stands for Internet Control Message Protocol.
+\item Used by hosts and routers to communicate network-level information.
+\item Operates on top of the Internet Protocol. (IP).
 \end{itemize}
 \end{document}
