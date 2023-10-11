@@ -43,6 +43,7 @@
 \chapter{Misc.}
 \section{Misc. Confirmed Optimizations}
 \begin{enumerate}
+    \item When writing custom comparators, avoid having memory accesses (\texttt{a[i][j]}) inside the comparator. Instead, modify the data structures whose elements are being compared to pass values that can be used in the comparator without memory accesses.
     \item For maps,
 \begin{lstlisting}
     auto iter = m.find(k);
