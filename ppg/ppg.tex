@@ -2145,22 +2145,41 @@ void quicksort(vector<int> &a, int s, int e){
 \subsection{Quick Select}
 \begin{itemize}
 \item The partition function splits the array into two parts whose elements have an upper (for prefix) and lower (for suffix) bounds on their ranks in the sorted array.
-\item This allows us to use it to find the kth element in an array. The following algorithm is called quick select:
+\item This allows us to use it to find the kth (smallest) element in an array. The following algorithm is called quick select:
 \begin{lstlisting}
-//where kth largest element of a is to be found.
-int pq, q, e,n;
-n = a.size();
-pq = 0;
-q = 0;
-e = n-1;
-while(q<n-k){
-    pq = q;
-    q = partition(a,q,e);
-    //repeatedly pick the right partition, while the kth element is still contained in it.
-    if(pq==q){break;}
+vector<int> a;
+int partition(int s, int e){
+    int pivot = a[e];
+    int i,j;
+    i = s-1;
+    j = e;
+    while(i<j){
+        do{j--;}
+        while(j>s-1 && a[j]>=pivot);
+        do{i++;}
+        while(i<e && a[i]<=pivot);
+        if(i<j){
+            swap(a[i],a[j]);
+        }
+    }
+    j++;
+    swap(a[e],a[j]);
+    return j;
+    //return the start of the suffix, ensuring nums[suffixStart] = pivot.
 }
-sort(a.begin()+pq,a.begin()+n);
-return a[n-k];
+int qselect(int s, int e, int k){
+    int q;
+    q = partition(s,e);
+    if(q<k){
+        return qselect(q+1,e,k);
+    }
+    else if(q>k){
+        return qselect(s,q-1,k);
+    }
+    else{
+        return a[q];
+    }
+}
 \end{lstlisting}
 \end{itemize}
 \chapter{Operating Systems}
