@@ -12,7 +12,7 @@
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 \author{Hardik Rajpal}
-\title{Notes from nearly draining pursuits of mastery in Leetcode problems}
+\title{Notes from nearly draining pursuits\\of mastery in Leetcode problems}
 \hbadness 100001
 \begin{document}
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -204,9 +204,9 @@ public:
 \begin{itemize}
 \item A given vector \texttt{a} can be used as a heap in-place without transferring its contents anywhere using the functions below:
 \begin{enumerate}
-\item \texttt{make\_heap}:
-\item \texttt{push\_heap}:
-\item \texttt{pop\_heap}:
+\item \texttt{make\_heap(first, last[, struct comp])}:moves elements in (first,last) container around to make a heap in O(N) time.
+\item \texttt{push\_heap(first, last[, struct comp])}:inserts an element in the max heap \\represented by (first,last).
+\item \texttt{pop\_heap}:removes the maximum element in the heap formed by (first,last).
 \end{enumerate}
 \end{itemize}
 \subsection{The Big Fat Table of Data Structures}
