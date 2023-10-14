@@ -2106,7 +2106,42 @@ for(int i=n/2;i>-1;i--){
 \item The sum: $\sum_{i=1}^{logn}{n\times i/2^i}$ is strictly bounded by $2n$
 \end{itemize}
 \section{Quick Sort}
-
+\begin{itemize}
+\item Involves two procedures: Partition and Quicksort
+\item Partion takes an array, picks a pivot element in it, and rearranges the elements such that:
+\begin{itemize}
+    \item A prefix of the array contains all elements less than (or equal to) the pivot.
+    \item A suffix of the array contains all elements greater than (or equal to) the pivot.
+\end{itemize}
+\item It returns the first index of a valid suffix where all values are $\ge$ the chosen pivot.
+\begin{lstlisting}
+int partition(vector<int> &a, int s, int e){
+    //s,e inclusive.
+    int pivot = a[pivotCriteria()];
+    int i = s-1, j = e+1;//outer points to allow do-while
+    while(i<j){
+        do{j--;}
+        while(a[j]>=pivot);//note the equality.
+        do{i++;}
+        while(a[i]<=pivot);//note the equality.
+        if(i<j){
+            swap(a[i],a[j]);
+        }
+    }
+    return i;//first index of a valid suffix.
+}
+\end{lstlisting}
+\item Quicksort partitions the array into two arrays, and makes recursive calls on each partition.
+\begin{lstlisting}
+void quicksort(vector<int> &a, int s, int e){
+    if(e<=s){return;}
+    int q = partition(a,s,e);
+    //first index of suffix.
+    quicksort(a,s,q-1);//sort the prefix
+    quicksort(a,q,e);//sort the suffix.
+}
+\end{lstlisting}
+\end{itemize}
 
 \chapter{Operating Systems}
 \href{C:/CODE/atgit/notes/osrev/osrev.pdf}
