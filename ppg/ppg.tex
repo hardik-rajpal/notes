@@ -2121,9 +2121,9 @@ int partition(vector<int> &a, int s, int e){
     int i = s-1, j = e+1;//outer points to allow do-while
     while(i<j){
         do{j--;}
-        while(a[j]>=pivot);//note the equality.
+        while(j>s-1 && a[j]>=pivot);//note the equality.
         do{i++;}
-        while(a[i]<=pivot);//note the equality.
+        while(i<e+1 && a[i]<=pivot);//note the equality.
         if(i<j){
             swap(a[i],a[j]);
         }
@@ -2142,7 +2142,27 @@ void quicksort(vector<int> &a, int s, int e){
 }
 \end{lstlisting}
 \end{itemize}
-
+\subsection{Quick Select}
+\begin{itemize}
+\item The partition function splits the array into two parts whose elements have an upper (for prefix) and lower (for suffix) bounds on their ranks in the sorted array.
+\item This allows us to use it to find the kth element in an array. The following algorithm is called quick select:
+\begin{lstlisting}
+//where kth largest element of a is to be found.
+int pq, q, e,n;
+n = a.size();
+pq = 0;
+q = 0;
+e = n-1;
+while(q<n-k){
+    pq = q;
+    q = partition(a,q,e);
+    //repeatedly pick the right partition, while the kth element is still contained in it.
+    if(pq==q){break;}
+}
+sort(a.begin()+pq,a.begin()+n);
+return a[n-k];
+\end{lstlisting}
+\end{itemize}
 \chapter{Operating Systems}
 \href{C:/CODE/atgit/notes/osrev/osrev.pdf}
 {Find separate notes here.}
