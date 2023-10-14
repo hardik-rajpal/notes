@@ -1925,62 +1925,189 @@ vector<int> kmp(string t, string p){
 \end{lstlisting}
 \subsubsection{Linear Time LPS}
 It's complicated man. Maybe do this later.
-\section{Tries}
+\subsection{Tries}
 \begin{itemize}
-\item Tries are meant to store data indexed by strings from a fixed set of characters.
-\item Said data can be the occurrences of the index string in a large body of text.
-\item A generic implementation is give below:
-\begin{lstlisting}
-class Trie{
-    int charindex(char c);//each char mapped to an integer,
-    vector<Trie*> chars = vector<Trie*>(numChars,NULL);//integers indexing a Trie pointer,
-    Data data;//initialized to empty.
-    void insert(string index,Data data){
-        int i = 0;
-        Trie* t = this;
-        while(i<index.size()){
-            if(!t->chars[charindex(index[i])]){
-                t->chars[charindex(index[i])] = new Trie;
+    \item Tries are meant to store data indexed by strings from a fixed set of characters.
+    \item Said data can be the occurrences of the index string in a large body of text.
+    \item A generic implementation is give below:
+    \begin{lstlisting}
+    class Trie{
+        int charindex(char c);//each char mapped to an integer,
+        vector<Trie*> chars = vector<Trie*>(numChars,NULL);//integers indexing a Trie pointer,
+        Data data;//initialized to empty.
+        void insert(string index,Data data){
+            int i = 0;
+            Trie* t = this;
+            while(i<index.size()){
+                if(!t->chars[charindex(index[i])]){
+                    t->chars[charindex(index[i])] = new Trie;
+                }
+                t = t->chars[charindex(index[i])];
+                i++;
             }
-            t = t->chars[charindex(index[i])];
-            i++;
+            t->data = data;
         }
-        t->data = data;
-    }
-    Data* get(string index){
-        int i = 0;
-        Trie* t = this;
-        while(i<index.size()){
-            if(!t->chars[charindex(index[i])]){
-                return NULL;
+        Data* get(string index){
+            int i = 0;
+            Trie* t = this;
+            while(i<index.size()){
+                if(!t->chars[charindex(index[i])]){
+                    return NULL;
+                }
+                t = t->chars[charindex(index[i])];
+                i++;
             }
-            t = t->chars[charindex(index[i])];
-            i++;
+            return &(t->data);
         }
-        return &(t->data);
-    }
-    void remove(string index){
-        int i = 0;
-        Trie* t = this;
-        while(i<index.size()){
-            if(!t->chars[charindex(index[i])]){
-                return;
+        void remove(string index){
+            int i = 0;
+            Trie* t = this;
+            while(i<index.size()){
+                if(!t->chars[charindex(index[i])]){
+                    return;
+                }
+                t = t->chars[charindex(index[i])];
+                i++;
             }
-            t = t->chars[charindex(index[i])];
-            i++;
+            return t->data = NULL;
         }
-        return t->data = NULL;
-    }
-};
-\end{lstlisting}
-\item This implementation's space complexity is O(|W|J), where J is the number of unique
-ordered pairs (i,c) such that data has been indexed using a string which has c at index i.
-W is the character set.
-\item A more space-efficient, and thus access time-inefficient implementation would be
-to use maps from chars to Trie pointers.
-\item A suffix Trie can be constructed in O(|T|) time, which means pattern matching can be done
-in O(|P|+|T|+k) time, where k is the number of times the pattern occurs in T.  
+    };
+    \end{lstlisting}
+    \item This implementation's space complexity is O(|W|J), where J is the number of unique
+    ordered pairs (i,c) such that data has been indexed using a string which has c at index i.
+    W is the character set.
+    \item A more space-efficient, and thus access time-inefficient implementation would be
+    to use maps from chars to Trie pointers.
+    \item A suffix Trie can be constructed in O(|T|) time, which means pattern matching can be done
+    in O(|P|+|T|+k) time, where k is the number of times the pattern occurs in T.  
+    \end{itemize}
+\section{Heap}
+\begin{itemize}
+\item Implemented as a binary tree to order items by a parameter.
+\item All levels except the last one are full. The last level is left-filled.
+\item Structural Property: $\forall$node, Priority(node)$\le$Priority(node.parent)
+\item $\implies$ the root has the maximum priority.
+\item Height of a heap with n nodes is $h = floor(log_2(n+1))$
 \end{itemize}
+\subsection{Array Implementation}
+\begin{lstlisting}
+vector<int> a(vals.begin(),vals.end());
+//zero indexed.
+int parent(i){
+    return (i-1)/2;
+    //parent(0) returns 0.
+}
+int left(i){
+    return 2*i + 1;
+}
+int right(i){
+    return 2*i + 2;
+}
+//condition: for all i, a[i] <= a[parent(i)]
+\end{lstlisting}
+\subsection{UpwardsHeapify}
+\begin{lstlisting}
+void upwardsHeapify(int i){
+    while(i!=0){
+        //MAX HEAP => parent should be >. Swap if not.
+        if(a[parent(i)] < a[i]){
+            swap(a[parent(i)],a[i]);
+        }
+        i = parent(i);
+    }
+}
+\end{lstlisting}
+\subsection{Insertion}
+\begin{lstlisting}
+void insert(int v){
+    a.push_back(v);
+    upwardsHeapify(a.size()-1);
+    return;
+}
+\end{lstlisting}
+\subsection{Heapify}
+\begin{itemize}
+\item Function used to convert any given binary tree into a heap.
+\end{itemize}
+\begin{lstlisting}
+heapifyNode(int i){
+    int vl=INT_MIN,vr=INT_MIN;
+    if(left(i)<n){
+        vl = a[left(i)];
+    }
+    if(right(i)<n){
+        vr = a[right(i)];
+    }
+    if(a[i] < max(vl,vr)){
+        if(a[left(i)] > a[right(i)]){
+            swap(a[i],a[left(i)]);
+            heapifyNode(a[left(i)]);//continues down the tree.
+        }
+        else{
+            swap(a[i],a[right(i)]);
+            heapifyNode(a[right(i)]);//continues down the tree.
+        }
+    }
+}
+heapifyTree(int i){
+    if(i<0 || i > n-1){return;}
+    heapifyTree(left(i));
+    heapifyTree(right(i));
+    heapifyNode(i);
+}
+\end{lstlisting}
+\begin{itemize}
+\item Note that heapify continues down the tree, because the branch whose head is swapped with the given node is not guarranteed to be a heap with the new node.
+\item \texttt{heapifyNode} takes O(logn) time.
+\item \texttt{heapifyTree} takes O(nlogn) time, since it visits each node once, calling \texttt{heapifyNode}.
+\end{itemize}
+\subsection{Deletion (of root)}
+\begin{lstlisting}
+void deleteMin(){
+    arr[0] = arr[arr.size()-1];
+    heapifyNode(0);//Note: deletion is O(logn)
+    return;
+}
+\end{lstlisting}
+
+\subsection{Inplace Heapsort}
+\begin{itemize}
+\item Works in O(nlogn) time and O(1) space.
+\item The key idea is to implement max heap helper functions and keep swapping a[0] with a[n-1], reducing n each time.
+\end{itemize}
+\begin{lstlisting}
+void inplaceheapsort(vector<int>& nums){
+    int n = nums.size();
+    vector<int> ans;
+    maxHeapifyTree(nums,0,n);
+    while(--n){
+        swap(nums[0],nums[n]);//max elem moved to end of array repeatedly.
+        maxHeapifyNode(nums,0,n);
+    }
+    return;
+}
+\end{lstlisting}
+\subsection{Other modifications}
+\begin{itemize}
+\item If an element in a max heap is incremented, we must call \texttt{upwardsHeapify} to ensure the array remains a heap; if it is decremented, we must call \texttt{heapify}. Vice-versa for elements in min heaps. 
+\end{itemize}
+\subsection{Array to Heap in O(n)}
+\begin{itemize}
+\item \texttt{heapifyTree(0)} and repeated insertions run in O(nlogn) time.
+\item A linear solution is below:
+\begin{lstlisting}
+//Note: only first half of the elems are used in the loop
+for(int i=n/2;i>-1;i--){
+    heapifyNode(i);
+}
+\end{lstlisting}
+\item The running time is linear because the heapify calls incur low costs for of the nodes.
+\item In particular, there are at most $n/2^i$ nodes that incur $i$ swaps (or operations) in heapify.
+\item The sum: $\sum_{i=1}^{logn}{n\times i/2^i}$ is strictly bounded by $2n$
+\end{itemize}
+\section{Quick Sort}
+
+
 \chapter{Operating Systems}
 \href{C:/CODE/atgit/notes/osrev/osrev.pdf}
 {Find separate notes here.}
