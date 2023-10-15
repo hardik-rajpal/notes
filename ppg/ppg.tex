@@ -2260,23 +2260,59 @@ int qselect(int s, int e, int k){
     \item \texttt{a1, a2, ...}: An example of values for A1, A2,... and \texttt{a}: a set of values of each column.
     \item \texttt{R1, R2, ...}: Table (relation) names.
     \item \texttt{E1(A), E2(B), ...}: Expressions using column names from \texttt{A} and \texttt{B}.
+    \item \texttt{C1, C2, ...}: Condition statements.
     \item \texttt{abc|def}: either abc or def can be used here.
 \end{itemize}
 \item Select statements:
 \begin{lstlisting}[caption=The Usual]
-select (A1, A2, A3) from R1 where E1(A);
+select (A1, A2, A3) from R1 where C1;
 \end{lstlisting}
 \begin{itemize}
-\item Examples of E1(A):
+\item Examples of C1:
 \begin{lstlisting}
 A1 = a1
+A1 > a1
+A1 < a1
+A1 <= a1
+A1 >= a1
+A1 <> a1
+A1 LIKE pattern
+A1 in (a1,a1',a1'')
+A1 between a1 and a2
+A1 IS NULL
 \end{lstlisting}
+\item Each condition operand can be preceeded by NOT to negate it. Ex: \texttt{A NOT LIKE pattern}.
+\item In patterns, \texttt{\_} replaces 1 character and \texttt{\%} replaces 0, 1 or more characters.
 \end{itemize}
-\begin{lstlisting}[caption=Order]
+\begin{lstlisting}[caption=Variations of Select]
 select (A1, A2, A3) from R1 order by A1,A2 desc|asc;
-\end{lstlisting}
-\begin{lstlisting}[caption=Distinct]
 select distinct (A1, A2, A3) from R1 where E1(A);
+select (A1, A2, A3) from R1 limit n offset k;//skip first k rows and return the next n rows.
+select A1, aggregate(A2) from R1 group by A1;
+select A1, aggregate(A2) from R1 group by A1 having E1(aggregate(A2));
+\end{lstlisting}
+\item Joins:
+\begin{enumerate}
+\item \texttt{(Inner) Join}: return rows where both tables have an entry for the common column (ignore matchless columns from both tables).
+\item \texttt{Left (outer) Join}: return all rows from table 1 (on the left), and if the row's column has a matching row in table 2, append its data too. 
+\item \texttt{Right (Outer) Join}: return all rows from table 2 (on the right), and if the row's column has a matching row in table 1, append its data too.  
+\item \texttt{Full (Outer) Join}: return all rows from both tables, correlating the ones with matching entries in the common column. 
+\item cross join: every row is joined with every row. This is a costly operation and is rarely used. It is invoked in the following query:
+\begin{lstlisting}
+select A1,A2 from R1,R2;
+\\equivalent to
+select A1,A2 from R1 cross join R2;
+\end{lstlisting}
+\item The generic join sytax is:
+\begin{lstlisting}
+select * from R1 (join-specification) R2 on C;
+\end{lstlisting}
+\end{enumerate}
+\item Set operations can be used to combine the results from two separate select queries:
+\begin{lstlisting}[caption=Set Operation]
+select * from R1 UNION select * from R2;
+select * from R1 INTERSECT select * from R2;
+select * from R1 MINUS select * from R2;
 \end{lstlisting}
 \end{itemize}
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
