@@ -1491,7 +1491,69 @@ constexpr bool b4{ noexcept(goo()) }; // true; goo() is explicitly noexcept(true
 constexpr bool b5{ noexcept(S{}) };   // true; a struct's default constructor is noexcept by default
 \end{lstlisting}
 \end{itemize}
+\section{The Inlined}
+\subsection{Global Constants}
+\begin{itemize}
+\item Some constants might be used across files and we want to define them only once.
+\item One way of doing this (pre C++17) was:
+\begin{lstlisting}
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+// define your own namespace to hold constants
+namespace constants
+{
+    // constants have internal linkage by default
+    constexpr double pi { 3.14159 };
+    constexpr double avogadro { 6.0221413e23 };
+    constexpr double myGravity { 9.2 };
+}
+#endif
+\end{lstlisting}
+\item And we \texttt{\#include<constants.h>} wherever we need the constants.
+\item Each separate object file that uses \texttt{constants.h} gets a separate copy
+of the constants, but the compiler removes them away later.
+\item Downsides of this:
+\begin{enumerate}
+\item Each object file using \texttt{constants.h} has to be recompiled whenever the constants are updated.
+\item If the constants aren't optimized away by the compiler for some reason and are large,
+they use a lot of memory.
+\end{enumerate}
+\item The alternative is to:
+\begin{enumerate}
+\item Put forward declarations of the constants in a header file that can be included in multiple files.
+\item Define them only once in a .cpp file.
+\end{enumerate}
+\item Note: \texttt{constexpr} variables can't be forward declared, as the compiler must know their values at compile time. We use \texttt{const} in this case:
+\begin{lstlisting}
+/*constants.cpp contents:*/
+#include "constants.h"
 
+namespace constants
+{
+    // actual global variables
+    extern const double pi { 3.14159 };
+    extern const double avogadro { 6.0221413e23 };
+    extern const double myGravity { 9.2 }; // m/s^2
+}
+
+/*constants.h contents*/
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+namespace constants
+{
+    // since the actual variables are inside a namespace, the forward declarations need to be inside a namespace as well
+    extern const double pi;
+    extern const double avogadro;
+    extern const double myGravity;
+}
+#endif
+\end{lstlisting}
+\item Downside of this method is that the values of \texttt{constants::pi} and the others aren't treated as constants in files other than \texttt{constants.cpp}. This keeps several helpful optimizations from happening.
+\item \texttt{inline} variables are a better solution from \texttt{C++ 17}
+\item An inline variable, declared a single header file, can be used in multiple cpp files without generating redundant copies.
+\item Inline global variables have external linkage by default.
+\end{itemize}
 \chapter{DSA Revision Notes}
 \section{Stacks, Queues, Linked Lists}
 \begin{itemize}
@@ -2188,7 +2250,35 @@ int qselect(int s, int e, int k){
 \chapter{Networks}
 \href{C:/CODE/atgit/notes/networks/networks.pdf}
 {Find separate notes here.}
-
+\chapter{DBMS}
+\section{\href{https://www.sqltutorial.org/sql-cheat-sheet/}{SQL}}
+\begin{itemize}
+\item Notation:
+\begin{itemize}
+    \item \texttt{T1, T2, ...}: Data types
+    \item \texttt{A1, A2, ...}: Column names and \texttt{A}: entire set of columns.
+    \item \texttt{a1, a2, ...}: An example of values for A1, A2,... and \texttt{a}: a set of values of each column.
+    \item \texttt{R1, R2, ...}: Table (relation) names.
+    \item \texttt{E1(A), E2(B), ...}: Expressions using column names from \texttt{A} and \texttt{B}.
+    \item \texttt{abc|def}: either abc or def can be used here.
+\end{itemize}
+\item Select statements:
+\begin{lstlisting}[caption=The Usual]
+select (A1, A2, A3) from R1 where E1(A);
+\end{lstlisting}
+\begin{itemize}
+\item Examples of E1(A):
+\begin{lstlisting}
+A1 = a1
+\end{lstlisting}
+\end{itemize}
+\begin{lstlisting}[caption=Order]
+select (A1, A2, A3) from R1 order by A1,A2 desc|asc;
+\end{lstlisting}
+\begin{lstlisting}[caption=Distinct]
+select distinct (A1, A2, A3) from R1 where E1(A);
+\end{lstlisting}
+\end{itemize}
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
 \section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
 \begin{itemize}
