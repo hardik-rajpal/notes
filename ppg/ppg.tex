@@ -43,6 +43,7 @@
 \chapter{Misc.}
 \section{Misc. Confirmed Optimizations}
 \begin{enumerate}
+    \item While using \texttt{cout}, \texttt{cerr} is fine during debugging, remember to remove them before submission as they greatly affect runtime.
     \item When writing custom comparators, avoid having memory accesses (\texttt{a[i][j]}) inside the comparator. Instead, modify the data structures whose elements are being compared to pass values that can be used in the comparator without memory accesses.
     \item For maps,
 \begin{lstlisting}
@@ -575,6 +576,9 @@ down to:
 \subsection{Common Patterns}
 \subsubsection{Min (Max) Path to Reach Target}
 \subsubsection{Distinct Ways}
+\begin{itemize}
+\item It might help to convert direction problems into terms involving sums and bounds, which are easier to reason about and enforce.
+\end{itemize}
 \subsubsection{Merging Intervals}
 \subsubsection{DP on Strings}
 \subsubsection{Decision Making}

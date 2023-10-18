@@ -385,6 +385,55 @@ sometimes get you under the time limit.
     the neighbours using any one owner. Since, all elements in the shared field are visited and running them
     through the loop for other owners of the field is redundant. \href{https://leetcode.com/problems/jump-game-iv/}{(Leetcode)}
 \end{itemize}
+\subsection{Topological Sort}
+This can be implemented using BFS or DFS on a graph, starting from points with indegrees 0.
+\begin{lstlisting}[caption=DFS implementation]
+bool notDAG = false;
+vector<int> vis(n,0);
+vector<vector<int>> adj;//adjacency list.
+vector<int> order;
+void dfs(int u){
+    if(notDAG){return;}
+    vis[u] = 1;
+    for(int v:adj[u]){
+        if(vis[v]==1){
+            notDAG = true;
+            vis[u] = 2;
+            return;
+        }
+        else if(vis[v]==0){
+            dfs(v);
+        }
+    }
+    vis[u] = 2;
+}
+//stack version:
+void dfs(int u){
+    stack<int> s;
+    s.push(u);
+    bool cproc = false;
+    while(s.size()){
+        cproc = false;
+        u = s.top();
+        vis[u] = 1;
+        for(int v:adj[u]){
+            if(vis[v]==1){
+                notDAG = true;
+                return;
+            }
+            else if(vis[v]==0){
+                s.push(v);
+                cproc = true;
+            }
+        }
+        if(!cproc){
+            order.push_back(u);
+            s.pop();
+            vis[u] = 2;
+        }
+    }
+}
+\end{lstlisting}
 \section{Misc. Algorithms}
 \subsection{Binary Search}
 While the idea of binary search is clear, opportunities
