@@ -415,6 +415,10 @@ void dfs(int u){
     while(s.size()){
         cproc = false;
         u = s.top();
+        if(vis[u]==2){
+            s.pop();
+            continue;
+        }
         vis[u] = 1;
         for(int v:adj[u]){
             if(vis[v]==1){
