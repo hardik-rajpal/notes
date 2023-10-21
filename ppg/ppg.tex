@@ -152,6 +152,10 @@ O(n^{log_b(a)}) & a > b^d
 \begin{enumerate}
 \item One-Definition Rule: TODO
 \end{enumerate}
+\section{Watch out for these bugs}
+\begin{itemize}
+\item When reusing a pointer to heap data, remember to set it to NULL after you \texttt{delete} it.
+\end{itemize}
 \chapter{Week 1}
 \section{Searching Algorithms}
 \subsection*{Notes from \href{https://www.geeksforgeeks.org/searching-algorithms/}{GFG}}
@@ -609,7 +613,7 @@ down to:
         \item Friend functions.
     \end{enumerate}
     \item The base classes can be inherited through public, 
-    protected or private inheritance, which is specified the 
+    protected or private inheritance, which is specified by the 
     access specifier before its name in the declaration of the 
     derived class. The results are:
     \begin{enumerate}

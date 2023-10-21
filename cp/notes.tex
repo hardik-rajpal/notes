@@ -351,39 +351,45 @@ while(!q.empty()){
     steps++;
 }
         \end{lstlisting}
-    \end{minipage}\hfill
-    \begin{minipage}{.45\textwidth}
-        \begin{lstlisting}[caption=DFS,language=C++]
-T s;
-unordered_map<T,vector<T>> edges;
-stack<T> s;
-unordered_map<T,bool> visited;
-unordered_map<T,T> prev;
-s.push(s);
-visited[s] = true;
-while(!s.empty()){
-    T u = s.top();
-    s.pop();
-    for(nb:edges[u]){
-        if(!visited[nb]){
-            visited[nb] = true;
-            prev[nb] = u;
-            q.push(nb);
+\end{minipage}\hfill
+\begin{minipage}{.45\textwidth}
+    \begin{lstlisting}[caption=DFS,language=C++]
+    T s;
+    unordered_map<T,vector<T>> edges;
+    stack<T> s;
+    unordered_map<T,bool> visited;
+    unordered_map<T,T> prev;
+    s.push(s);
+    visited[s] = true;
+    while(!s.empty()){
+        T u = s.top();
+        s.pop();
+        for(nb:edges[u]){
+            if(!visited[nb]){
+                visited[nb] = true;
+                prev[nb] = u;
+                q.push(nb);
+            }
         }
     }
-}
-\end{lstlisting}
+    \end{lstlisting}
 \end{minipage}\\
 The nodes should be reduced from the abstract type T, to
 int whenever possible; thereby reducing the
 \texttt{unordered\_map}s to \texttt{vector}s which can
 sometimes get you under the time limit.
 \href{https://stackoverflow.com/questions/55451825/why-is-vector-faster-than-unordered-map}{Click here for Why?}
-\subsubsection*{Optimizations}
+\subsubsection*{Variations}
 \begin{itemize}
     \item If the list of neighbours is a shared data structure, consider clearing it after having visited
     the neighbours using any one owner. Since, all elements in the shared field are visited and running them
     through the loop for other owners of the field is redundant. \href{https://leetcode.com/problems/jump-game-iv/}{(Leetcode)}
+    \item Some algorithms may require the execution of a DFS to be identical to the recursive function call, with some processing at the parent after the children have been processed (searched at). This can be accomplished by: 
+    \begin{itemize}
+        \item using an adjacency list of queues (so as to \texttt{pop\_front} each child from the list after a visit)
+        \item using an array for \texttt{childstart}, which maintains which index of the adjacency list we are to start inspecting the children.
+    \end{itemize} 
+    The latter method allows for reuse of the adjacency list whereas the former method destroys it.
 \end{itemize}
 \subsection{Topological Sort}
 This can be implemented using BFS or DFS on a graph, starting from points with indegrees 0.
@@ -408,6 +414,7 @@ void dfs(int u){
     vis[u] = 2;
 }
 //stack version:
+vector<int> childstart(n,0);
 void dfs(int u){
     stack<int> s;
     s.push(u);
@@ -415,12 +422,10 @@ void dfs(int u){
     while(s.size()){
         cproc = false;
         u = s.top();
-        if(vis[u]==2){
-            s.pop();
-            continue;
-        }
         vis[u] = 1;
-        for(int v:adj[u]){
+        for(int v,i=childstart[u];i<adj[u].size();i++){
+            v=adj[u][i];
+            childstart[u]++;//to ensure this node isn't processed again as a child of u later.
             if(vis[v]==1){
                 notDAG = true;
                 return;
@@ -428,6 +433,7 @@ void dfs(int u){
             else if(vis[v]==0){
                 s.push(v);
                 cproc = true;
+                break;
             }
         }
         if(!cproc){
@@ -558,14 +564,8 @@ current value in a sequence can be solved better by ignoring any values that are
 surrounded by higher values; remove any element if it is smaller than its previous
 element.\\
 TODO: get infographic?
-\subsection{Linked Lists}
-The following tasks can be done in O(1) space with singly linked lists:
-\begin{enumerate}
-    \item Finding a[n/2 - 1].
-    \item Finding its length.
-    \item Reversing the list.
-    \item Hare and Turtle ??? TODO
-\end{enumerate}
+
+
 \subsection{Boyer-Moore Majority Voting}
 \begin{itemize}
 \item It returns the element occuring $>$ floor(n/2) times in an array of size n, in linear time.
@@ -634,6 +634,28 @@ for(auto entry:votes){
     if(entry.second > thres){ans.push_back(entry.first);}
 }
 \end{lstlisting} 
+\end{itemize}
+\section{Linked Lists}
+The following tasks can be done in O(1) space with singly linked lists:
+\begin{enumerate}
+    \item Finding a[n/2 - 1].
+    \item Finding its length.
+    \item Reversing the list.
+    \item Hare and Turtle ??? TODO
+\end{enumerate}
+\subsection{Floyd's Cycle Detection}
+\begin{itemize}
+\item Suppose the kth node in the list is the first node that's a part of the cycle which has n nodes.
+\begin{center}
+\includegraphics[width=8cm]{rsrc/floyd.jpg}
+\end{center}
+\item Let $p_s$ and $p_f$ represent the positions of the slow and fast pointers respectively.
+\item Initially, $p_s = 0, p_f = 0.$
+\item At $p_s = k$, $p_f = 2k$.
+\item $\implies c = (2k-k) \% n = k \% n$ is the offset of the fast pointer when the slow pointer reaches the start of the cycle.
+\item When, after m iterations, $p_s = k+m, p_f = 2(k+m)$ and $(p_s-k) == (p_f-k) \% n$.
+\item $\implies (m + k) \% n = 0 \implies $ their current offsets in the cycle are (n-k)\% n.
+\item $\implies $ If $p_a$ (new pointer) is $=0$, with k more iterations, the slow pointer's would be at $n-k + k = n$ (start of the cycle), as will $p_a$.
 \end{itemize}
 \section*{Misc. Notes}
 \subsection*{Precision printing}
