@@ -496,7 +496,66 @@ necessary values (min, max, etc.) can help reduce time complexites from O(n)
 to O($\sqrt{n}$).
 \subsection{Split into subarrays}
 The problem can be solved if the given array can be split into non-overlapping contiguous subarrays satisfying a given property.
-TODO explain some more. 
+TODO explain some more.
+\subsection{Segment Tree}
+Idk why this is so hyped man.
+\begin{lstlisting}
+class SegTree{
+    vector<int> seg;//length of seg must be 4*n, where n is the array's length.
+    int parent(int i){return i/2;}//similar to heaps.
+    int left(int i){return 2*i+1;}
+    int right(int i){return 2*i+2;}
+    int combineSegs(int v1, int v2){
+        return v1+v2;
+        return max(v1,v2);
+        return min(v1,v2);
+    }
+    int combId = 0 or INT_MIN or INT_MAX;//identity element of combineSegs
+    void build(int i, int l, int r,vector<int> &a){
+        if(l==r){
+            seg[i] = a[l];
+        }
+        else{
+            int del = (r-l)/2, li, ri;
+            li = left(i);
+            ri = right(i);
+            build(li,l,l+del,a);
+            build(ri,l+del+1,r,a);
+            seg[i] = seg[li]+seg[ri];
+        }
+    }
+    SegTree(vector<int> &a){
+        int n = a.size();
+        seg = vector<int>(4*n,0);
+        build(0,0,n-1,a);
+    }
+    int query(int i, int s, int e, int l, int r){
+        if(r<s || l>e){
+            //l,r completely out of s,e
+            return combId;//identity of merge.
+        }
+        else if(l<=s && r>=e){
+            return seg[i];
+        }
+        else{
+            int vl, vr, li, ri,del;
+            li = left(i);
+            ri = right(i);
+            del = (e-s)/2;
+            vl = query(li,s,s+del,l,r);
+            vr = query(ri,s+del+1,e,l,r);
+            return combineSegs(vl,vr);
+        }
+    }
+    int findRange(int l, int r){
+        return query(0,0,(seg.size()/4)-1,l,r);
+    }
+};
+\end{lstlisting} 
+This is useful when:
+\begin{itemize}
+\item There are multiple queries asking about values computed over ranges.
+\end{itemize}
 \subsection{Array Scan}
 The name is given to the family of algorithms where we do a couple of runs of a given array to evaluate an attribute. Approaches involving subarrays can be dealt with using to two indices \texttt{s} and \texttt{e}. Things to note:
 \begin{itemize}
@@ -641,7 +700,7 @@ The following tasks can be done in O(1) space with singly linked lists:
     \item Finding a[n/2 - 1].
     \item Finding its length.
     \item Reversing the list.
-    \item Hare and Turtle ??? TODO
+    \item Floyd's cycle detection.
 \end{enumerate}
 \subsection{Floyd's Cycle Detection}
 \begin{itemize}

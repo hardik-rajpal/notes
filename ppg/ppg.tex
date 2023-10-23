@@ -98,6 +98,13 @@ n \in \{2^{k-1}, 2^{k-1}-1, ... -1,0,1,...2^{k-1}-1\}, n = (-1)^{b_{k-1}}\sum_{i
 \item To take 2's complement of a number is to flip its bits and add 1 to it.
 \item This is equivalent to finding its negative in the 2's complement notation.
 \end{itemize}
+\subsection{Applications}
+Using the fact that computers use 2's complement and bit operations, we can check certain facts about a number in O(1) time:
+\begin{itemize}
+\item $n = 2^k \iff (n>0) \&\& (n \& n-1 == 0)$
+\item $n = 2^{2k} \iff (n>0) \&\& (n \& n-1 ==0) \&\& (n \& mask == n)$, where $mask = 0x55555555$.
+\item Additionally, for any prime p, we can check if n is $p^k$, by checking if $ub \% n==0$, where ub is the largest power of p that fits within the integer upper bound in the language.
+\end{itemize}
 \section{Modular Arithmetic}
 \begin{itemize}
 \item a \% b returns the remainder when a is divided by b.
@@ -521,6 +528,10 @@ int dijkstras(vector<vector<int>>& ps, int s, int target) {
     return res;
 }
 \end{lstlisting}
+\begin{itemize}
+\item Dijkstra's can be modified to count the number of minimum cost paths between two fixed points too.
+\item This involves maintaining an array of \texttt{ways} denoting the number of min-cost ways to visit a vertex. The answer is \texttt{ways[dst]}. See \href{https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/}{this problem.}
+\end{itemize}
 \subsubsection*{Stack Based Questions}
 These usually involve finding the (lexicographically) minimal
 subsequence. We maintain a stack to track the sequence
