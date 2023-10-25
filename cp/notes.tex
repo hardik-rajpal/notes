@@ -551,6 +551,43 @@ class SegTree{
         return query(0,0,(seg.size()/4)-1,l,r);
     }
 };
+\end{lstlisting}
+Alternatively, a \href{https://codeforces.com/blog/entry/18051}{less intuitive but efficient and short implementation} is:
+\begin{lstlisting}
+class SegmentTree{
+    int n;
+    vector<int> segs;
+    void build(vector<int> &nums) {  // build the tree
+        n = nums.size();
+        segs = vector<int>(2*n,0);
+        for(int i=0;i<n;i++){
+            segs[n+i] = nums[i];
+        }
+        for (int i = n - 1; i > 0; --i){
+            segs[i] = segs[i<<1] + segs[i<<1|1];
+        }
+    }
+
+    void modify(int p, int value) {  // set value at position p
+        p += n;
+        segs[p] = value;
+        for (; p > 1; p >>= 1){
+            segs[p>>1] = segs[p] + segs[p^1];//parent val = combine current p and sibling of p.
+        }
+    }
+
+    int query(int l, int r) {  // sum on interval [l, r)
+        int res = 0;
+        l+=n;
+        r+=n;
+        // if inclusive r, r+=1;
+        for (; l < r; l >>= 1, r >>= 1) {
+            if (l&1) res += segs[l++];
+            if (r&1) res += segs[--r];
+        }
+        return res;
+    }
+};
 \end{lstlisting} 
 This is useful when:
 \begin{itemize}
