@@ -4,11 +4,20 @@
 using namespace std;
 class Base{
     public:
+    virtual int func(){
+        cout<<"base"<<endl;
+        return 0;
+    }
     ~Base(){
         cout<<"DB";
     }
 };
 class Derived: public Base{
+    int func(){
+        cout<<"derived, private"<<endl;
+        return 1;
+    }
+    public:
     ~Derived(){
         cout<<"DD";
     }
@@ -26,6 +35,8 @@ int mymax(int a,int b){
 // }
 int main()
 {   
-    cout<<mymax(1.1,2.3)<<endl;
+    // cout<<mymax(1.1,2.3)<<endl;
+    Derived d;
+    Base *b = &d;
     return 0;
 }

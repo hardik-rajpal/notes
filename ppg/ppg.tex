@@ -568,6 +568,12 @@ organizing the input data in a structure such as a (frequency)
 map or a heap. Or we're just sorting the input array.
 So, consider this when thinking of approaching 
 a question greedily.
+\section{2 pointers}
+\begin{itemize}
+\item Problems that apparently involve an O($n^2$) search space of solutions may be done in O(n), if a we can find some reason to ignore certain sets of coordinates.
+\item With two-pointer approaches, we try to see if there's a reason to move any one particular pointer instead of the other.
+\item An example problem would be \href{https://leetcode.com/problems/container-with-most-water/}{this} and \href{https://leetcode.com/problems/maximum-score-of-a-good-subarray/}{this}.
+\end{itemize}
 \chapter{Week 5}
 \section{Dynamic Programming}
 A common optimization to look out for when writing the code
@@ -785,7 +791,33 @@ Without any prefixes in the functions defined in the derived classes (that are i
 the compiler assumes that any calls to these functions from an object of type base*/base always needs the implementation from the parent class. This is known as static linkage or static resolution (of the function call) or early binding, as the implementation for the area function is fixed at runtime to that of the base class (for objects of or pointers to the base class).\\
 Note that calls from \texttt{rec} or \texttt{tri} would have called their respective functions, not the base class' function.
 \subsection{Dynamic Linkage}
-Prefixing function identifiers that are shared across derived and base classes with \texttt{virtual}, allows for dynamic linkage, or dynamic resolution or late binding. With the said prefix, the compiler identifies the right implementation to call by the contents of the object or pointer being used to invoke the function. This is polymorphism.
+\begin{itemize}
+\item Prefixing function identifiers that are shared across derived and base classes with \texttt{virtual}, allows for dynamic linkage, or dynamic resolution or late binding.
+\item With the said prefix, the compiler identifies the right implementation to call by the contents of the object or pointer being used to invoke the function. This is polymorphism.
+\item Note that a public function may be overridden by a private function, making the function inaccessible from objects of the derived classes.
+\begin{lstlisting}
+class Base{
+    public:
+    virtual int func(){
+        cout<<"base"<<endl;
+        return 0;
+    }
+};
+class Derived: public Base{
+    private:
+    int func(){
+        cout<<"derived, private"<<endl;
+        return 1;
+    }
+};
+int main(){
+    Derived d;
+    d.func();//compiler error: func is not accessible.
+    Base &b = d;
+    b.func();//compiles, prints "derived, private"=> allows accessing private function.
+}
+\end{lstlisting}
+\end{itemize}
 \subsubsection{Pure Virtual Functions}
 If a function is always intended to be overridden in the derived classes and there's no meaningful definition in the base class,
 we can just declare the function in the base class and set it to zero to avoid compilation errors about no definition being found for
@@ -1574,6 +1606,17 @@ namespace constants
 \item An inline variable, declared a single header file, can be used in multiple cpp files without generating redundant copies.
 \item Inline global variables have external linkage by default.
 \end{itemize}
+
+\section{Unions}
+\href{https://en.cppreference.com/w/cpp/language/union}{Cpp Reference Page}
+\section{Misc. (Courtesy of Sony)}
+\begin{itemize}
+\item \texttt{cout.width(len)} prefixes the next output (with whitespace) sent to it so that its length is equal to len
+\item If len < output.size(), the function call has no effect.
+\end{itemize}
+\begin{itemize}
+\item Size of objects of a union class is the maximum size of any one field.
+\end{itemize}
 \chapter{DSA Revision Notes}
 \section{Stacks, Queues, Linked Lists}
 \begin{itemize}
@@ -1585,7 +1628,11 @@ fixed-size array and a pointer to the top/front/back of the queue that moves aro
     \item Tight: f(N) = N+c;
 \end{itemize}
 \item Push operation that call growing the underlying array cost f(N)+N+1 units.
-\item 
+\end{itemize}
+\subsection{Queues}
+\begin{itemize}
+\item A common use of queues (or deques) is to explore a search space in steps, for example BFS.
+\item Each step involves expanding the frontier of the space by one unit, while popping the previous frontier from the queue.
 \end{itemize}
 \section{Hash Tables}
 \begin{itemize}

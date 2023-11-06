@@ -103,3 +103,19 @@ int main(){
     }
 }
 
+template<int N>
+class Inclusion{
+    int a[(N+31/32)];
+public:
+    Inclusion(){
+        for(int i=0;i<(N+31)/32;i++){
+            a[i] = 0;
+        }
+    }
+    void insert(int i){
+        a[i/32] |= 1 << (i % 32);
+    }
+    int count(int i){
+        return a[i/32] & (1<<(i%32));
+    }
+};
