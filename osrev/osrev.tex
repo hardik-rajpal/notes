@@ -454,6 +454,46 @@ From Neso Academy's OS lectures.
 \item It enables the processor to execute two (or more) threads, sets of instructions, at the same time.
 \item Hyperthreading allows two streams to be executed concurrently, it s like having two separate processors working together.
 \end{itemize}
+\section{Process Synchronization}
+\begin{itemize}
+\item A cooperating process is one that can affect or be affected by other processes executing in the system (as opposed to the usual processes that have certain guarrantees of isolation).
+\item Cooperating processes may
+\begin{itemize}
+    \item directly share a logical address space (code and data)
+    \item or be allowed to share data only through files or messages.
+\end{itemize}
+\item Concurrent access to shared data may result in data inconsistency.
+\item Up ahead we discuss mechanisms to ensure the orderly execution of cooperating processes that share a logical address space ensuring data consistency.
+\item For sharing of data through buffers, the buffers may be:
+\begin{enumerate}
+\item Bounded: The consumer must wait if it's empty, the producer must wait if it's full.
+\item Unbounded: The consumer must wait if it's empty, the producer never has to wait.
+\end{enumerate}
+\item Buffers are suplemented with a \texttt{counter} variable to track the number of items in the buffer.
+\item The possibly concurrent updates to the \texttt{counter} variable is a race condition.
+\item Race condition: A situation where several processes access and manipulate the same data concurrently and the outcome of the execution depends on the particular order in which the accesses take place.
+\item One of the goals of process synchronization (primitives) is to avoid race conditions.
+\end{itemize}
+\subsection{Critical Sections}
+\begin{itemize}
+\item If a system has n process, $P_1, P_2, ... P_n$
+\item Each process has a segment of code, called its \textbf{critical section}, where the process may be changing common (shared) variables, updating a table, writing to a file or accessing some other shared resource.
+\item No two processes should be allowed to execute their critical sections at the same time.
+\item The \textbf{critical-section problem} is to design a protocol that the processes can use to cooperate.
+\item Rules about critical sections:
+\begin{itemize}
+\item Each process must request permission to enter its critical section.
+\item The section of code implementing this request is the \textbf{entry section}.
+\item The critical section must be followed by an \textbf{exit section}, where the process announces its exit from its critical section.
+\item The remaining code is the \textbf{remainder section}.
+\end{itemize}
+\item A solution to the critical section problem must satisfy:
+\begin{enumerate}
+\item Mutual exclusion: No two processes can execute their critical sections simultaneously.
+\item Progress (liveness): If no process is executing its critical section, and multiple processes request to enter their critical sections, the decision of whom to permit must be taken by processes that are not executing in their remainder section. Additionally, the decision cannot be postponed indefinitely.
+\item Bounded waiting: There exists a limit on the number of times that other processes are allowed to enter their critical sections after a process has made a request to enter its critical section and before its request has been granted.
+\end{enumerate}
+\end{itemize}
 \section{Notes from Interview Questions}
 \chapter{Misc.}
 \chapter{References}
