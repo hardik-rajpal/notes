@@ -494,6 +494,256 @@ From Neso Academy's OS lectures.
 \item Bounded waiting: There exists a limit on the number of times that other processes are allowed to enter their critical sections after a process has made a request to enter its critical section and before its request has been granted.
 \end{enumerate}
 \end{itemize}
+\subsection{Peterson's Solution to the CSP}
+\begin{itemize}
+\item Classic, software-based solution to the CSP.
+\item May not work correctly on modern computer architectures.
+\item Provides a good algorithmic description of solving the CSP, and illustrates relevant complexities of software that addresses the requirements of CSP.
+\item Solution outline:
+\begin{itemize}
+\item The solution is restricted to two processes $P_1$ and $P_2$ that alternate execution between their critical and remainder sections.
+\item Two variables need to be shared between $P_1$ and $P_2$:
+\begin{enumerate}
+    \item \texttt{int turn}: indicates whose turn it is to enter their critical section. It can be modified by both the processes.
+    \item \texttt{bool flag[2]}: Used to indicate if a process is ready to enter its critical section.
+\end{enumerate}
+\item Key Idea: $P_i$ is ready to enter its critical section $\implies $ set \texttt{flag[i]} to true and set \texttt{turn} = $j$, $j \neq i$.
+\item It's a humble algorithm.
+\end{itemize}
+\item The algorithm:
+\begin{lstlisting}
+int turn;
+bool flag[2];
+void process(int i){//i = index of process
+    do{
+        flag[i] = true;
+        turn = j;//~ turn = otherProcessIndex();
+        //j != i ~ assume other process is using its CS
+        while(flag[j] && turn==j);
+        //PC here => flag[j]=false || turn!=j
+        //=>j is not at CS or it's not j's turn => my turn.
+        doCriticalTasks();
+        flag[i] = false;//Not in CS anymore.
+        doRemainderTasks();
+    }
+    while(true);
+}
+\end{lstlisting}
+\end{itemize}
+\subsection{Test and Set Lock}
+\begin{itemize}
+\item Hardware-based solution to the CSP.
+\item There is a shared lock variable, which can take two values, 0 (unlocked) or 1 (locked).
+\item Before enterring the critical section, the process inquires about the lock.
+\item If it's already locked (some other process is in its CS), the process waits until it becomes free.
+\item If it's not locked, the process locks it and executes its CS.
+\item A great analogy for the lock is that processes can execute their CSs in a single, fixed room, whose door they lock on enterring and unlock on exiting (having finished their CS).
+\item \textbf{Atomic operation:} can not be interrupted, executes as a single operation; all or nothing.
+\item Note: testAndSet is an \textbf{atomic operation} equivalent to the following:
+\begin{lstlisting}
+bool testAndSet(bool *target){
+    bool rv = *target;
+    *target = true;
+    return rv;
+}
+\end{lstlisting}
+\item Processes use the function as follows:
+\begin{lstlisting}
+bool lock;
+bool testAndSet(bool* lock);
+void process(int i){
+    do{
+        while(testAndSet(&lock));
+        //acquired lock
+        doCriticalTasks();
+        lock = false;
+        doRemainderTasks();
+    }
+    while(true);
+}
+\end{lstlisting}
+\item This solution satisfies mutual exclusion and progress requirements.
+\item It is \textbf{susceptible to starvation} with more than 2 processes; it doesn't satisfy the bounded waiting condition.
+\end{itemize}
+\subsection{Semaphores}
+\begin{itemize}
+\item Software-based solution to the CSP.
+\item They implement a management of concurrent processes usinga single integer value, called a semaphore.
+\item A semaphore is a non-negative variable which is shared between threads, to achieve process synchronization.
+\item A semaphore \texttt{S} only allows for:
+\begin{enumerate}
+\item Initialization to an integer (non-negative).
+\item \texttt{wait()} aka \texttt{P()}: atomic operation. (\textbf{probe}ren, to test.)
+\item \texttt{signal()} aka \texttt{V()}: atomic operation. (verhogen, to increment.)
+\end{enumerate}
+\item Wait() (atomic) operation:
+\begin{lstlisting}
+P(Semaphore S){
+    while(S<=0);
+    S--;//no problem of inconsistency, since atomic
+}
+\end{lstlisting}
+\item Wait (P) is called before enterring a critical section.
+\item Singal() (atomic) operation:
+\begin{lstlisting}
+V(Semaphore S){
+    S++;//no problem of inconsistency, since atomic
+}
+\end{lstlisting}
+\item Singal (V) is called on exiting a critical section.
+\item To reiterate, both P and V are atomic operations; no two processes can modify \texttt{S} simultaneously.
+\item Types of semaphores:
+\begin{enumerate}
+\item Binary Semaphores: S is either 0 or 1. These are aka mutex locks, as they are locks that provide mutual exclusion. It is initialized to 1.
+\item Counting Semaphore: The value ranges over an unrestricted domain. It is used to control access to a resource that has multiple instances.
+\end{enumerate}
+\end{itemize}
+\subsubsection{Disadvantages of Semaphores}
+\begin{itemize}
+\item Main disadvantage: busy waiting inside the P call.
+\begin{itemize}
+\item Busy wait: While a process is in its CS, any other process that tries to enter its CS must loop continuously in its entry section. This consumes (wastes) CPU cycles that other processes may have used productively.
+\item These are spinlock semaphores, as the process "spins" while waiting for the lock.
+\end{itemize}
+\item To overcome the busy waiting disadvantage, we can make slight modifications to P and V.
+\item New P function:
+\begin{itemize}
+\item Rather than engaging in busy waiting, the process cna block itself.
+\item The block operation puts the process into a waiting queue associated with the semaphore, and the state of the process is switched to a waiting state.
+\item The control is transferred to the CPU scheduler, which selects another process to execute.
+\end{itemize}
+\item New V function:
+\begin{itemize}
+\item Send a signal to the queue to pop a blocked process. If the queue is empty, increment S instead.
+\end{itemize}
+\item Deadlock and Starvation:
+\begin{itemize}
+\item The implementation with a waiting queue may result in a situation where two or more processes are waiting indefinitely for an event that can be caused only by one of the two processes. This requires at least two semaphores, used by both the processes.
+\begin{center}
+    \includegraphics[width=8cm]{res/semaphores.png}
+\end{center}
+\end{itemize}
+\end{itemize}
+\subsection{Bounded Buffer Problem, aka Producer-Consumer Problem}
+\begin{itemize}
+\item There is a buffer of n slots, where each slot can store one unit of data.
+\item There are two processes accessing the buffer:
+\begin{enumerate}
+\item Producer: inserts data into (empty slots in) the buffer.
+\item Consumer: removes data from (non-empty slots in) the buffer.
+\end{enumerate}
+\item Requirements for sound functioning:
+\begin{enumerate}
+\item The producer must not insert data when the buffer is full.
+\item The consumer must not remove data when the buffer is empty.
+\item The removal and insertion of data shouldn't happen simultaneously.
+\end{enumerate}
+\item The solution involves three semaphores:
+\begin{enumerate}
+\item m (mutex): binary semaphore used to acquire and release a common lock on the buffer.
+\item empty: a counting semaphore, initialized to the buffer size. It represents the number of empty slots in the buffer.
+\item full:a counting semaphore, initialized to 0; it represents the number of full semaphores in the buffer. 
+\end{enumerate}
+\item The producer code is:
+\begin{lstlisting}
+void producer(){
+do{
+    wait(empty);//ensure empty slots exist, decrement by 1
+    wait(mutex);//acquire lock.
+    addDataToBuffer();
+    signal(mutex);//release lock.
+    signal(full);//increment full.
+} while(true);
+}
+\end{lstlisting}
+\begin{lstlisting}
+void consumer(){
+do{
+    wait(full);//ensure data exists, decrement by 1.
+    wait(mutex);//acquire lock
+    removeDataFromBuffer();
+    signal(mutex);//release lock
+    signal(empty);//increment empty
+} while(true);
+}
+\end{lstlisting}
+\end{itemize}
+\subsection{Readers-Writers Problem}
+\begin{itemize}
+\item A database is to be shared among several concurrent processes.
+\item Some of these processes may want only to read the database (readers), whereas other may want to read and write to it (writers).
+\item Inconsistencies arise when a writer and any other thread (writer or reader) access the db simultaneously.
+\item To avoid these, writers must have exclusive access to the database.
+\item We use two semaphores and an integer value:
+\begin{itemize}
+\item int readCount; tracks number of readers in the critical section.
+\item Mutex: initialized to 1, used to ensure mutual exclusion between accesses to readCount.
+\item writer: initialized to 1, used by writer and reader processes.
+\end{itemize}
+\item Code:
+\begin{lstlisting}
+Semaphore writer(1), mutex(1);
+int readCount = 0;
+void writer(){
+do{
+    wait(writer);
+    
+    doWriteTasks();
+    
+    signal(writer);
+}while(true);
+}
+void reader(){
+do{
+    wait(mutex);
+    readCount+=1;
+    if(readCount==1){
+        wait(writer);
+    }
+    signal(mutex);
+
+    doReadTasks();
+
+    wait(mutex);
+    readCount-=1;
+    if(readCount==0){
+        signal(writer);
+    }
+    signal(mutex);
+
+}while(true);
+}
+\end{lstlisting}
+\end{itemize}
+\subsection{The Dining Philosophers Problem}
+\begin{itemize}
+\item N (say 5) philophers at a circular table, with N forks placed between each pair of neighbours.
+\item Each philosopher needs two forks to eat his meal, whenever he wants to eat.
+\item Once done, he places the forks back down, now available to his neighbours.
+\item Naive code:
+\begin{lstlisting}
+Semaphore forks[N](1);//initalized to 1.
+void tryEating(int i){//i = philopher's index.
+do{
+    wait(forks[i]);
+    wait(forks[i+1 % N]);
+    eatFood();
+    signal(forks[i]);
+    signal(forks[i+1 % N]);
+    think();
+}    
+while(true);
+}
+\end{lstlisting}
+\item This is susceptible to a deadlock when all philosophers get hungry at the same time and grab fork[i], stuck on waiting for fork[i+1].
+\item Possible solutions:
+\begin{itemize}
+\item Allow an extra fork, or reduce the number of philosophers by 1.
+\item Allow a philosopher to pick up both chopsticks, or neither. $\implies$ The pick-up becomes a critical section.
+\item Asymmetric solution: pick i or i+1\%N first, depending of the value of i\%2.
+\end{itemize}
+\end{itemize}
+\subsection{Monitors}
 \section{Notes from Interview Questions}
 \chapter{Misc.}
 \chapter{References}
