@@ -163,6 +163,8 @@ O(n^{log_b(a)}) & a > b^d
 \section{Watch out for these bugs}
 \begin{itemize}
 \item When reusing a pointer to heap data, remember to set it to NULL after you \texttt{delete} it.
+\item Prefer using (small.size()>large.size()+k) where k>=0, as opposed to (small.size() - large.size() > k). The two return values are unsigned and thus always yield a non-negative difference.
+\item Separate out the iterating condition (limit, checks, increments to values) from a map before updating it, to avoid infinite loops and incorrect results.
 \end{itemize}
 \chapter{Week 1}
 \section{Searching Algorithms}

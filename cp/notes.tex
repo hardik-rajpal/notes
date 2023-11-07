@@ -83,7 +83,7 @@ by flags and bit operations.\\
 \begin{center}
     \fbox{\texttt{insert(index)}$\equiv$\texttt{flag|(1<<index)} and \texttt{count(index)}$\equiv$\texttt{flag\&(1<<index)}}
 \end{center}
-The data structure below outperforms \texttt{set} and \texttt{unordered\_set} in a program where only inclusion is to be checked, for a fixed range of integers.
+The data structure below outperforms \texttt{set}, \texttt{unordered\_set} and \texttt{bitset} in a program where only inclusion is to be checked, for a fixed range of integers.
 \begin{lstlisting}
 template<int N>
 class Inclusion{
@@ -304,6 +304,10 @@ Hence, any useful data should be copied over from the iterator before removing t
 Note: \texttt{iter} denotes the iterator return type. \texttt{first} and \texttt{last} denote \texttt{.begin()} and \texttt{.end()} iterators.
 \begin{itemize}
     \citem{void sort(first,last[, struct comp])} (O(nlogn))
+    \citem{iter partition(first,last,UnaryPredicate)} (O(nlogn))
+    \begin{itemize}
+    \item Returns the iterator to the first element of the second group.
+    \end{itemize}
     \citem{void reverse(first,last)} (O(n))
     \citem{void random\_shuffle(first,last)} (O(n))
     \citem{iter max\_element(first,last[,struct comp])} (O(n))
