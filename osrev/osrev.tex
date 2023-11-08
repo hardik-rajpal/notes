@@ -744,6 +744,50 @@ while(true);
 \end{itemize}
 \end{itemize}
 \subsection{Monitors}
+\begin{itemize}
+\item A high level abstraction that provides a convenient and effective mechanism for process synchronization.
+\item A monitor type presents a set of programmer-defined operations that provide mutual exclusion within the monitor.
+\item The monitor type also contains \textbf{shared} variables whose values define the state of an instance of that type, along with the bodies of procedures or functions that operate on those variables, with care for synchronization.
+\item The monitor enforces that its local variables can be accessed only by its public procedures, not directly; they are private.
+\item The monitor construct ensures that only one process at a time can execute its procedures.
+\item Monitors require a new construct, called a Condition variable. Condition variables (say, \texttt{cond1}) have methods wait() and signal().
+\begin{itemize}
+\item \texttt{cond1.wait()} means the caller process is suspended until another\\process invokes \texttt{cond1.signal()}
+\item \texttt{cond1.signal()} resumes \textbf{exactly one} suspended process.
+\end{itemize}
+\item The monitor also has an entry queue, where processes waiting to use its procedures are stored.
+\item Additionally, each condition variable in the monitor has its own separate queue of suspended processes.
+\end{itemize}
+\subsubsection{Dining Philosophers Problem using Monitors}
+\begin{itemize}
+\item We impose the restriction that a philosopher may pick up his forks only if both of them are available.
+\begin{lstlisting}
+enum {thinking,hungry,eating} state[5];
+/*
+state[i] can be set to eating, only if both state[(i+4)%5] and state[(i+1)%5] are not eating.
+*/
+condition self[5];//vars to hold hungry state, signal fork down.
+//using i-1, i+1 for brevity.
+void test(int i){
+    if((state[i-1]!=eating && state[i+1]!=eating) && state[i]==hungry){
+        state[i] = eating;
+        self[i].signal();
+    }
+}
+void pickup(int i){
+    state[i] = hungry;
+    test(i);
+    if(state[i]!=eating){
+        self[i].wait();
+    }
+}
+void putdown(int i){
+    state[i] = thinking;
+    test(i+1);
+    test(i-1);
+}
+\end{lstlisting}
+\end{itemize}
 \section{Notes from Interview Questions}
 \chapter{Misc.}
 \chapter{References}
