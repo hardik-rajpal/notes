@@ -2586,7 +2586,100 @@ let d = {j:b};
 \item python pass by reference or value.
 \end{itemize}
 \end{itemize}
+\chapter{Solid Principles \href{https://stackoverflow.blog/2021/11/01/why-solid-principles-are-still-the-foundation-for-modern-software-architecture/}{from Stackoverflow}}
+\begin{itemize}
+\item Solid is a set of principles distilled from the writings of Robert C. Martin in the early 2000s. It is a way to think specifically about:
+\begin{itemize}
+    \item the quality of OOP
+    \item how the code should be split up
+    \item which parts should be internal/exposed
+    \item how code should use other code.
+\end{itemize}
+\item Some major changes in the industry after the development of the solid principles are:
+\begin{itemize}
+    \item Dynamically-typed languages
+    \item Non-OOP paradigms: functional programming.
+    \item Open source software has proliferated.
+    \item Microservices, SAAS: services that talk to other services.
+\end{itemize}
+\item These changes imply that many things SOLID really cared about: classes, interfaces, data hiding, polymorphism, are not what programmers deal with every day.
+\item What hasn't changed:
+\begin{itemize}
+\item Code is written and modified by people over and over again. There will always be a need for well-documented code and APIs.
+\item Code is organized into modules. Each language provides some way of organizing code into distinct, bounded units. Thus, there will always be a need to decide how best to group code together.
+\item Code can be internal or external: some code is written for use within the team, while some is written for use by consumers or other teams. There is a need to decide what is visible and hidden.
+\end{itemize}
+\item Up we discuss SOLID principles as applicable to modern programming.
+\end{itemize}
+\section{Single Responsibility Principle}
+\begin{itemize}
+\item Each class (module) should do one job, and do it well. Our code shouldn't mix multiple roles or purposes together: high cohesion.
+\item We shouldn't have to modify the code for that class unless there are changes to its specific function, or the interface it provides, or the interfaces it uses.
+\end{itemize}
+\section{Open-closed Principle}
+\begin{itemize}
+\item Software entities (classes) should be open for (allow) extension (via inheritance), but closed for (disallow) modification. (Once the code is sent into production).
+\item This limits the dependency on the author of the class. Additionally, multiple changes could result in the class incorporating too many concerns.
+\item It also protects the code from unskilled hands.
+\item We should be able to use and add to a module (via inheritance), without rewriting it.
+\item In the FP world, this involves defining explicit hook points in the base method to allow for before and after modifications, as well as a way to override the base behaviour. 
+\begin{lstlisting}
+// library code
 
+const saveRecord = (record, save, beforeSave, afterSave) => {
+    const defaultSave = (record) => {
+    // default save functionality
+    }
+    
+    if (beforeSave) beforeSave(record);
+    if (save) {
+    save(record);
+    }
+    else {
+    defaultSave(record);
+    }
+    if (afterSave) afterSave(record);
+}
+    
+// calling code
+    
+const customSave = (record) => { ... }
+saveRecord(myRecord, customSave);
+\end{lstlisting}
+\end{itemize}
+\section{Liskov Substitution Principle}
+\begin{itemize}
+\item Objects of a subclass should be allowed to be substituted in methods involving objects of the superclass, without altering any desirable properties of the program (breaking anything).
+\item This allows for/encourages polymorphism in OOPS.
+\item In FP, it encourages function parameters, as passed to filter and map in javascript.
+\end{itemize}
+\section{Interface Segregation Principle}
+\begin{itemize}
+\item Many client-specific interfaces are better than one general-purpose interface.
+\item Don't show your client (this could be another piece of code using an interface/type), more than what they need to see.
+\begin{lstlisting}
+interface PrintRequestModifier {
+   public void createRequest();
+   public void deleteRequest();
+}
+ 
+interface PrintRequestWorker {
+   public void workOnRequest()
+}
+ 
+class PrintRequest implements PrintRequestModifier, PrintRequestWorker {
+   public void createRequest() {}
+   public void deleteRequest() {}
+   public void workOnRequest() {}
+}
+\end{lstlisting}
+\item This decreases coupling and ensures that a client doesn't need to know about, or depend on, features that it has no intention of using.
+\end{itemize}
+\section{Dependency Inversion Principle}
+\begin{itemize}
+\item Depend on abstractions, not concretions.
+\item In OO, this means that clients should depend on interfaces rather than concrete classes as much as possible; this minimizes the surface area of the code that the client depends on.
+\end{itemize}
 \chapter{Aptitude Test Pointers}
 \input{parts/aptitude}
 \end{document}

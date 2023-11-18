@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
+\usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem}
+\title{Reading Notes from JS's G
+uide for Job Applications}
+\author{Hardik Rajpal}
+\begin{document}
+\maketitle
+\section{Randomness}
+\begin{itemize}
+\item Financial markets involve a lot of uncertainty; predictions are difficult.
+\item Probability provides a good framework for making decisions when uncertainty is involved.
+\item One-off future events are more complicated to draw (even probabilistic) predictions about. Said predictions vary on asymmetry of information and personal experiences.
+\item Probability can and is used to reason about \textbf{knowable unknowns}: events that have a deterministic value (ex. events in the past) but said value is not known to anyone (within reach). 
+\item There are ``different types'' of randomness (random variables):
+\begin{enumerate}
+    \item Discrete
+    \begin{itemize}
+        \item Specially, Binary.
+    \end{itemize}
+    \item Continuous
+\end{enumerate} 
+\end{itemize}
+\section{Counting}
+\begin{itemize}
+\item With a \textbf{finite number of outcomes}, each of which is \textbf{equally likely}, evaluating the probability of each event (set of outcomes) is equivalent to figuring out its cardinality.
+\begin{center}
+    p[criteria is fulfilled] = $\frac{\text{\# outcomes that fulfill criteria}}{\text{total number of possible outcomes}}$
+\end{center}
+\item Outcomes that are not equally likely can be viewed events consisting of atomic, equally likely outcomes to simplify calculations. 
+\end{itemize}
+\section{Probability, Independence, Random Variables, Expectation}
+\begin{itemize}
+\item Same old, same old.
+\end{itemize}
+\section{Confidence Intervals}
+\begin{itemize}
+\item There are a few ways to consider a range of values of a random variable for processing:
+\begin{enumerate}
+\item Study the literal min,max values of the RV.
+\item Measure E[$(X-\mu)^2$] or E[$\|X-\mu\|$]
+\item Describe a confidence interval: an interval containing most of the probability mass of the random variable. Its confidence is given by P(X$\in$ CI).
+\end{enumerate}
+\end{itemize}
+\section{Conditional Probability}
+\begin{itemize}
+\item A \textbf{prior} refers to the initial probability function, before any information is considered.
+\item On receiving information, we ``update'' our beliefs.
+\end{itemize}
+\section{Making Markets}
+\begin{itemize}
+\item To effect a trade, we need to specify the following:
+\begin{enumerate}
+\item The object being traded (often implied by the context).
+\item The direction: buy or sell.
+\item The price of the transaction.
+\item The quantiy or size of the transaction.
+\end{enumerate}
+\item To buy, we indicate bids; to sell, we indicate offers (asks).
+\item ``I'm 2 bid for 10 '' $\implies$ I want to buy 10 units for the price of \$2 each.
+\item ``I have 10 at 4 '' $\implies$ I want to sell 10 units for the price of \$4 each.
+\item ``I am 2 at 4, 10 up '' $\implies$ I want to sell 10 units for the price of \$4 each, buy 10 units at the price of \$2.
+\item These phrases create orders (irl or on exchange platforms), which stay active and anyone can trade against them until its traded or you say ``I'm out.''
+\item To buy someone's bid order, say ``sold.'' To sell to someone's ask order, say ``take' em.'' 
+\item For partial fills, attach the quantity to the comment.
+\item Once an order is filled, (the entire quantity has been traded), it cannot be traded against again.
+\end{itemize}
+\subsection{The Strategy}
+\begin{itemize}
+\item If you think E[X] is $\mu$, you should be willing to buy for less and to sell for more.
+\item The factors to consider before hitting the red button:
+\begin{itemize}
+\item On average, do you stand to profit.
+\item Can you lose a lot of money (WCS)? Losing money is bad because it keeps you from participating in great opportunities to trade in the future if your capital is depleted.
+\item How much are you making? Bidding too low to maximize the profit in every outcome means there's a low chance of being sold the contract. Bidding right at the mean $\mu$ means the profit is limited.
+\end{itemize}
+\item We want to balance our likelihood of a trade and the expected profit.
+\item Here's a market on the E[die roll]: ``3 at 4, 10 up.''. (Buy, bid price first, followed by ask price, followed by quantity.)
+\end{itemize}
+\end{document}

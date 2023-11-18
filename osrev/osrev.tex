@@ -14,6 +14,12 @@ escapeinside={/*!}{!*/}
 }
 \title{Operating Systems: Shortnotes}
 \author{Hardik Rajpal}
+\newcommand{\syscalldoc}[3]{
+    \item \href{#2}{\texttt{#1}}
+    \begin{itemize}
+        #3
+    \end{itemize}
+}
 \begin{document}
 \maketitle
 \tableofcontents
@@ -24,6 +30,60 @@ escapeinside={/*!}{!*/}
 \begin{itemize}
 \item Process Control Block: A per-process data structure that tracks process meta-data.
 \end{itemize}
+\chapter{System Calls}
+\section{List Of SysCalls (C)}
+The full list is \href{https://www.cheat-sheets.org/saved-copy/Linux_Syscall_quickref.pdf}{available here.}
+\subsection{Generic}
+\begin{enumerate}
+\syscalldoc{exit(int status)}
+{https://man7.org/linux/man-pages/man3/exit.3.html}{
+\item terminate the calling process.
+}
+
+\end{enumerate}
+\subsection{Files}
+\begin{enumerate}
+\syscalldoc{int dup(int oldfd)}{https://man7.org/linux/man-pages/man2/dup.2.html}{
+\item Duplicates a file descriptor.
+\item Returns the new file descriptor. (All dup calls return the new file descriptor.)
+}
+\syscalldoc{int dup2(int oldfd,int useThisFd)}{
+https://man7.org/linux/man-pages/man2/dup.2.html
+}{
+\item Duplicates oldfd, and assigns copy to useThisFd.
+\item Silently closes the file on useThisFd if it is already in use.
+\item Returns useThisFd.
+}
+\end{enumerate}
+\subsection{Processes}
+\begin{enumerate}
+\syscalldoc{excve()}{...}{
+\item Loads a new program into the address space of the running process.
+}
+\syscalldoc{int fork()}
+{https://man7.org/linux/man-pages/man2/fork.2.html}{
+\item creates a child process with same code and PC value; returns pid in parent process, 0 in child process.
+}
+\syscalldoc{waitpid(pid\_t pid, int *stat\_loc, int options)}
+{https://man7.org/linux/man-pages/man3/waitpid.3p.html}{
+\item Wait for a child process to stop.
+\item Use pid arg as NULL to get status for any child whose group ID matches that of the calling process's group ID.
+\item Return value is the pid of the child whose status is reported.
+}
+\syscalldoc{getpid()}{...}{
+\item Returns PID of calling process.
+}
+\syscalldoc{getppid()}{...}{
+\item Returns the PID of the calling process's parent process.
+}
+\syscalldoc{int pipe(int pipefd[2], int flags)}
+{https://man7.org/linux/man-pages/man2/pipe.2.html}{
+\item Creates a unidirectional data channel that can be used for interprocess communication.
+\item pipefd[0] is for reading, and pipefd[1] is for writing.
+\item Data written to the pipe is buffered by the kernel until it is read.
+\item Returns 0 on a successfuly setup.
+}
+\end{enumerate}
 \chapter{Memory Virtualization}
 \section*{Terms}
 \begin{enumerate}
