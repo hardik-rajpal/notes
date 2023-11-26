@@ -2558,7 +2558,121 @@ let d = {j:b};
 \end{enumerate}
 \item Variables declared using \texttt{const} may be mutable or immutable; but they can't be assigned to later.
 \end{itemize}
+\section{Anti-patterns}
+Summarized from blogs \href{https://dev.to/medhatdawoud/javascript-anti-patterns-2nia}{one} and \href{https://javascript.plainenglish.io/javascript-anti-patterns-we-do-every-day-3d0086e2910}{two.}
+\begin{itemize}
+\item Array operations:
+    \begin{itemize}
+        \item Use \texttt{map} only to create a new array from a given array.
+        \item Use \texttt{for-loops} only for sequential element processing.
+        \item Use \texttt{forEach} only for independent element processing.
+    \end{itemize}
+\item \texttt{let, const and var}:
+    \begin{itemize}
+        \item \texttt{let} and \texttt{const} variables are blockscoped, while \texttt{var} are not. Prefer using block-scoped variables as they reduce the chances of bugs related to shadowing.
+        \item For all constant variables, use \texttt{const};
+    \end{itemize}
+\item Promises: offer several code management advantages, such as:
+\begin{itemize}
+    \item No more callback pyramid of doom:
+    \begin{lstlisting}
+        doSomething(function (result) {
+            doSomethingElse(result, function (newResult) {
+                doThirdThing(newResult, function (finalResult) {
+                console.log(`Got the final result: ${finalResult}`);
+                }, failureCallback);
+            }, failureCallback);
+        }, failureCallback);
+        //replaced by:
+        doSomething()
+        .then(function (result) {
+          return doSomethingElse(result);
+        })
+        .then(function (newResult) {
+          return doThirdThing(newResult);
+        })
+        .then(function (finalResult) {
+          console.log(`Got the final result: ${finalResult}`);
+        })
+        .catch(failureCallback);
+    \end{lstlisting}
+    \item Note the importance of the \texttt{return} statments in the chain. A floating promise in such a chain is one
+    without a return statement, whose output is thus not passed to the following then clauses.
+    \item Floating promises can lead to race conditions. Ex:
+    \begin{lstlisting}
+        const listOfIngredients = [];
+        doSomething()
+        .then((url) => {
+            // Missing `return` keyword in front of fetch(url).
+            fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                listOfIngredients.push(data);
+            });
+        })
+        .then(() => {
+            console.log(listOfIngredients);
+            // listOfIngredients will always be [], because the fetch request hasn't completed yet.
+        });
+    \end{lstlisting}
+    \item Using async/await allows for writing code with promises that resembles synchronous code closely.
+    \item \texttt{.then(callback)} attached after \texttt{.catch} is both with and without execution of the catch statement.
+\end{itemize}
+\item Promise composition:
+\begin{itemize}
+    \item \texttt{Promise.all([p1,p2,1,abc])} await all promises (non-sequentially) and return array with values returned by them.
+    \item For sequential promise resolutions:
+    \begin{lstlisting}
+        [func1, func2, func3]
+        .reduce((p, f) => p.then(f), Promise.resolve())
+        .then((result3) => {
+            /* use result3 */
+        });
+        //Think of Promise.resolve as a blank promise that returns undefined immediately.
+        //Promise.resolve("value").then((v)=>{console.log(v);})//"value". 
+    \end{lstlisting}
+    Or using async/await:
+    \begin{lstlisting}
+        let result;
+        for (const f of [func1, func2, func3]) {
+        result = await f(result);
+        }
+        /* use last result (i.e. result3) */
 
+    \end{lstlisting}
+\end{itemize}
+\item Nesting: convert nested if-checks to flattened if (invalid), return statements.
+\item Naming convention: adjectives prefixing nouns, camelCase.
+\item When definining useful constants (that can be written in terms of other constants),
+\begin{itemize}
+    \item Use uppercase snake\_case for names.
+    \item Have the definition convey be meaningful in terms of other constants.
+\end{itemize}
+\item DOM manipulation calls (\texttt{document.appendChild}) should not be done in loops.
+\item Avoid creating extra objects in memory during accumulation operations:
+\begin{lstlisting}
+    const users = [
+  { name: "Medhat", admin: true },
+  { name: "Adam", admin: false },
+  { name: "Karma", admin: true },
+]
+
+// spread operator is creating a new Obj
+users.reduce(
+  (acc, item) => ({
+    ...acc,
+    [item.name]: item.admin,
+  }),
+  {}
+)
+//better: 
+users.reduce((acc, item) => {
+  acc[item.name] = item.admin
+  return acc
+}, {})
+
+\end{lstlisting}
+\end{itemize}
 
 
 
