@@ -37,6 +37,28 @@
 \item Ethernet addresses are 48bits=6Bytes long.
 \item IPv4 addresses are 32bits=4Bytes long.
 \end{itemize}
+\section{Data Units}
+Reference: \href{https://www.baeldung.com/cs/networking-packet-fragment-frame-datagram-segment}{baeldung.} and \href{https://gateoverflow.in/139334/name-of-data-unit-at-different-layers}{Gateoverflow, I'm sorry, no offence.}
+\begin{enumerate}
+\item Packet (aka IP Datagram): data unit used at the network layer.
+\begin{itemize}
+    \item Comprises of the network layer header (src/dst IP addresses) and the payload (transport layer or otherwise).
+    \item Basic unit of communication between a source and a destination in a network.
+\end{itemize}
+\item Fragment: Network layer unit. A packet can be split into multiple fragments, so as to ensure that each fragment is under the \textbf{Maximum Transmitted Unit} limit of the network.
+\item Frame: Link layer unit, refers to one network layer fragment (or entire packet), encapsulated with link layer headers and trailers.
+\begin{itemize}
+    \item There exist two types of framing: fixed-length and variable-length.
+    \item Fixed-length: the constant size eliminates the need for a delimiter.
+    \item Variable-length: it's essential to define the start and end of the frame.
+\end{itemize}
+\item (UDP) Datagram: Unit used at the transport layer by UDP only. It refers to the application layer payload and the UDP header encapsulating it.
+\item Segment: A segment is a transport layer unit. It refers to a piece of a packet and the TCP header encapsulating it.
+\begin{itemize}
+\item Segments increase the efficiency of network performance and improve security. (TODO: How?)
+\end{itemize}
+\item Message: Unit of data at application layer.
+\end{enumerate}
 \chapter{Link Layer}
 \section{ARP Protocol}
 \label{sec:arp}
@@ -202,4 +224,54 @@
 \item Used by hosts and routers to communicate network-level information.
 \item Operates on top of the Internet Protocol. (IP).
 \end{itemize}
+\chapter{Transport Layer}
+\begin{itemize}
+\section{Introduction}
+\item Provides logical communication between two processes.
+\begin{itemize}
+    \item The devices running the processes are identified by their IP addresses.
+    \item On each device, the process (application) involved in a connection is identified by a port.
+\end{itemize}
+\item Helps in multiplex, demultiplexing of packets for delivery to the right processes.
+\item Aka end-to-end protocols.
+\item Unit of data at transport layer is a segment. 
+\end{itemize}
+\subsection{Sockets}
+\begin{itemize}
+\item Sockets function as the interface between processes and the transport layer.
+\item On a device (fixed IP address), a socket is identified by a port number.
+\item There are two types of sockets that provide two corresponding types of (de)multiplexing.
+\begin{enumerate}
+\item Connectionless:
+\begin{itemize}
+    \item Used with UDP sockets.
+    \item A socket on a machine (fixed IP address) is identified by a port number.
+    \item Thus, once on the network, the socket is identified by a 2-tuple: (dst IP address, dst Port Number).
+    \item Packets with the tuple are directed to the same socket (thus, process),
+    regardless of the source IP address and port.
+    \item It is the process' job to segregate the data from different clients.
+\end{itemize}
+\item Connection-oriented:
+\begin{itemize}
+    \item Used with TCP sockets.
+    \item A socket on a machine (fixed dst IP address) is identified by src IP, src Port and dst Port.
+    \item Thus, once on the network, the socket is identified  by a 4-tuple: (dst IP, dst Port, src IP, src Port).
+    \item 
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+\subsection{Port Numbers}
+\begin{itemize}
+\item Ports are a logical construct, an abstraction, a figment of the programmers' inter-subjective imagination.
+\item Physical ports refer to ports on a switch, not these ports.
+\item 16bit numbers (0 to $2^16$ - 1) to identify processes using the network on a machine.
+\item One process can listen to multiple ports, but one port can only be used by one process.
+\item The point of the port abstraction is to allow for multiple processes to share the network without conflicts.
+\item Some OS provide extensions to the above, allowing for port reuse. \href{https://stackoverflow.com/questions/1694144/can-two-applications-listen-to-the-same-port}{See this.}
+\item Note that one computer may have two (active) IP addresses, by having two network cards, and two processes may use
+    the ports with the same number on each IP address.
+\end{itemize}
+\section{TCP}
+
+\section{UDP}
 \end{document}

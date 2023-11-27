@@ -162,6 +162,11 @@ O(n^{log_b(a)}) & a > b^d
 \end{enumerate}
 \section{Watch out for these bugs}
 \begin{itemize}
+\item Integer overflow: if your algorithm returns a value absurdly low or higher than the set of possible values, check for integer overflow.
+\begin{itemize}
+    \item Change types of all non-negative integers to \texttt{unsigned long long}
+    \item Types of all signed integers to \texttt{long long}.
+\end{itemize}
 \item When reusing a pointer to heap data, remember to set it to NULL after you \texttt{delete} it.
 \item Prefer using (small.size()>large.size()+k) where k>=0, as opposed to (small.size() - large.size() > k). The two return values are unsigned and thus always yield a non-negative difference.
 \item Separate out the iterating condition (limit, checks, increments to values) from a map before updating it, to avoid infinite loops and incorrect results.
@@ -534,7 +539,15 @@ int dijkstras(vector<vector<int>>& ps, int s, int target) {
 \begin{itemize}
 \item Dijkstra's can be modified to count the number of minimum cost paths between two fixed points too.
 \item This involves maintaining an array of \texttt{ways} denoting the number of min-cost ways to visit a vertex. The answer is \texttt{ways[dst]}. See \href{https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/}{this problem.}
+\item Dijkstra's algorithm can be used to solve the most generic weight problem:
+\begin{itemize}
+    \item Each edge u$\rightarrow$v has a weight $w(u,v)$;
+    \item Each node has a weight $w_v(u)$;
 \end{itemize}
+\item We transform the problem to set each edge weight to $w'(u,v) = w(u,v) + w_v(v);$
+\item We can use dijkstra's on this new graph so long as each edge weight is non-negative. Also note that the source node's weight is unaccounted for and must be added to the final answer.
+\end{itemize}
+
 \subsubsection*{Stack Based Questions}
 These usually involve finding the (lexicographically) minimal
 subsequence. We maintain a stack to track the sequence

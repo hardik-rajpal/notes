@@ -633,6 +633,8 @@ of the set \{\texttt{a[0],a[1]...a[i]}\} and in a suffix array, it denotes the m
 of the set \{\texttt{a[i],a[i+1],...a[n-1]}\}.
 \item Additionally, \textbf{prefix and suffix sum} arrays
 can be used to pre-compute cumulative sums for sub-arrays.
+\item Another useful transformation is to generate consecutive prefix/suffix arrays, where the prefix is nullified 
+at i if a[i]==0. See \href{https://leetcode.com/problems/maximal-rectangle/description/}{this problem.}
 \item If a question involves finding
 the max element less than or min element more than a value over a range (iter1, iter2), consider maintaining 
 a sorted collection of the range, so as to use \texttt{lower\_bound} and \texttt{upper\_bound}, or custom \textbf{binary search functions}.
