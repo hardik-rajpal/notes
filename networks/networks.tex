@@ -30,6 +30,8 @@
 \protorow{ARP}{N/A}{Link}{Returns the MAC address corresponding to an IP address}{\hyperref[sec:arp]{Further discussion.}}
 \protorow{DHCP}{UDP}{Application}{Used to obtain new IP address assignments for hosts.}{\hyperref[sec:dhcp]{Further discussion.}}
 \protorow{ICMP}{IP}{Network}{Used by hosts and routers to communicate network level information}{\hyperref[sec:icmp]{Futher discussion.} \href{https://serverfault.com/questions/511965/why-is-icmp-categorized-as-a-layer-3-protocol}{Why is it on the network layer?}}
+\protorow{UDP}{IP}{Transport}{Used for (process-) to-process delivery.}{\hyperref[sec:udp]{Read more.} Source process is unnecessary or deduced by application layer (ex. DHCP $\implies$ delivery to source is based on \hyperref[sec:dhcp]{link-layer broadcast and transaction id Xid})}
+\protorow{}{}{}{}{}
 \end{tabular}
 \end{center}
 \section{Addresses}
@@ -60,7 +62,7 @@ Reference: \href{https://www.baeldung.com/cs/networking-packet-fragment-frame-da
 \item Message: Unit of data at application layer.
 \end{enumerate}
 \chapter{Link Layer}
-\section{ARP Protocol}
+\section{Address Resolution Protocol}
 \label{sec:arp}
 \begin{itemize}
 \item Operates at link layer.
@@ -256,7 +258,14 @@ Reference: \href{https://www.baeldung.com/cs/networking-packet-fragment-frame-da
     \item Used with TCP sockets.
     \item A socket on a machine (fixed dst IP address) is identified by src IP, src Port and dst Port.
     \item Thus, once on the network, the socket is identified  by a 4-tuple: (dst IP, dst Port, src IP, src Port).
-    \item 
+    \item The server creates a new socket for each client that connects to it.
+    \begin{itemize}
+        \item In the program, the socket is identified by a file descriptor or a reference to some object wrapping around it.
+        \item In the kernel, the fd is associated with the 4-tuple mentioned earlier.
+        \item When a packet arrives with the four tuple, the kernel looks up the tuple's corresponding socket in a table, and sends the payload to that socket.
+        \item The program access this by the read functions in the object wrapping around the socket's fd.
+        \item Note: I am not sure how the lookup is done as this is a transport layer functionality which requires access to the network layer header (src IP). 
+    \end{itemize}
 \end{itemize}
 \end{enumerate}
 \end{itemize}
@@ -271,7 +280,72 @@ Reference: \href{https://www.baeldung.com/cs/networking-packet-fragment-frame-da
 \item Note that one computer may have two (active) IP addresses, by having two network cards, and two processes may use
     the ports with the same number on each IP address.
 \end{itemize}
-\section{TCP}
+\section{Transmission Control Protocol}
+\label{sec:tcp}
+\begin{itemize}
+\item Connection-oriented byte stream protocol.
+\item Provides:
+\begin{itemize}
+    \item (De)Multiplexing.
+    \item Reliable process to process data transfer.
+    \item Full duplex connection.
+    \item Flow control: receiver has control over sending rate.
+    \item Congestion control: stops sender from overwhelming routers and network while using these resources sufficiently well.
+\end{itemize}
+\item Key idea: sliding window protocol.
+\item Key challenges that TCP addresses:
+\begin{enumerate}
+\item Connection management: explicit connection establishment between two processes and tear-down.
+\item Round Trip Time: Adaptive timeout mechanism to correspond to varying congestion rates and route availability.
+\item Reordering: Arbitrary delays for each packet implies they need to be reordered at the destination.
+\item Flow Control: Mechanism to ensure destination host isn't overwhelmed with the data transfer rate.
+\item Congestion Control: Mechanism to ensure network (possibly changing) isn't overwhelmed with the data transfer rate.
+\end{enumerate}
+\item Segment format:
+\mygraphic{rsrc/tcppacket.png}
+\begin{itemize}
+\item Without options, the header length is 20 B.
 
-\section{UDP}
+\end{itemize}
+\end{itemize}
+\section{User Datagram Protocol}
+\label{sec:udp}
+\begin{itemize}
+\item Provides (de)multiplexing over best effort network layer service.
+\item UDP segments can be lost, duplicated, delivered out of order.
+\item Connectionless $\implies$ no handshaking phase between client and server.
+\item Packet delivery to socket identified by (dst IP, dst Port)
+\item Each DHCP segment is handled independently of the other.
+\item Pros:
+\begin{itemize}
+    \item Not having a handshake phase, it has zero connection establishment overhead.
+    \item Small segment header: less data overhead per packet.
+    \item Server can support multiple clients due to the simplicity of the protocol.
+    \item ? No congestion control: rate is independent of congestion in the network.
+    \item No retransmission delay: useful for realtime applications like VoIP, games.
+\end{itemize}
+\item Cons:
+\begin{itemize}
+    \item No delivery guarrantees $\implies$ applications have to implement these capabilities on their own.
+\end{itemize}
+\item Protocols using UDP:
+\begin{itemize}
+    \item DHCP
+    \item RIP
+    \item DNS
+    \item SNMP
+\end{itemize}
+\item UDP datagram format:
+\mygraphic{rsrc/udppacket.png}
+\begin{itemize}
+\item Length refers to the total length of the segment in bytes = 8B header + app data.
+\item Checksum is calculated over UDP header, app data and pseudo header from IP header.
+\begin{itemize}
+    \item Pseudo header includes the protocol version number, source and destination IP addresses.
+    \item Checksum on pseudo header verifies correct delivery.
+    \item Checksum is optional in IPv4 but compulsory in IPv6 as it doesn't have a checksum in its header.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
 \end{document}
