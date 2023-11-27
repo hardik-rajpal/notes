@@ -2620,7 +2620,7 @@ Summarized from blogs \href{https://dev.to/medhatdawoud/javascript-anti-patterns
 \end{itemize}
 \item Promise composition:
 \begin{itemize}
-    \item \texttt{Promise.all([p1,p2,1,abc])} await all promises (non-sequentially) and return array with values returned by them.
+    \item \texttt{Promise.all([p1,p2,1,abc])} await all promises (non-sequentially) and return array with values returned by them. It rejects with the error from the first promise being rejected.
     \item For sequential promise resolutions:
     \begin{lstlisting}
         [func1, func2, func3]
@@ -2640,7 +2640,32 @@ Summarized from blogs \href{https://dev.to/medhatdawoud/javascript-anti-patterns
         /* use last result (i.e. result3) */
 
     \end{lstlisting}
+    \item \texttt{Promise.allSettled([p1,p2,p3])} works like \texttt{Promise.all}, except it never rejects. It waits for
+    all promises to be resolved or rejected and returns an array of status-value objects:
+    \begin{lstlisting}
+        Promise.allSettled([
+        Promise.resolve(33),
+        new Promise((resolve) => setTimeout(() => resolve(66), 0)),
+        99,
+        Promise.reject(new Error("an error")),
+        ]).then((values) => console.log(values));
+        /* [
+           { status: 'fulfilled', value: 33 },
+           { status: 'fulfilled', value: 66 },
+           { status: 'fulfilled', value: 99 },
+           { status: 'rejected', reason: Error: an error }
+         ] */
+    \end{lstlisting}
+    \item \texttt{Promise.any([p1,p2,p3])} resolves with the value from the first (quickest) to be resolved. If an empty array is passed or if all the promises are rejected, it rejects with an array containing reject-values for each promise.
+    \item \texttt{Promise.race([p1,p2,p3])} resolves when the first (quickest) promise rejects or resolves. 
 \end{itemize}
+\item Promise error handling: (References \href{https://stackoverflow.com/questions/42013104/placement-of-catch-before-and-after-then}{one} and \href{https://stackoverflow.com/questions/24662289/when-is-thensuccess-fail-considered-an-antipattern-for-promises}{two})
+\begin{lstlisting}
+P.then((v)=>{return transform(v);}).catch((err)=>{handle(err);});
+//handle will be called for errors from P and for errors in transform(v).
+P.then((v)=>{return transform(v);},(err)=>{handle(err)}).catch((err)=>{handleTransformError(err)});
+//handle will be called only for errors from P.
+\end{lstlisting}
 \item Nesting: convert nested if-checks to flattened if (invalid), return statements.
 \item Naming convention: adjectives prefixing nouns, camelCase.
 \item When definining useful constants (that can be written in terms of other constants),
@@ -2673,10 +2698,6 @@ users.reduce((acc, item) => {
 
 \end{lstlisting}
 \end{itemize}
-
-
-
-
 
 \chapter{Python}
 \section{Misc.}
