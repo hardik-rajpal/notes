@@ -31,6 +31,81 @@ escapeinside={/*!}{!*/}
 \item Process Control Block: A per-process data structure that tracks process meta-data.
 \end{itemize}
 \chapter{System Calls}
+\section{How are they done?}
+\begin{itemize}
+\item The operating system provides an application binary interface (ABI) of calls that perform privileged tasks like:
+\begin{itemize}
+    \item File system access
+    \item Memory management
+    \item Process management
+\end{itemize}
+\item The two key building blocks of OS design for execution are:
+\begin{enumerate}
+    \item Privileged modes of execution.
+    \item Interrupts and interrupt-driven execution.
+\end{enumerate}
+\end{itemize}
+\subsection{Privileged Modes of Execution}
+\begin{itemize}
+\item The OS is the owner of all resources: CPU, memory, I/O, and we want to keep it that way.
+\item To prevent uncontrolled malicious/erroneous usage of these resources.
+\begin{itemize}
+    \item Programs overwriting each other's memory.
+    \item Monopolizing the CPU.
+    \item Capture of all incoming packets on NIC.
+\end{itemize}
+\item Broadly, the two modes are:
+\begin{enumerate}
+\item User mode: less privileged, this is where user programs run.
+\item Kernel mode: more privileged, this is where OS code runs.
+\end{enumerate}
+\item The requirement of kernel mode for OS code execution relies on hardware support.
+\item Each instruction from an ISA has the minimum privilege level it needs to run.
+\item With the current level less than an instruction's requirement, it results in a no-op or UDB.
+\end{itemize}
+\subsection{Interrupts}
+\begin{itemize}
+\item Observed via a voltage line in the CPU that's high when an interrupt key sequence is spotted.
+\item The CPU finishes the current instruction, handles the interrupt, then moves on to the next instruction (if still allowed).
+\item There exist priority orders between interrupts to decide which interrupt interrupt which other interrupt's handler.
+\item There exist interrupt handler queues.
+\item There are two types of interrupts:
+\begin{enumerate}
+\item Hardware:
+\begin{itemize}
+    \item Keyboard/mouse inputs.
+    \item Disk interrupts
+    \item Timer interrupts
+\end{itemize}
+\item Software:
+\begin{enumerate}
+    \item Implicit (Exceptions): division by zero, segmentation fault.
+    \item Explicit: system call. 
+\end{enumerate}
+\end{enumerate}
+\item For a given OS, every interrupt transfers the control to a function called the Interrupt Service Routine.
+\item An interrupt is raised by an interrupt instruction, with a number corresponding to the type of interrupt: For x86: \texttt{int 0x80} is used for all system call (0x80) interrupts (int).
+\item The outline of what happens on an interrupt for a system call is given below:
+\begin{enumerate}
+\item Wait for current instruction to finish execution.
+\item Freeze execution.
+\item Switch from user mode to privileged mode of execution.
+\item Save context of user process on kernel stack.
+\item Jump to the universal system call handler, whose address is at by IDT[index].
+\begin{itemize}
+    \item IDT is the interrupt descriptor table and index is the number passed along with the interrupt instruction.
+    \item Note that index is constant across system calls, varies for other interrupt types.
+\end{itemize}
+\item Arguments to the sytem call itself are passed through general purpose registers \texttt{eax, ebx, ecx, edx...}.
+\item The particular system call is identified by the system call number, (!= index), which is read from \texttt{eax}. The number is looked up in the \texttt{syscall\_table}, which returns the address for the code that executes the call. 
+\end{enumerate}
+\item Once the system call has been executed, the system call handler calls the \texttt{iret} instruction, which:
+\begin{enumerate}
+    \item Restores the user process' context from kernel stack.
+    \item Switches to user mode.
+    \item Jumps to PC+1, where PC is where the system call was made. 
+\end{enumerate}
+\end{itemize}
 \section{List Of SysCalls (C)}
 The full list is \href{https://www.cheat-sheets.org/saved-copy/Linux_Syscall_quickref.pdf}{available here.}
 \subsection{Generic}
