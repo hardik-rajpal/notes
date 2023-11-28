@@ -405,6 +405,77 @@ Used by each host for flow control, to control the sending rate at the other.
     \item With timewait, said packets are cleared out.
     \item In the time-wait state, attempts to open a connection with the same 4-tuple results in a "bind failed" error.
 \end{itemize}
+
+\end{itemize}
+\subsection{Congestion Control}
+\begin{itemize}
+\item Throughput$\vline_{SWP} = \frac{W\times MSS}{RTT}$,where
+\begin{itemize}
+    \item W is the window size in number of segments.
+    \item MSS is the maximum segment size
+    \item RTT is the round trip time.
+    \item Here the transmission time is ignored, consider a large W.
+    \item Considering the transmission time Tx, RTT is replaced by RTT + (W-1)$\times$Tx. This accounts for the NIC only being able to send one packet over a period of Tx.
+\end{itemize}
+\item The need for congestion control:
+\begin{itemize}
+\item Many flows (TCP or UDP) pass through a router $\implies$ number varies with time.
+\item Link capacities also vary across routers.
+\item Throughput achieved by a given flow depends on many parameters.
+\item We need to estimate W such that each flow gets a fair share of the bandwidth.
+\item A fixed low W results in underutilization while a large W causes congestion $\implies$ W varies over time.
+\item Congestion control refers to preventing sources from sending too much data too fast and thereby congesting the network.
+\end{itemize}
+\item The capacity of the network in SWP is defined as the bandwidth-delay product: BW $\times$ RTT.
+\item Removal of data from the pipe (the sliding window) is done on receiving an ACK for a given packet, and subsequently, a new packet is sent in the window. This feature of TCP is said to make it self-clocking.
+\item We view the network as a pipe of dynamic capacity given by the BW-delay product. It is used to derive a congestion window variable CW.
+\item TCP uses self-clocking to pump packets into the network.
+\end{itemize}
+\subsubsection{Getting to Equilibrium}
+\begin{itemize}
+\item A large initial value of CW (by every client in the network for each TCP connection) will push the network into congestion.
+\item A value of CW that is ``just right'' means that bursty transmissions can lead to losses. This is due to buffer overflow at bottleneck routers (high input BW, low output BW) in the presence of other users.
+\item Hence, we start with a conservative, low, value of CW and slowly fill up the pipe: ``Slow start.''
+\item Slow start:
+\begin{itemize}
+    \item Use a variable called CW to capture the maximum allowed number of outstanding data in the network. (sent, unacked at sender).
+    \item Set CW to 1 initially.
+    \item On each ack for new data, increase CW by 1 on every ack. (Linear increment with ACKs, but exponential in RTT.)
+    \item CW = $2^{\frac{t}{RTT}}$
+    \mygraphic{rsrc/slowstart.png}
+    \item Consecutive ACKs are separated by the Tx time at the bottleneck link in the network, and for each ACK, we send two packets. $\implies$ At most, two packets every Tx time of the bottleneck bandwidth.
+    \item Hence, we send data at at most twice the bottleneck link on the path $\implies$ bound to overestimate the capacity at some time in the future.
+\end{itemize}
+\end{itemize}
+\subsubsection{Conservation at Equilibrium}
+\begin{itemize}
+\item Conservation: Don't put a packet unless a packet is removed (ACKed at sender).
+\item This is particularly important if the network is in a congested state.
+\item At slow start, two packets are added for each removed, and thus this is violated before attaining equilibrium.
+\item It is also violated on timeouts (perceived losses). Thus,it is crucial to estimate RTT properly, so that delayed packets are not interpreted as lost.
+\item RTT increases as the network gets more congested.
+\item Original Algorithm for RTT estimation:
+\begin{itemize}
+\item Sample RTT = RTT for the SN whose ACK has just been received.
+\item Est. RTT = a $\times$ Est. RTT + (1-a)$\times$ Sample RTT.
+\item Lower value of a means Est. RTT is heavily influenced by temporary fluctuations.
+\item Higher value of a means Est. RTT is not quick enough to adapt to real changes.
+\item Timeout = 2 $\times$ Est. RTT.
+\item a $\in$ (0.8,0.9) $\implies$ works fine with low variance of RTT, but fails with a congested network, where the variance of RTT is large.
+\item However, this algorithm led to a network collapse.
+\end{itemize}
+\item Jacobson/Karels Algorithm:
+\begin{itemize}
+    \item It takes into account variance of RTTs.
+    \item Trust Est. RTT if variance is low, if it is large, the timeout shouldn't depend heavily on Est. RTT.
+    \item Difference = Sample RTT. - Est. RTT
+    \item Est. RTT = Est. RTT + (d $\times$ Difference)
+    \item Deviation = Deviation + (d$\times$(|Difference|-Deviatoin)), where d \~ 0.125
+    \item Timeout = u$\times$Est.RTT + q$\times$Deviation, u=1, q=4.
+    \item Exponential timeout backoff to control spacing between retransmits (in the absence of new Sample RTTs).
+    \item Timeout doubles for every timeout.
+    \item With stable RTTs, we react to losses quicker, but in cases of high deviation, the timeout is larger and allows for larger delays.
+\end{itemize}
 \end{itemize}
 \section{User Datagram Protocol}
 \label{sec:udp}
