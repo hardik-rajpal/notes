@@ -301,11 +301,109 @@ Reference: \href{https://www.baeldung.com/cs/networking-packet-fragment-frame-da
 \item Flow Control: Mechanism to ensure destination host isn't overwhelmed with the data transfer rate.
 \item Congestion Control: Mechanism to ensure network (possibly changing) isn't overwhelmed with the data transfer rate.
 \end{enumerate}
-\item Segment format:
+\end{itemize}
+\subsection{Segment Format}
 \mygraphic{rsrc/tcppacket.png}
+\subsubsection{Sequence Number and Ack}
 \begin{itemize}
-\item Without options, the header length is 20 B.
-
+\item Each byte is assigned a sequence number.
+\item The Sequence number field in the header refers to that of the first byte.
+\item The ack field acknowledges the data flow from the other direction. It carries the sequence number of the next byte
+the host is expecting.
+\item Unless specified otherwise, the ack is cumulative. 
+\item ACK=85 $\implies$ all bytes with sequence number $\leq$ 84 have been received, and 85 onwards are expected. 
+\end{itemize}
+\subsubsection{Flags}
+\begin{enumerate}
+\item U flag
+\begin{itemize}
+\item Urgent flag to indicate that the segment contains urgent data.
+\item Used along with urgent pointer, which indicates the length of the urgent segment, thus indicating where the non-urgent data begins.
+\item Assumes that urgent data (if any) precedes non-urgent data in the application payload.
+\end{itemize}
+\item A flag:
+\begin{itemize}
+\item The Ack flag is set if the acknowledgement field is valid.
+\item It's used to separate single direction data flow connection packets (A=0) from two-way flows (A=1).
+\end{itemize}
+\item P flag:
+\begin{itemize}
+\item The push flag indicates whether the receiver should pass data to higher layer immediately.
+\end{itemize}
+\item R flag: Reset flag, used to abort connection.
+\item S/F flags: Syn and fin flags are used during connection establishment and termination.
+\end{enumerate}
+\subsubsection{Advertised Window}
+Used by each host for flow control, to control the sending rate at the other.
+\subsubsection{Checksum}
+\begin{itemize}
+\item Similar to UDP checksem.
+\item Compulsory in both IPv4 and IPv6.
+\item Calculated over TCP header, data and pseudoheader: src, dst IP addresses, IP protocol number and total length of TCP segment.
+\end{itemize}
+\subsubsection{Options}
+\begin{itemize}
+\item Used at connection setup to negotiate certain parameters.
+\item Also used later to carry certain info for implementing specific functionality.
+\item Ex:
+\begin{itemize}
+    \item Can negotiate maximum segment size (based on MTU supported by network between two hosts).
+    \item Can perform window scaling.
+    \item Permits use of selective acks: both to indicate device support for selacks and to carry actual selack info.
+    \item Permits use of alternative checksums.
+\end{itemize}
+\end{itemize}
+\subsection{Connection Management}
+\begin{itemize}
+\item Being a connection oriented protocol, all TCP connections start with a connection establishment phase. This phase helps in:
+\begin{itemize}
+\item Exchanging and initiating state variables: MaxSegSize, ISNs, ACK types.
+\item Allocating resources for connection (send and receive buffer spaces).
+\item The buffer space allocation depends on the OS, ranges from 4KB to MB.
+\end{itemize}
+\end{itemize}
+\subsubsection{Connection Setup}
+\begin{itemize}
+\item A simple request-grant-data model is susceptible to errors from packet duplication and timeout-induced replays.
+\item The three-way handshake helps counter this.
+\mygraphic{rsrc/tcp3way.png}
+\item SYN $\implies$ synchronization.
+\item Case 1: Only SYN is duplicated.
+\begin{itemize}
+\item On receiving the response to the duplicated SYN (SN=z, ACK=x+1) (which was in the network and just got delivered), the server A sends a RST packet as it has not initiated any connection with B. 
+\mygraphic{rsrc/tcp3waycase1.png}
+\end{itemize}
+\item Case 2: Both SYN and SYN+ACK are duplicated.
+\begin{itemize}
+\item RST packets are essential to close such erroneous transfers.
+\mygraphic{rsrc/tcp3waycase2.png}
+\end{itemize}
+\end{itemize}
+\subsubsection{Initial Sequence Number}
+\begin{itemize}
+\item We don't start with zero so segments from different connections don't get mixed up.
+\item Additionally, there's a security risk with predictable ISNs.
+\item Current implementation uses random ISN.
+\item Older implementations considered using the system clock to choose ISNs, for connection segregation, but this still suffered from having predictable ISNs.
+\end{itemize}
+\subsubsection{Connection termination}
+\begin{itemize}
+\item Asymmetric release (just hang-up) leads to data loss.
+\item Symmetric release:
+\begin{itemize}
+\item Treat connection as two separate unidirectional connections.
+\item Each side should be released separately.
+\mygraphic{rsrc/tcpfinack.png}
+\item After sending a FIN, the host doesn't send anymore data. It continues to ACK any data it receives.
+\end{itemize}
+\mygraphic{rsrc/tcpstate.png}
+\item Note that the client is in the time-wait state before it closes by timeout.
+\begin{itemize}
+    \item It waits here for 2*(Max Seg Lifetime).
+    \item This mechanism is expected to clear out older packets in the network and prevent them from interfering with the new connection.
+    \item In particular, if a connection with a 4-tuple is closed and a new connection with the same 4-tuple is started shortly after (as can happen with HTTP requests), packets from the previous connection (which are forwarded to the socket identified by the 4-tuple being used by the new connection) can result is a RST packet and the consequent connection termination.
+    \item With timewait, said packets are cleared out.
+    \item In the time-wait state, attempts to open a connection with the same 4-tuple results in a "bind failed" error.
 \end{itemize}
 \end{itemize}
 \section{User Datagram Protocol}
