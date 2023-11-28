@@ -477,6 +477,35 @@ Used by each host for flow control, to control the sending rate at the other.
     \item With stable RTTs, we react to losses quicker, but in cases of high deviation, the timeout is larger and allows for larger delays.
 \end{itemize}
 \end{itemize}
+\subsubsection{Congestion Avoidance: AIMD}
+\begin{itemize}
+\item Control theory says that an unstabel system can be stabilized by adding exponential damping.
+\item A network system subject to random load shocks and prone to congestive collapse can be stabilized by adding exponential damping to its primary excitation (traffic sources).
+\item Essentially, we want to give the system enough time to recover before we send more packets.
+\item Adapting to the path:
+\begin{itemize}
+\item Estimation method for W may overestimate or underestimate W; we need to correct this.
+\item The available BW also changes over time; need to adapt to this.
+\item We need a feedback mechanism from the network to realize that the estimate is wrong.
+\end{itemize}
+\item On overestimation,
+\begin{itemize}
+\item Overestimation leads to congestion.
+\item Note that routers don't send any ``source quench'' messages to inform the host of congestion.
+\item If losses are due to congestion and timers are working correctly, timeouts indicate congestion. (At least on wired systems, bit error rate is very low.)
+\item Multiplicative decrease yields better stability: $W_i = dW_{i-1}$, d<1, typically 0.5.
+\end{itemize}
+\item On underestimation,
+\begin{itemize}
+\item Underestimation leads to lower utilization.
+\item Exponential (multiplicative) increase leads to instability and overestimation is inevitable.
+\item We thus prefer additive increase: $W_i = W_{i-1} + u$, u << $W_{max}$, typically 1.
+\item $\implies$ we increase W by 1 segment every RTT, NOT on every ACK (which is what slow start does).
+\item This is equivalent to incrementing by 1/W on every ACK.
+\end{itemize}
+\item This algorithm results in a saw-tooth graph:
+\mygraphic{rsrc/CAgraph.png}
+\end{itemize}
 \section{User Datagram Protocol}
 \label{sec:udp}
 \begin{itemize}
