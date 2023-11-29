@@ -3,6 +3,15 @@
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage[a4paper,hmargin=0.8in,bottom=1.3in]{geometry}
 \usepackage{lastpage,enumerate,fancyhdr,mathrsfs,xcolor,graphicx,listings,hyperref,enumitem}
+\makeatletter
+\def\maxwidth#1{\ifdim\Gin@nat@width>#1 #1\else\Gin@nat@width\fi}
+\makeatother
+\hbadness 100001
+\newcommand{\mygraphic}[1]{
+\begin{center}
+    \includegraphics[width=\maxwidth{15cm}]{#1}
+\end{center}
+}
 \newcommand*{\algodis}[4]{
     \textbf{#1:} #2\\%name: % key idea
     \textbf{Time:} #3 \\% O(what)
@@ -2397,6 +2406,77 @@ select * from R1 INTERSECT select * from R2;
 select * from R1 MINUS select * from R2;
 \end{lstlisting}
 \end{itemize}
+\chapter{(CPU) Architecture}
+From The Art of Writing Efficient Programs.
+\section{Introduction}
+\begin{itemize}
+\item Our program will deliver the result faster if every computation it executes brings us closer to the result and, at every moment, we do as much computing as possible.
+\item We want to study here how to make the best use of the CPU resources using a single thread.
+\item Some components on the CPU largely work by themselves and there is little the programmer needs to do the make the best use of them.
+\item Some need a careful arrangement of machine code that is mostly done by compilers.
+\item But more than half the chip is dedicated to components that just don't optimize themselves and require the programmer's understanding and tweeking to function optimally.
+\mygraphic{rsrc/silicon.png}
+\end{itemize}
+\section{Benchmarking Details}
+\begin{itemize}
+\item Division is much slower (3 to 4 times) than addition, subtraction and multiplication (which are roughly of the same order).
+\item When operating on a two arrays and reading their elements, the values first have to be loaded into registers before the operation can be executed. (Or, in some cases, one of the values has to be loaded while the other can be referenced in memory).
+\begin{lstlisting}
+a1 = v1[i]+v2[i]; //for i in a range,
+//broken into:
+/*
+read v1[i] into r1;
+read v2[i] into r2;
+r3 = r1+r2;//use r3 for a1 operations ahead.
+*/
+\end{lstlisting}
+\item Note that the below program has the same cost (~total cycles or time) as the one above:
+\begin{lstlisting}
+a1 = v1[i]+v2[i]; //for i in a range,
+a2 = v1[i]*v2[i]; //for i in a range,
+a3 = v1[i]<<v2[i]; //for i in a range,
+\end{lstlisting}
+\item Once the operands (v1[i], v2[i]) are loaded into the registers, the processor can execute several operations at once. This is known as instruction-level parallelism (ILP).
+\item There is a limit to how many such instructions the CPU can do at once (even after loading the values into the registers).
+\item We can use a tool like Machine Code Analyzer (MCA) to get information on how the instructions are executed, where the delays and bottlenecks are among other details.
+\end{itemize}
+\section{Data Dependencies and Pipelining}
+\begin{itemize}
+\item Complex arithmetic instructions, when broken down into 3A-instructions, tend to have some instructions dependent on the completion of the ones before them.
+\begin{lstlisting}
+a1[i] = (p1[i]+p2[i])*(p1[i]-p2[i]);//one iteration of the loop
+//breaks into:
+s[i] = (p1[i]+p2[i]);
+d[i] = (p1[i]-p2[i]);
+//s,d evaluations can employ ILP
+a1[i] = s[i]*d[i];//can't be executed unless we have s[i] and d[i].
+\end{lstlisting}
+\mygraphic{rsrc/datadependency.png}
+\item The iteration now takes two cycles instead of one, because results of the first cycle are used in the second.
+\item One solution to this is pipelining the asm code to compute a1[i-1] after computing s[i],d[i]:
+\mygraphic{rsrc/pipelining.png}
+\item Stage 2 of the previous expression runs at the same time as stage 1 of the next instructions. (The pipeline gets deeper for more complex instructions.)
+\item With more iterations, while the first iteration takes two cycles, subsequent iterations are effectively done in one cycle, and the time should be comparable to that of an iteration without data dependency.
+\item Note: this pipeling is done by the hardware, not by the compiler. The compiler simply generates the code for one iteration and the operations needed to advance to the next iteration.
+\item Register renaming, where the CPU maps register names written in asm \texttt{rsi, rax} etc to physical registers, helps avoid the contradiction of s[i-1] and s[i] using the same register and therefore requiring disjoing cycles.
+\item For example, in this two-level pipeline, \texttt{rsi} is mapped to two separate registers, distinguished by the CPU as \texttt{rsi1} and \texttt{rsi2}. This hardware renaming is not visible to any tools like LLVM-MCA or a profiler.
+\item This register renaming allows for the pipelining discussed above.
+\item \textbf{Loop unrolling:} refers to converting a loop into linear code. It is a popular compiler optimization technique, but here, it is done in the hardware.
+\item Observation: The order in which the CPU executes our code is not the same order in which the instructions are written. This is called out of order execution, and has important consequences for multi-threaded programs.
+\end{itemize}
+\section{Pipelining and Branches}
+\begin{itemize}
+\item Conditional execution (branches) are the bane of pipelining, much like data dependency is the bane of ILP.
+\item The instruction \texttt{a1 = p1[i]>p2[i]?p1[i]:p2[i]} is broken down as:
+\mygraphic{rsrc/branches.png}
+\item This has a data dependency as a code dependency. We need the value of v1[i]>v2[i] before deciding which of the two instructions to execute.
+\item Having conditional move or conditional add instructions in the ISA can maintain the same performance:
+\mygraphic{rsrc/cmove.png}
+\item With this, our code becomes entirely sequential, without any jumps, and can be pipelined perfectly.
+\item Though not all compilers use them to implement the ternary operator.
+\item The conditional code discussed in the book is about five times slower than the sequential code.
+\item 
+\end{itemize}
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
 \section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
 \begin{itemize}
@@ -2711,7 +2791,6 @@ users.reduce((acc, item) => {
 
 \end{lstlisting}
 \end{itemize}
-
 \chapter{Python}
 \section{Misc.}
 \begin{itemize}
