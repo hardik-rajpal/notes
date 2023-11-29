@@ -2475,7 +2475,173 @@ a1[i] = s[i]*d[i];//can't be executed unless we have s[i] and d[i].
 \item With this, our code becomes entirely sequential, without any jumps, and can be pipelined perfectly.
 \item Though not all compilers use them to implement the ternary operator.
 \item The conditional code discussed in the book is about five times slower than the sequential code.
-\item 
+\end{itemize}
+\section{Branch Prediction}
+\begin{itemize}
+\item Consider a branchless, hardware-pipelined loop:
+\begin{lstlisting}
+for (size_t i = 0; i < N; ++i) {
+    a1 += v1[i] + v2[i]; // s[i] = v1[i] + v2[i]
+}
+\end{lstlisting}
+\item The processor perceives the corresponding instructions as:
+\mygraphic{rsrc/wloop.png}
+\item Ideally, w is such that at every cycle, the CPU is executing exactly as many instructions as it can simultaneously (rarely possible in practice).
+\item However, there's no guarrantee that there are w elements ahead. While evaluating v1[i]+v2[i], i may be N-1, and loading v1[i+2] would result in UDB.
+\item Hence, we must check if i < N even in the branchless code, before we execute the pipelined set of instructions. The code is therefor conditional (has branches).
+\item The way to save pipelining in the presence of branches is to attempt to convert the conditional code into an unconditional sequence, by trying to predict what branch will be taken.
+\item For example, if N is large, i<N will evaluate to true for most iterations.
+\item The processor makes a bet on facts like these using branch prediction.
+\item It analyzes the history of every branch in the code and assumes that the behaviour will not change in the future.
+\item Of course, we defer the actual writing of the results into memory until we evaluate the condition and confirm that the iteration does, in fact, happen. The processor has some write buffers to hold such unconfirmed results before committing them to memory.
+\item \textbf{Speculative Execution:} execution of code in a branch before we know that this code really exists (the branch is to be taken).
+\item If the prediction is wrong, the processor has to:
+\begin{enumerate}
+    \item Discard the result of every instruction that should not have been evaluated.
+    \item Fetch the instructions that it previously assumed wouldn't be needed and evaluate them instead.
+\end{enumerate} 
+\item The above event is called a pipeline flush and it is an expensive occurrence.
+\item The benchmarks show that cost of a well-predicted branch is minimal and that it is much faster than exactly the same code with a branch that is predicted poorly (say, based on random numbers).
+\item Most profilers can profile branch prediction failures, and pinpoint the functions where these mispredictions happen.
+\item Branch misses \~ 0.09\% is much better than \~ 11.17 \%.
+\item Note that predictors can:
+\begin{itemize}
+    \item Distinguish between different call sites leading to different prediction patterns and make use of this.
+    \item Recognize complex patterns, like an alternating boolean value. 
+\end{itemize}
+\end{itemize}
+\section{Speculative Execution}
+\begin{itemize}
+\item In the case of a misprediction, we may end up reading values outside of the valid memory region. (Ex: v1[N+1] in the previous example.) Even reading such values can result in UDB.
+\item Another example is the function below:
+\begin{lstlisting}
+int f(int* p) {
+    if (p) {
+            return *p;
+    } else {
+            return 0;
+    }
+}
+\end{lstlisting}
+\item Here, a null pointer may be dereferenced in the case of a misprediction.
+\item Such errors, and incorrect writes (discussed earlier), and any action that cannot be undone are treated as \textbf{potential actions}, as long as the instruction that caused that action remains speculative (until the condition is evaluated).
+\item The CPU has special hardware circuits, such as buffers, to store these events temporarily, while the condition is evaluated.
+\end{itemize}
+\section{Optimizations}
+\begin{itemize}
+\item Replacing compound boolean expressions (\texttt{c3 || (c1 \&\& c2)}) by corresponding expressions that use arithmetic operations or bitwise operations (and maintain program correctness) helps improve performance if:
+\begin{itemize}
+    \item The compound expression often evaluates to a single value (true/false).
+    \item The performance cost losing the short-circuiting feature of C,C++ with boolean operators is not too high.
+\end{itemize}
+\item The reason for this is that multiple branches introduced by c++'s short-circuiting compilation of boolean expressions are now reduced to a single branch, which benefits from branch prediction.
+\end{itemize}
+\section{Branchless Computing}
+\begin{itemize}
+\item It refers to rewriting our code to use no branches, or at least much fewer of them.
+\item It seeks to eliminate the need for branch predictors and pipeline flushes, and holding write buffers with potential actions.
+\item Note that manual unrolling, such as combining
+the statements for two iterations if the total number is known to be even is NOT likely to improve performance, since:
+\begin{itemize}
+    \item If N is large, the branch is predicted almost perfectly.
+    \item The compiler may have done the unrolling anyway as an optimization.
+    \item Or, a vectorizing compiler willuse SSE or AVX instructions to implement this loop.
+\end{itemize}
+\item Manual unrolling doesn't help because usually, the compiler would have done it anyways.
+\end{itemize}
+\subsection{Branchless Selection}
+\begin{itemize}
+\item This involves using booleans to index arrays. Ex:
+\begin{lstlisting}
+unsigned long a1 = 0, a2 = 0;
+for (size_t i = 0; i < N; ++i) {
+        if (b1[i]) {
+            a1 += p1[i];
+        } else {
+            a2 += p1[i];
+        }
+}
+//is replaced by:
+unsigned long a1 = 0, a2 = 0;
+unsigned long* a[2] = { &a2, &a1 };
+for (size_t i = 0; i < N; ++i) {
+    a[b1[i]] += p1[i];
+}
+\end{lstlisting}
+\item It should be ensured that boolean values b1[i] only hold zero or one.
+\item As such the second code can be pipelined, the branchless version delivers significant performance improvement.
+\item Some compilers implment \texttt{?:} using a lookup array where possible, instead of a conditional branch. Thus replacing the if block by the ternary operator would also optimize the code.  
+\end{itemize}
+\subsection{More Examples}
+\begin{itemize}
+\item There is a limit to how many extra computations can be in the branchless version of a code while maintaining a performance improvement from the branched version. Additionally, if the branch prediction is effective, it will likely outperform the branchless version.
+\item Also, if an instruction is optimized by a compiler using vector instructions like SSE or AVX, it may not benefit from branchless transformations.
+\item Lastly, if function call branches are transformed like so to use function pointers, it hinders inlining, which is a major optimization, one that is never justified to be given up to get rid of a branch.
+\end{itemize}
+\chapter{Computer Architecture (Biswa's Playlist)}
+\section{Introduction}
+\begin{itemize}
+\item MIPS is a simple yet expressive ISA.
+\item Its basic principles are similar to Arm.
+\item Still in use today: embedded devices, routers, modems.
+\item ISA is an abstraction:
+\begin{itemize}
+    \item It is an interface between hardware and software.
+    \item Hides complexity of execution from the software through a set of simple instructions.
+\end{itemize}
+\item Operands for an instruction can be in registers or in the memory.
+\item Registers are closer to the processor, and take 1 unit of time to read. The memory  (DRAM) is much costlier (~100) to access than registers.
+\item The ISA conveys to the programmer what the processor can/cannot do.
+\item An instruction from the ISA conveys to the processor what it needs to do.
+\item Up ahead, we restrict the discussion to the MIPS ISA.
+\end{itemize}
+\section{MIPS Instructions}
+\subsection{Processor (aka Core)}
+\begin{itemize}
+\item It contains:
+\begin{itemize}
+\item Registers (~dozen), considered 32bits here.
+\item ALU
+\end{itemize}
+\item There exist an address bus (carries addresses from processor to memory) and a data bus (carries the data from memory to processor) connecting the processor to the memory.
+\end{itemize}
+\subsection{Instructions}
+\begin{itemize}
+\item Instructions allow for operations on 16bits constants at most.
+\item Most instructions have two sources and one destination. (op dst src1 src2)
+\item Where src1, src2 and dst refer to registers.
+\item Complex instructions are broken down into simpler registers with some registers holding intermediate results (temporary variables, registers called temporary register).
+\item Special treatment of zero:
+\begin{itemize}
+\item \$0 is a special register that contains 0.
+\item \texttt{a = b} is encoded to add a,b,\$0
+\end{itemize}
+\item Pseudo instruction: not really a separate instruction in the ISA, but it is included for the programmer's conenience. Ex: move a,b actually translates to the same binary as add a,b,\$0.
+\item Bitwise operations in MIPS: sll, srl (shift left,right), and, or, nor, andi, ori. (i $\implies$ immediate, one of the operands is a constant.) (Not is nor with \$0).
+\item Note:
+\begin{itemize}
+    \item lui: loads the supplied 16bit constant into upper 16bits of the register.
+    \item ori, addi: operate on lower bits of a register with the 16bit supplied constant.
+\end{itemize}
+\end{itemize}
+\subsection{Memory Instructions}
+\begin{itemize}
+\item Von Newmann came up with the idea of instructions being stored in memory as well as the data. Hence the program is stored in memory as the binary.
+\item A word = 4B = 32bits.
+\item Say our DRAM has 4GB capacity, and is a collection of words.
+\item Program counter:
+\begin{itemize}
+\item Special register that stores the address of the instruction.
+\item 32bit processor $\implies$ the addresses are of 32bits.
+\item So, the processor fetches PC, PC+4,...sequentially.
+\end{itemize}
+\item The access time for registers increases if there are more registers, thus, we keep a limited number of registers.
+\item Load and store:
+\begin{itemize}
+    \item lw \$t0, 1(\$a0) is \$t0 = Memory[\$a0+1];
+    \item sw \$t0, 3(\$a0) is Memory[\$a0+3] = \$t0;
+\end{itemize}
+
 \end{itemize}
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
 \section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
