@@ -1641,6 +1641,31 @@ namespace constants
 \begin{itemize}
 \item Size of objects of a union class is the maximum size of any one field.
 \end{itemize}
+\section{Between Interviews}
+\subsection{C++ padding/packing}
+\begin{itemize}
+\item The size of a struct (and class) is not always just the sum of the sizes of the data members. This is attributed to padding and packing.
+\begin{lstlisting}
+struct Base{
+    char a;
+    char b;
+    char c;
+    int i;// sizeof(Base) returns 8.
+};
+struct Base{
+    char a; 
+    char b;
+    int i;
+    char c;//sizeof(Base) returns 12
+    // Memory layout: a|b|-|-|i|i|i|i|c|-|-|-
+};
+\end{lstlisting}
+\item \texttt{\#pragma pack(1)} disables padding.
+\end{itemize}
+\section{C++ Qs}
+\begin{itemize}
+\item \texttt{mutable} makes a data member modifiable even inside const member functions.
+\end{itemize}
 \chapter{DSA Revision Notes}
 \section{Stacks, Queues, Linked Lists}
 \begin{itemize}
