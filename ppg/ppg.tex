@@ -2698,6 +2698,144 @@ exit://do nothing
 \item Skipped lectures 4,5 and 6.
 \end{itemize}
 \section{Instruction Decoding}
+\section{Pipeline Hazards}
+\begin{itemize}
+\item A hazard is anything that prevents an instruction to move ahead in the pipeline.
+\item Three types:
+\begin{itemize}
+\item Structural hazard
+\item Data hazard
+\item Control hazard
+\end{itemize}
+\item Structural hazard happens due to two instructions trying to access a resource at the same time.
+\item They are highly infrequent.
+\item Registers are edge-triggered (edge of the clock graph), which means we can read/write the same register file in same clock cycle. 
+\item Yet, if there is only one port to the register file for data, we get structural hazards.
+\item Similarly, if there's a single memory (instruction+data), structural hazard.
+\item Data Hazards refer to data dependency between instructions. The later instructions wait for previous ones to finish.
+\begin{itemize}
+\item True dependency may lead to RAW hazard. I2 reads something written to in I1. I2 has to wait for WB stage of I1 .
+\item Anti dependence may lead to WAR hazard. I1 reads something written to in I2. We don't I1 to have the latest value. Read must happen before write.
+\item Output dependence may lead to WAW hazard. I1 and I3 want to write with I2 in between reading. Same as WAR hazard. (It's not possible in vanilla 5-stage pipeline).
+\end{itemize}
+\item Each dependence may cause a hazard based on how far apart the instructions are.
+\item Control hazards: arize from instructions that change the PC. Which branch do we continue fetching into the pipeline?
+\item On encountering a hazard
+\begin{itemize}
+\item instructions cannot move forward and must wait for the hazard to get resolved.
+\item The pipeline must stall.
+\item Pass a bubble into the pipeline, using a control signal that keeps the PC from being updated in the micro-arch or using nops inserted by the compiler. Ex: sl \$t0 \$0
+\item A bubble is equivalent to a stage of the following instruction being repeated: IF2 ID2 ID2 ID2 IE2 IM2 IWB2.
+\end{itemize}
+\item Similarly, with control hazards, replace fetched instruction by nop.
+\item We need data hazard detectors, ideally at ID stage: (ID/EX and EX/MEM) refer to latches.
+\begin{itemize}
+    \item EX/MEM.RegRd = ID/EX.RegRs
+    \item EX/MEM.RegRd = ID/EX.RegRt
+    \item MEM/WB.RegRd = ID/EX.RegRs
+    \item MEM/WB.RegRd = ID/EX.RegRt
+\end{itemize}
+\item Second solution to hazards: bypassing aka forwarding.
+\item Route data to dependent instructions asap.
+\item Output to be written to register is available after EX or after MEM stage; we shouldn't wait for WB stage to happen.
+\item We take forwarding paths from these stages into the ALU input (where the newly written data is to be read). (Use the multiplexers and control signals in case of a hazard to decide which input to use).
+\item Bypassing doesn't eliminate control hazards.
+\item Bypassing doesn't eliminate all needs for stalls. Ex:
+\begin{lstlisting}
+lw r1,0(r4);
+sub r3,r1,r2;//still have to stall for one cycle.
+\end{lstlisting}
+\item For control hazards, branch condition is checked in the execute stage.
+\item Delayed branch: define branch to take place after a following instruction.
+\item Introduce instructions independent of branching between the branch instructions and the branch target if taken.
+\item Choose instructions to put in the branch delay slot from:
+\begin{itemize}
+    \item From before the branch. (Best choice)
+    \item From branch target.
+    \item From fall through.
+\end{itemize}
+\item Stalls impact the CPI and thus the program speed.
+\end{itemize}
+\subsection{Branch Prediction}
+\begin{itemize}
+\item BP needs to happen in the fetch stage. 
+\mygraphic{rsrc/branchpred.png}
+\item Static Direction Predition: 
+\begin{itemize}
+    \item Always not-taken. Simple to implement; doesn't need BTB, doesn't need direction prediction. Accuracy < 40\%
+    \item Always taken: No direction prediction, but needs BTB. Accuracy: >60\%.
+\end{itemize}
+\item Dynamic Predictors:
+\begin{itemize}
+    \item Last Time predictor: 
+    \mygraphic{rsrc/statebp.png}
+\end{itemize}
+\end{itemize}
+\subsection{Implementation}
+\begin{itemize}
+\item K bits of branch instruction address used to index in a table of $2^K$ entries, 1 bit per entry.
+\item Always mispredicts first and last iteration. Accuracy = (N-2)/N. (Or init to 1, and (N-1)/N)
+\item Alternating taken/not-taken gives 0\% accuracy.
+\item Mispredictions lead to stalls.
+\item Alternatively, use 2bit predictors, that switch the prediction after two continuous mispredictions.
+\item Implemented using saturating counter.
+\item Bimodal predictors are good for biased branches (always taken/not taken).
+\item Suppose next fetch address after a branch instruction is not determined after N cycles in a pipelined processor.
+\item N cycles = minimum branch resolution latency.
+\item How do we keep the pipeline full even before branch prediction?
+\item Increase in bp accuracy even at 0.5\% level is useful.
+\end{itemize}
+\subsection{Local and Global History}
+\begin{itemize}
+\item Local behaviour: prediction(A) given last k instances of branch A.
+\item Global behaviour: prediction(Z) given the outcomes of all previous branches A,B,C,..Z?
+\item Two level branch predictors.
+\item First level: global branch history register; the direction of the last N branches. (Branch history table) Entry used to index into pattern history table.
+\item Second level: Table of saturating counter for each history entry. (Pattern history table).
+\item PHT is 2 bit predictor usually.
+\item Set of branches: one register for correlated ones.
+\item suspended here.
+\end{itemize}
+\section{Memory Hierarchy}
+\subsection{Hierarchy}
+\begin{itemize}
+\item DRAM is capacitor based. Data stored as charge. DRAM is denser.
+\item Capacitor needs to be refreshed periodically to maintain the charge despite leaking.
+\item DRAMs are accessed as a table: row index and column index.
+\item SRAMs take 6T to 8T to store one bit.
+\item Low density, doesn't need refreshing, faster.
+\item Bigger is slower.
+\item Faster is more expensive.
+\item Memory hierarchy.
+\begin{itemize}
+\item We want both fast and large memory.
+\item Needs a hierarchy.
+\end{itemize}
+\item CPU talks to small, fast memory (RF, SRAM): talks to big slow memory (DRAM).
+\item SRAM are is a part of the processor (on chip)
+\item DRAM is not on chip. 
+\end{itemize}
+\subsection{Caches}
+\begin{itemize}
+\item Costly DRAM accesses (~200 cycles) without caches.
+\item Bandwidth problems can be solved with more buses, but latency problems are bounded by the speed of light.
+\item DRAM controller on chip, mediates data transfer.
+\item Memory wall: speed difference between processor and memory access.
+\item Common case idea: reduce time of execution of common case execution path.
+\item Locality:
+\begin{itemize}
+\item Temporal: same address accessed repeatedly over a period of time.
+\item Spatial: nearby addresses accessed closely in time.
+\end{itemize}
+\item Caches exploit these localities speculatively.
+\item Multiple level of caches: cache hierarchy.
+\begin{itemize}
+\item L1:closest to cpu, fastest, smallest. Latency and bandwidth in mind (multiple ports)
+\item L2: (Latency)
+\item L3:furthest from cpu, slowest, largest. (Capacity)
+\end{itemize}
+\end{itemize}
+\subsection{Cache Mapping Techniques}
 
 \chapter{Javascript Notes from \href{https://www.interviewbit.com/javascript-interview-questions/}{InterviewBit}}
 \section{Data Types, typeof and instanceof from \href{https://www.w3schools.com/js/js_typeof.asp}{W3Schools}}
