@@ -80,7 +80,8 @@ TODO: pragma O3 stuff
     \item Replace fixed-length vectors by array$<$type,fixed-length$>$.
     \item Replace maps by vectors if they are indexed by integers within a fixed range. Ex: the alphabet as indices.
     \item That die roll problem optimization. (Needs to be phrased more mathematically.)
-    \item Use of suffix arrays + descending order (or its prefix counterpart) to cut of paths in backtracking.
+    \item Use of suffix arrays + descending order (or its prefix counterpart) to cut off paths in backtracking.
+    \item \texttt{container.emplace} is better than \texttt{container.insert} but be wary of the syntax for containers of non-primitive objects. Emplace takes (a key and) arguments to their constructors while insert takes the (a pair of key and) object.
 \end{enumerate}
 \section{Binary Representations}
 \subsection{Unsigned numbers}
@@ -155,7 +156,7 @@ Using the fact that computers use 2's complement and bit operations, we can chec
 
 \begin{equation}
 T(n) \le aT(n/b) + cn^d \implies
-T(n) \le a^{log_b(n)}T(0) + c.n^d.(\sum_{i=1}^{log_b(n)-1}{\frac{a}{b^d}})
+T(n) \le a^{log_b(n)}T(0) + c.n^d.(\sum_{i=1}^{log_b(n)-1}{\frac{a}{b^{di}}})
 \end{equation}
 \begin{equation}
 \implies T(n) = 
@@ -184,8 +185,10 @@ O(n^{log_b(a)}) & a > b^d
     \item Types of all signed integers to \texttt{long long}.
 \end{itemize}
 \item When reusing a pointer to heap data, remember to set it to NULL after you \texttt{delete} it.
-\item Prefer using (small.size()>large.size()+k) where k>=0, as opposed to (small.size() - large.size() > k). The two return values are unsigned and thus always yield a non-negative difference.
+\item Prefer using (small.size()$>$large.size()+k) where k$\ge$0, as opposed to (small.size() - large.size() $>$ k). The two return values are unsigned and thus always yield a non-negative difference.
 \item Separate out the iterating condition (limit, checks, increments to values) from a map before updating it, to avoid infinite loops and incorrect results.
+\item \texttt{map.insert} doesn't override existing values at the given key. It is a no-op
+if the key exists in the map already.
 \end{itemize}
 \section{STL}
 \subsection{Sets and Maps}
@@ -602,7 +605,7 @@ It involves recursively picking an element (\textbf{the pivot})
 from the unsorted array, 
 placing it so that all elements less than it are before and all
 those greater than it are after. Then calling this function on the sub-arrays
-after and before the chosen element.
+after and before the chosen element. See section at the end.
 
 \subsection*{The Others}
 \begin{enumerate}
@@ -631,8 +634,130 @@ after and before the chosen element.
     % \item \algodis{Radix/Counting Sort}
     % {}{}{}
 \end{enumerate}
+\section{Quick Sort}
+\begin{itemize}
+\item Involves two procedures: Partition and Quicksort
+\item Partion takes an array, picks a pivot element in it, and rearranges the elements such that:
+\begin{itemize}
+    \item A prefix of the array contains all elements less than (or equal to) the pivot.
+    \item A suffix of the array contains all elements greater than (or equal to) the pivot.
+\end{itemize}
+\item It returns the first index of a valid suffix where all values are $\ge$ the chosen pivot.
+\begin{lstlisting}
+int partition(vector<int> &a, int s, int e){
+    //s,e inclusive.
+    int pivot = a[pivotCriteria()];
+    int i = s-1, j = e+1;//outer points to allow do-while
+    while(i<j){
+        do{j--;}
+        while(j>s-1 && a[j]>=pivot);//note the equality.
+        do{i++;}
+        while(i<e+1 && a[i]<=pivot);//note the equality.
+        if(i<j){
+            swap(a[i],a[j]);
+        }
+    }
+    return i;//first index of a valid suffix.
+}
+\end{lstlisting}
+\item Quicksort partitions the array into two arrays, and makes recursive calls on each partition.
+\begin{lstlisting}
+void quicksort(vector<int> &a, int s, int e){
+    if(e<=s){return;}
+    int q = partition(a,s,e);
+    //first index of suffix.
+    quicksort(a,s,q-1);//sort the prefix
+    quicksort(a,q,e);//sort the suffix.
+}
+\end{lstlisting}
+\end{itemize}
+\subsection{Quick Select}
+\begin{itemize}
+\item The partition function splits the array into two parts whose elements have an upper (for prefix) and lower (for suffix) bounds on their ranks in the sorted array.
+\item This allows us to use it to find the kth (smallest) element in an array. The following algorithm is called quick select:
+\begin{lstlisting}
+vector<int> a;
+int partition(int s, int e){
+    int pivot = a[e];
+    int i,j;
+    i = s-1;
+    j = e;
+    while(i<j){
+        do{j--;}
+        while(j>s-1 && a[j]>=pivot);
+        do{i++;}
+        while(i<e && a[i]<=pivot);
+        if(i<j){
+            swap(a[i],a[j]);
+        }
+    }
+    j++;
+    swap(a[e],a[j]);
+    return j;
+    //return the start of the suffix, ensuring nums[suffixStart] = pivot.
+}
+int qselect(int s, int e, int k){
+    int q;
+    q = partition(s,e);
+    if(q<k){
+        return qselect(q+1,e,k);
+    }
+    else if(q>k){
+        return qselect(s,q-1,k);
+    }
+    else{
+        return a[q];
+    }
+}
+\end{lstlisting}
+\end{itemize}
+
 \chapter{Week 2}
-See \href{C:/CODE/atgit/notes/cp/notes.pdf}{the other notes.pdf}
+Topics: Stacks, Queues, linkedlists.
+\section{Stacks}
+\begin{enumerate}
+\item Stacks can be used to maintain ``first element to the right $>$ '' for a given array.
+\item Stacks can be used to select lexicographically least strings satisfying some property greedily.
+\end{enumerate}
+\section{Queues}
+\begin{enumerate}
+\item Use queues for level-order traversal of trees.
+\begin{lstlisting}
+while(q.size()){
+    int n = q.size();
+    while(n--){
+        Node n = q.front(); q.pop();
+        for(Node u:n.children()){
+            q.push(u)
+        }
+        //Now q holds next level nodes of the tree.
+    }
+}
+\end{lstlisting}
+\end{enumerate}
+\section{Linked Lists}
+The following tasks can be done in O(1) space with singly linked lists:
+\begin{enumerate}
+    \item Finding a[n/2 - 1].
+    \item Finding its length.
+    \item Reversing the list.
+    \item Floyd's cycle detection.
+\end{enumerate}
+\subsection{Floyd's Cycle Detection}
+\begin{itemize}
+\item Suppose the kth node in the list is the first node that's a part of the cycle which has n nodes.
+\begin{center}
+\includegraphics[width=8cm]{rsrc/floyd.jpg}
+\end{center}
+\item Let $p_s$ and $p_f$ represent the positions of the slow and fast pointers respectively.
+\item Initially, $p_s = 0, p_f = 0.$
+\item At $p_s = k$, $p_f = 2k$.
+\item $\implies c = (2k-k) \% n = k \% n$ is the offset of the fast pointer when the slow pointer reaches the start of the cycle.
+\item When, after m iterations, $p_s = k+m, p_f = 2(k+m)$ and $(p_s-k) == (p_f-k) \% n$.
+\item $\implies (m + k) \% n = 0 \implies $ their current offsets in the cycle are (n-k)\% n.
+\item $\implies $ If $p_a$ (new pointer) is $=0$, with k more iterations, the slow pointer's would be at $n-k + k = n$ (start of the cycle), as will $p_a$.
+\end{itemize}
+
 \chapter{Week 3}
 \section{Complete Search}
 \subsection*{Subset Processing}
@@ -1358,28 +1483,6 @@ for(auto entry:votes){
     if(entry.second > thres){ans.push_back(entry.first);}
 }
 \end{lstlisting} 
-\end{itemize}
-\section{Linked Lists}
-The following tasks can be done in O(1) space with singly linked lists:
-\begin{enumerate}
-    \item Finding a[n/2 - 1].
-    \item Finding its length.
-    \item Reversing the list.
-    \item Floyd's cycle detection.
-\end{enumerate}
-\subsection{Floyd's Cycle Detection}
-\begin{itemize}
-\item Suppose the kth node in the list is the first node that's a part of the cycle which has n nodes.
-\begin{center}
-\includegraphics[width=8cm]{rsrc/floyd.jpg}
-\end{center}
-\item Let $p_s$ and $p_f$ represent the positions of the slow and fast pointers respectively.
-\item Initially, $p_s = 0, p_f = 0.$
-\item At $p_s = k$, $p_f = 2k$.
-\item $\implies c = (2k-k) \% n = k \% n$ is the offset of the fast pointer when the slow pointer reaches the start of the cycle.
-\item When, after m iterations, $p_s = k+m, p_f = 2(k+m)$ and $(p_s-k) == (p_f-k) \% n$.
-\item $\implies (m + k) \% n = 0 \implies $ their current offsets in the cycle are (n-k)\% n.
-\item $\implies $ If $p_a$ (new pointer) is $=0$, with k more iterations, the slow pointer's would be at $n-k + k = n$ (start of the cycle), as will $p_a$.
 \end{itemize}
 \section*{Misc. Notes}
 \subsection*{Precision printing}
@@ -3045,83 +3148,6 @@ for(int i=n/2;i>-1;i--){
 \item The running time is linear because the heapify calls incur low costs for of the nodes.
 \item In particular, there are at most $n/2^i$ nodes that incur $i$ swaps (or operations) in heapify.
 \item The sum: $\sum_{i=1}^{logn}{n\times i/2^i}$ is strictly bounded by $2n$
-\end{itemize}
-\section{Quick Sort}
-\begin{itemize}
-\item Involves two procedures: Partition and Quicksort
-\item Partion takes an array, picks a pivot element in it, and rearranges the elements such that:
-\begin{itemize}
-    \item A prefix of the array contains all elements less than (or equal to) the pivot.
-    \item A suffix of the array contains all elements greater than (or equal to) the pivot.
-\end{itemize}
-\item It returns the first index of a valid suffix where all values are $\ge$ the chosen pivot.
-\begin{lstlisting}
-int partition(vector<int> &a, int s, int e){
-    //s,e inclusive.
-    int pivot = a[pivotCriteria()];
-    int i = s-1, j = e+1;//outer points to allow do-while
-    while(i<j){
-        do{j--;}
-        while(j>s-1 && a[j]>=pivot);//note the equality.
-        do{i++;}
-        while(i<e+1 && a[i]<=pivot);//note the equality.
-        if(i<j){
-            swap(a[i],a[j]);
-        }
-    }
-    return i;//first index of a valid suffix.
-}
-\end{lstlisting}
-\item Quicksort partitions the array into two arrays, and makes recursive calls on each partition.
-\begin{lstlisting}
-void quicksort(vector<int> &a, int s, int e){
-    if(e<=s){return;}
-    int q = partition(a,s,e);
-    //first index of suffix.
-    quicksort(a,s,q-1);//sort the prefix
-    quicksort(a,q,e);//sort the suffix.
-}
-\end{lstlisting}
-\end{itemize}
-\subsection{Quick Select}
-\begin{itemize}
-\item The partition function splits the array into two parts whose elements have an upper (for prefix) and lower (for suffix) bounds on their ranks in the sorted array.
-\item This allows us to use it to find the kth (smallest) element in an array. The following algorithm is called quick select:
-\begin{lstlisting}
-vector<int> a;
-int partition(int s, int e){
-    int pivot = a[e];
-    int i,j;
-    i = s-1;
-    j = e;
-    while(i<j){
-        do{j--;}
-        while(j>s-1 && a[j]>=pivot);
-        do{i++;}
-        while(i<e && a[i]<=pivot);
-        if(i<j){
-            swap(a[i],a[j]);
-        }
-    }
-    j++;
-    swap(a[e],a[j]);
-    return j;
-    //return the start of the suffix, ensuring nums[suffixStart] = pivot.
-}
-int qselect(int s, int e, int k){
-    int q;
-    q = partition(s,e);
-    if(q<k){
-        return qselect(q+1,e,k);
-    }
-    else if(q>k){
-        return qselect(s,q-1,k);
-    }
-    else{
-        return a[q];
-    }
-}
-\end{lstlisting}
 \end{itemize}
 \chapter{Operating Systems}
 \href{C:/CODE/atgit/notes/osrev/osrev.pdf}
